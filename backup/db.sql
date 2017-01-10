@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.10.1
+-- version 4.2.8.1
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 08 2017 г., 13:43
+-- Время создания: Янв 10 2017 г., 19:24
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS `category` (
 `id` int(10) unsigned NOT NULL,
   `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'Родительская категория',
   `name` varchar(128) NOT NULL COMMENT 'Наименование',
-  `description` text NOT NULL COMMENT 'Описание'
+  `description` text COMMENT 'Описание',
+  `meta_desc` varchar(128) NOT NULL COMMENT 'SEO описание',
+  `meta_keys` varchar(128) NOT NULL COMMENT 'SEO ключевые слова'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Категории продукции';
 
 -- --------------------------------------------------------
@@ -55,7 +57,13 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE IF NOT EXISTS `city` (
-`id` int(11) unsigned NOT NULL
+`id` int(11) unsigned NOT NULL,
+  `region_id` int(10) unsigned NOT NULL COMMENT 'Код региона',
+  `name` varchar(32) NOT NULL COMMENT 'Наименование города',
+  `uri_name` varchar(32) NOT NULL COMMENT 'Наименование города для URL',
+  `index` int(6) unsigned NOT NULL COMMENT 'Почтовый индекс',
+  `latitude` decimal(11,8) DEFAULT NULL COMMENT 'Широта',
+  `longitude` decimal(11,8) DEFAULT NULL COMMENT 'Долгота'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Города';
 
 -- --------------------------------------------------------
@@ -121,7 +129,11 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 DROP TABLE IF EXISTS `region`;
 CREATE TABLE IF NOT EXISTS `region` (
-`id` int(11) unsigned NOT NULL
+`id` int(11) unsigned NOT NULL,
+  `code` int(2) unsigned zerofill NOT NULL COMMENT 'Код региона',
+  `name` varchar(64) NOT NULL COMMENT 'Название региона',
+  `capital` varchar(32) NOT NULL COMMENT 'Столица',
+  `district` varchar(32) NOT NULL COMMENT 'Округ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Регионы';
 
 -- --------------------------------------------------------
@@ -177,7 +189,7 @@ ALTER TABLE `category`
 -- Индексы таблицы `city`
 --
 ALTER TABLE `city`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `index` (`index`), ADD KEY `name` (`name`);
 
 --
 -- Индексы таблицы `feature`
@@ -213,7 +225,7 @@ ALTER TABLE `product`
 -- Индексы таблицы `region`
 --
 ALTER TABLE `region`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `code` (`code`);
 
 --
 -- Индексы таблицы `setting`
