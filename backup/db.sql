@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 10 2017 г., 19:24
+-- Время создания: Янв 11 2017 г., 20:23
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -52,6 +52,22 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `category_img`
+--
+
+DROP TABLE IF EXISTS `category_img`;
+CREATE TABLE IF NOT EXISTS `category_img` (
+`id` int(10) unsigned NOT NULL,
+  `category_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор категории',
+  `name` varchar(128) NOT NULL COMMENT 'Наименование файла изображения',
+  `is_main` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак главной фотографии',
+  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
+  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Картинки категорий';
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `city`
 --
 
@@ -80,17 +96,6 @@ CREATE TABLE IF NOT EXISTS `feature` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `image`
---
-
-DROP TABLE IF EXISTS `image`;
-CREATE TABLE IF NOT EXISTS `image` (
-`id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения';
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `manufacturer`
 --
 
@@ -107,7 +112,9 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 
 DROP TABLE IF EXISTS `offer`;
 CREATE TABLE IF NOT EXISTS `offer` (
-`id` int(10) unsigned NOT NULL
+`id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор товара',
+  `supplier_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор поставщика'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товарные предложения';
 
 -- --------------------------------------------------------
@@ -118,8 +125,25 @@ CREATE TABLE IF NOT EXISTS `offer` (
 
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
-`id` int(10) unsigned NOT NULL
+`id` int(10) unsigned NOT NULL,
+  `manufacturer_id` int(10) unsigned DEFAULT NULL COMMENT 'Идентификатор производителя'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товары';
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `product_img`
+--
+
+DROP TABLE IF EXISTS `product_img`;
+CREATE TABLE IF NOT EXISTS `product_img` (
+`id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор товара',
+  `name` varchar(128) NOT NULL COMMENT 'Наименование файла изображения',
+  `is_main` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак главной фотографии',
+  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
+  `date_upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения товаров';
 
 -- --------------------------------------------------------
 
@@ -186,6 +210,12 @@ ALTER TABLE `category`
  ADD PRIMARY KEY (`id`), ADD KEY `name` (`name`);
 
 --
+-- Индексы таблицы `category_img`
+--
+ALTER TABLE `category_img`
+ ADD PRIMARY KEY (`id`), ADD KEY `category_id` (`category_id`);
+
+--
 -- Индексы таблицы `city`
 --
 ALTER TABLE `city`
@@ -198,12 +228,6 @@ ALTER TABLE `feature`
  ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `image`
---
-ALTER TABLE `image`
- ADD PRIMARY KEY (`id`);
-
---
 -- Индексы таблицы `manufacturer`
 --
 ALTER TABLE `manufacturer`
@@ -213,13 +237,19 @@ ALTER TABLE `manufacturer`
 -- Индексы таблицы `offer`
 --
 ALTER TABLE `offer`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `product_id` (`product_id`), ADD KEY `supplier_id` (`supplier_id`);
 
 --
 -- Индексы таблицы `product`
 --
 ALTER TABLE `product`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `manufacturer_id` (`manufacturer_id`);
+
+--
+-- Индексы таблицы `product_img`
+--
+ALTER TABLE `product_img`
+ ADD PRIMARY KEY (`id`), ADD KEY `product_id` (`product_id`);
 
 --
 -- Индексы таблицы `region`
@@ -260,6 +290,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `category`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT для таблицы `category_img`
+--
+ALTER TABLE `category_img`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `city`
 --
 ALTER TABLE `city`
@@ -268,11 +303,6 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `feature`
 --
 ALTER TABLE `feature`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT для таблицы `image`
---
-ALTER TABLE `image`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `manufacturer`
@@ -288,6 +318,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `product`
 --
 ALTER TABLE `product`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `product_img`
+--
+ALTER TABLE `product_img`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `region`
@@ -309,6 +344,35 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `warehouse`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `category_img`
+--
+ALTER TABLE `category_img`
+ADD CONSTRAINT `category_img_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `offer`
+--
+ALTER TABLE `offer`
+ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `offer_ibfk_2` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `product`
+--
+ALTER TABLE `product`
+ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `product_img`
+--
+ALTER TABLE `product_img`
+ADD CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
