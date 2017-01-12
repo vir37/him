@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.8.1
+-- version 4.2.10.1
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 11 2017 г., 20:23
+-- Время создания: Янв 12 2017 г., 22:19
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -32,6 +32,71 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE IF NOT EXISTS `address` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Адреса';
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `auth_assignment`
+--
+
+DROP TABLE IF EXISTS `auth_assignment`;
+CREATE TABLE IF NOT EXISTS `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `auth_item`
+--
+
+DROP TABLE IF EXISTS `auth_item`;
+CREATE TABLE IF NOT EXISTS `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('admin', 1, 'Administrator', NULL, NULL, 1484246714, 1484246714),
+('guest', 1, 'Guest', NULL, NULL, 1484246770, 1484246770),
+('manager', 1, 'Manager', NULL, NULL, 1484246752, 1484246752);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `auth_item_child`
+--
+
+DROP TABLE IF EXISTS `auth_item_child`;
+CREATE TABLE IF NOT EXISTS `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `auth_rule`
+--
+
+DROP TABLE IF EXISTS `auth_rule`;
+CREATE TABLE IF NOT EXISTS `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -96,6 +161,17 @@ CREATE TABLE IF NOT EXISTS `feature` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `image`
+--
+
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE IF NOT EXISTS `image` (
+`id` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения';
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `manufacturer`
 --
 
@@ -103,6 +179,27 @@ DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE IF NOT EXISTS `manufacturer` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Производители';
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `migration`
+--
+
+DROP TABLE IF EXISTS `migration`;
+CREATE TABLE IF NOT EXISTS `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1483878830),
+('m130524_201442_init', 1483878840),
+('m140506_102106_rbac_init', 1484244123);
 
 -- --------------------------------------------------------
 
@@ -185,6 +282,25 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+`id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `warehouse`
 --
 
@@ -202,6 +318,30 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 --
 ALTER TABLE `address`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+ ADD PRIMARY KEY (`item_name`,`user_id`);
+
+--
+-- Индексы таблицы `auth_item`
+--
+ALTER TABLE `auth_item`
+ ADD PRIMARY KEY (`name`), ADD KEY `rule_name` (`rule_name`), ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Индексы таблицы `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+ ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
+
+--
+-- Индексы таблицы `auth_rule`
+--
+ALTER TABLE `auth_rule`
+ ADD PRIMARY KEY (`name`);
 
 --
 -- Индексы таблицы `category`
@@ -228,10 +368,22 @@ ALTER TABLE `feature`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `image`
+--
+ALTER TABLE `image`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `manufacturer`
 --
 ALTER TABLE `manufacturer`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `migration`
+--
+ALTER TABLE `migration`
+ ADD PRIMARY KEY (`version`);
 
 --
 -- Индексы таблицы `offer`
@@ -270,6 +422,12 @@ ALTER TABLE `supplier`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`), ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
+
+--
 -- Индексы таблицы `warehouse`
 --
 ALTER TABLE `warehouse`
@@ -303,6 +461,11 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `feature`
 --
 ALTER TABLE `feature`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `image`
+--
+ALTER TABLE `image`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `manufacturer`
@@ -340,6 +503,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `supplier`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT для таблицы `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `warehouse`
 --
 ALTER TABLE `warehouse`
@@ -347,6 +515,25 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `auth_item`
+--
+ALTER TABLE `auth_item`
+ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `category_img`
