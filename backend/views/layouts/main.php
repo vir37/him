@@ -44,12 +44,12 @@ AppAsset::register($this);
             [
                 'label' => 'Каталог',
                 'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
-                'url' => ['catalogue/index']
+                'url' => ['catalogue/']
             ],
             [
                 'label' => 'Настройки',
                 'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
-                'url' => ['settings/index']
+                'url' => ['settings/']
             ]
         );
         $menuItems[] = '<li>'

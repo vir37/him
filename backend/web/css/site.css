@@ -118,3 +118,20 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/*----------- SELF styles ------------------*/
+.no-padding { padding: 0; }
+.window {
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding:2px;
+    margin: 1px;
+}
+.window h5 {
+    text-transform: uppercase;
+    text-align: center;
+}
+.window h5 i {
+    padding-left:5px;
+    float:left;
+}
