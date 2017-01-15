@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => '<i class="fa fa-home fa-2x"></i>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,10 +40,22 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        array_push($menuItems,
+            [
+                'label' => 'Каталог',
+                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                'url' => ['catalogue/index']
+            ],
+            [
+                'label' => 'Настройки',
+                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                'url' => ['settings/index']
+            ]
+        );
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

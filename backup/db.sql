@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 12 2017 г., 22:19
+-- Время создания: Янв 15 2017 г., 17:02
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -42,9 +42,16 @@ CREATE TABLE IF NOT EXISTS `address` (
 DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) unsigned NOT NULL COMMENT 'Ссылка на id пользователя',
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('admin', 4, 1484418942);
 
 -- --------------------------------------------------------
 
@@ -69,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('admin', 1, 'Administrator', NULL, NULL, 1484246714, 1484246714),
+('createSupplier', 2, 'Can create the supplier', NULL, NULL, 1484415751, 1484415751),
 ('guest', 1, 'Guest', NULL, NULL, 1484246770, 1484246770),
 ('manager', 1, 'Manager', NULL, NULL, 1484246752, 1484246752);
 
@@ -265,7 +273,9 @@ CREATE TABLE IF NOT EXISTS `region` (
 
 DROP TABLE IF EXISTS `setting`;
 CREATE TABLE IF NOT EXISTS `setting` (
-`id` int(10) unsigned NOT NULL
+`id` int(10) unsigned NOT NULL,
+  `param` varchar(64) NOT NULL COMMENT 'Наименование настройки',
+  `value` varchar(128) NOT NULL COMMENT 'Значение настройки'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Настройки';
 
 -- --------------------------------------------------------
@@ -276,7 +286,15 @@ CREATE TABLE IF NOT EXISTS `setting` (
 
 DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
-`id` int(10) unsigned NOT NULL
+`id` int(10) unsigned NOT NULL,
+  `name` varchar(128) NOT NULL COMMENT 'Наименование поставщика',
+  `description` text NOT NULL COMMENT 'Описание оставщика',
+  `jur_address_id` int(11) unsigned DEFAULT NULL COMMENT 'Юридический адрес',
+  `fact_address_id` int(11) unsigned DEFAULT NULL COMMENT 'Фактический адрес',
+  `post_address_id` int(11) unsigned DEFAULT NULL COMMENT 'Почтовый адрес',
+  `logo` varchar(128) DEFAULT NULL COMMENT 'Файл логотипа',
+  `phone` varchar(16) DEFAULT NULL COMMENT 'Основной телефон',
+  `site` varchar(64) DEFAULT NULL COMMENT 'WEB-сайт'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Поставщики';
 
 -- --------------------------------------------------------
@@ -296,7 +314,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `status` smallint(6) NOT NULL DEFAULT '10',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'sasha', 'ra0CWLbdGaQbnb2rdPp5E0mDoms-pJmz', '$2y$13$i9G5Gs/PUFXs9wQvFFBl9emJG4AmGg7hz7urR3kOc1Gdlh4KHiOja', NULL, 'vir37@rambler.ru', 10, 1484418942, 1484418942);
 
 -- --------------------------------------------------------
 
@@ -323,7 +348,7 @@ ALTER TABLE `address`
 -- Индексы таблицы `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
- ADD PRIMARY KEY (`item_name`,`user_id`);
+ ADD PRIMARY KEY (`item_name`,`user_id`), ADD KEY `idx_user_id` (`user_id`);
 
 --
 -- Индексы таблицы `auth_item`
@@ -413,13 +438,13 @@ ALTER TABLE `region`
 -- Индексы таблицы `setting`
 --
 ALTER TABLE `setting`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `param` (`param`);
 
 --
 -- Индексы таблицы `supplier`
 --
 ALTER TABLE `supplier`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `jur_address_id` (`jur_address_id`), ADD KEY `fact_address_id` (`fact_address_id`), ADD KEY `post_address_id` (`post_address_id`);
 
 --
 -- Индексы таблицы `user`
@@ -506,7 +531,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `warehouse`
 --
@@ -559,6 +584,14 @@ ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`manufacturer_id`) REFERENCES `manu
 --
 ALTER TABLE `product_img`
 ADD CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `supplier`
+--
+ALTER TABLE `supplier`
+ADD CONSTRAINT `supplier_ibfk_1` FOREIGN KEY (`jur_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `supplier_ibfk_2` FOREIGN KEY (`fact_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `supplier_ibfk_3` FOREIGN KEY (`post_address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
