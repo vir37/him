@@ -9,4 +9,11 @@ class CatalogueController extends \yii\web\Controller
         return $this->render('index');
     }
 
+    public function actionCreate() {
+        return null;
+    }
+
+    public function actionList() {
+        return $this->render('list');
+    }
 }

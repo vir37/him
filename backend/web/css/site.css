@@ -135,3 +135,11 @@ a.desc:after {
     padding-left:5px;
     float:left;
 }
+.window > footer {
+    text-align: right;
+    padding-right: 10px;
+}
+.window > section {
+    padding-left: 10px;
+}
+
