@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.10.1
+-- version 4.2.8.1
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 15 2017 г., 17:02
+-- Время создания: Янв 19 2017 г., 19:57
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -28,7 +28,6 @@ USE `him`;
 -- Структура таблицы `address`
 --
 
-DROP TABLE IF EXISTS `address`;
 CREATE TABLE IF NOT EXISTS `address` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Адреса';
@@ -39,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `address` (
 -- Структура таблицы `auth_assignment`
 --
 
-DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL COMMENT 'Ссылка на id пользователя',
@@ -59,7 +57,6 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- Структура таблицы `auth_item`
 --
 
-DROP TABLE IF EXISTS `auth_item`;
 CREATE TABLE IF NOT EXISTS `auth_item` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
@@ -86,7 +83,6 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Структура таблицы `auth_item_child`
 --
 
-DROP TABLE IF EXISTS `auth_item_child`;
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
@@ -98,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 -- Структура таблицы `auth_rule`
 --
 
-DROP TABLE IF EXISTS `auth_rule`;
 CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci,
@@ -109,12 +104,24 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `catalogue`
+--
+
+CREATE TABLE IF NOT EXISTS `catalogue` (
+`id` int(5) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL COMMENT 'Наименование каталога',
+  `description` tinytext COMMENT 'Описание'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Различные варианты каталогов';
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `category`
 --
 
-DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
 `id` int(10) unsigned NOT NULL,
+  `catalogue_id` int(5) unsigned NOT NULL COMMENT 'Идентификатор каталога',
   `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'Родительская категория',
   `name` varchar(128) NOT NULL COMMENT 'Наименование',
   `description` text COMMENT 'Описание',
@@ -128,7 +135,6 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- Структура таблицы `category_img`
 --
 
-DROP TABLE IF EXISTS `category_img`;
 CREATE TABLE IF NOT EXISTS `category_img` (
 `id` int(10) unsigned NOT NULL,
   `category_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор категории',
@@ -144,7 +150,6 @@ CREATE TABLE IF NOT EXISTS `category_img` (
 -- Структура таблицы `city`
 --
 
-DROP TABLE IF EXISTS `city`;
 CREATE TABLE IF NOT EXISTS `city` (
 `id` int(11) unsigned NOT NULL,
   `region_id` int(10) unsigned NOT NULL COMMENT 'Код региона',
@@ -161,7 +166,6 @@ CREATE TABLE IF NOT EXISTS `city` (
 -- Структура таблицы `feature`
 --
 
-DROP TABLE IF EXISTS `feature`;
 CREATE TABLE IF NOT EXISTS `feature` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Характеристики';
@@ -172,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `feature` (
 -- Структура таблицы `image`
 --
 
-DROP TABLE IF EXISTS `image`;
 CREATE TABLE IF NOT EXISTS `image` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения';
@@ -183,7 +186,6 @@ CREATE TABLE IF NOT EXISTS `image` (
 -- Структура таблицы `manufacturer`
 --
 
-DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE IF NOT EXISTS `manufacturer` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Производители';
@@ -194,7 +196,6 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 -- Структура таблицы `migration`
 --
 
-DROP TABLE IF EXISTS `migration`;
 CREATE TABLE IF NOT EXISTS `migration` (
   `version` varchar(180) NOT NULL,
   `apply_time` int(11) DEFAULT NULL
@@ -215,7 +216,6 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- Структура таблицы `offer`
 --
 
-DROP TABLE IF EXISTS `offer`;
 CREATE TABLE IF NOT EXISTS `offer` (
 `id` int(10) unsigned NOT NULL,
   `product_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор товара',
@@ -228,7 +228,6 @@ CREATE TABLE IF NOT EXISTS `offer` (
 -- Структура таблицы `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
 `id` int(10) unsigned NOT NULL,
   `manufacturer_id` int(10) unsigned DEFAULT NULL COMMENT 'Идентификатор производителя'
@@ -240,7 +239,6 @@ CREATE TABLE IF NOT EXISTS `product` (
 -- Структура таблицы `product_img`
 --
 
-DROP TABLE IF EXISTS `product_img`;
 CREATE TABLE IF NOT EXISTS `product_img` (
 `id` int(10) unsigned NOT NULL,
   `product_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор товара',
@@ -256,7 +254,6 @@ CREATE TABLE IF NOT EXISTS `product_img` (
 -- Структура таблицы `region`
 --
 
-DROP TABLE IF EXISTS `region`;
 CREATE TABLE IF NOT EXISTS `region` (
 `id` int(11) unsigned NOT NULL,
   `code` int(2) unsigned zerofill NOT NULL COMMENT 'Код региона',
@@ -271,7 +268,6 @@ CREATE TABLE IF NOT EXISTS `region` (
 -- Структура таблицы `setting`
 --
 
-DROP TABLE IF EXISTS `setting`;
 CREATE TABLE IF NOT EXISTS `setting` (
 `id` int(10) unsigned NOT NULL,
   `param` varchar(64) NOT NULL COMMENT 'Наименование настройки',
@@ -284,7 +280,6 @@ CREATE TABLE IF NOT EXISTS `setting` (
 -- Структура таблицы `supplier`
 --
 
-DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(128) NOT NULL COMMENT 'Наименование поставщика',
@@ -303,7 +298,6 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 -- Структура таблицы `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
 `id` int(11) NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -329,7 +323,6 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 -- Структура таблицы `warehouse`
 --
 
-DROP TABLE IF EXISTS `warehouse`;
 CREATE TABLE IF NOT EXISTS `warehouse` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Склады';
@@ -369,10 +362,16 @@ ALTER TABLE `auth_rule`
  ADD PRIMARY KEY (`name`);
 
 --
+-- Индексы таблицы `catalogue`
+--
+ALTER TABLE `catalogue`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `category`
 --
 ALTER TABLE `category`
- ADD PRIMARY KEY (`id`), ADD KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD KEY `name` (`name`), ADD KEY `catalogue_id` (`catalogue_id`);
 
 --
 -- Индексы таблицы `category_img`
@@ -468,6 +467,11 @@ ALTER TABLE `warehouse`
 ALTER TABLE `address`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT для таблицы `catalogue`
+--
+ALTER TABLE `catalogue`
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
@@ -559,6 +563,12 @@ ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rul
 ALTER TABLE `auth_item_child`
 ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `category`
+--
+ALTER TABLE `category`
+ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`catalogue_id`) REFERENCES `catalogue` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `category_img`

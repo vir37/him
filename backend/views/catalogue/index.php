@@ -30,9 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-sm-4 col-md-3 col-lg-3 no-padding">
                 <div class="window">
                     <header>
-                        <h5><i class="fa fa-cubes" aria-hidden="true"></i>Товары</h5>
+                        <h5><i class="fa fa-cubes" aria-hidden="true"></i><?= Html::a('Товары', ['product/']) ?></h5>
                     </header>
-                    <section></section>
+                    <section>
+                        <p><small><i>Модуль управления товарами: добавление, удаление, привязка к категориям ...</i></small></p>
+
+                    </section>
                     <footer><i class="fa fa-ellipsis-v"></i></footer>
                 </div>
             </div>
