@@ -42,7 +42,7 @@ class Catalogue extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Наименование каталога',
+            'name' => 'Наименование',
             'description' => 'Описание',
         ];
     }

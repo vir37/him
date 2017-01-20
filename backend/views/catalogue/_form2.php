@@ -14,7 +14,8 @@ use yii\bootstrap\ActiveForm;
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => [
-
+                'label' => 'col-sm-4 col-md-3 col-lg-2',
+                'wrapper' => 'col-sm-8 col-md-7 col-lg-6',
             ]
         ],
     ]); ?>

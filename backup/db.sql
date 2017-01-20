@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.8.1
+-- version 4.2.10.1
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 19 2017 г., 19:57
+-- Время создания: Янв 20 2017 г., 23:17
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -19,6 +19,7 @@ SET time_zone = "+00:00";
 --
 -- База данных: `him`
 --
+DROP DATABASE `him`;
 CREATE DATABASE IF NOT EXISTS `him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `him`;
 
@@ -32,6 +33,11 @@ CREATE TABLE IF NOT EXISTS `address` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Адреса';
 
+--
+-- Очистить таблицу перед добавлением данных `address`
+--
+
+TRUNCATE TABLE `address`;
 -- --------------------------------------------------------
 
 --
@@ -44,6 +50,11 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Очистить таблицу перед добавлением данных `auth_assignment`
+--
+
+TRUNCATE TABLE `auth_assignment`;
 --
 -- Дамп данных таблицы `auth_assignment`
 --
@@ -68,6 +79,11 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Очистить таблицу перед добавлением данных `auth_item`
+--
+
+TRUNCATE TABLE `auth_item`;
+--
 -- Дамп данных таблицы `auth_item`
 --
 
@@ -88,6 +104,11 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Очистить таблицу перед добавлением данных `auth_item_child`
+--
+
+TRUNCATE TABLE `auth_item_child`;
 -- --------------------------------------------------------
 
 --
@@ -101,6 +122,11 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Очистить таблицу перед добавлением данных `auth_rule`
+--
+
+TRUNCATE TABLE `auth_rule`;
 -- --------------------------------------------------------
 
 --
@@ -110,9 +136,14 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 CREATE TABLE IF NOT EXISTS `catalogue` (
 `id` int(5) unsigned NOT NULL,
   `name` varchar(32) NOT NULL COMMENT 'Наименование каталога',
-  `description` tinytext COMMENT 'Описание'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Различные варианты каталогов';
+  `description` text COMMENT 'Описание'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Каталоги';
 
+--
+-- Очистить таблицу перед добавлением данных `catalogue`
+--
+
+TRUNCATE TABLE `catalogue`;
 -- --------------------------------------------------------
 
 --
@@ -121,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
 
 CREATE TABLE IF NOT EXISTS `category` (
 `id` int(10) unsigned NOT NULL,
-  `catalogue_id` int(5) unsigned NOT NULL COMMENT 'Идентификатор каталога',
+  `catalogue_id` int(5) unsigned NOT NULL COMMENT 'ИД каталога',
   `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'Родительская категория',
   `name` varchar(128) NOT NULL COMMENT 'Наименование',
   `description` text COMMENT 'Описание',
@@ -129,6 +160,11 @@ CREATE TABLE IF NOT EXISTS `category` (
   `meta_keys` varchar(128) NOT NULL COMMENT 'SEO ключевые слова'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Категории продукции';
 
+--
+-- Очистить таблицу перед добавлением данных `category`
+--
+
+TRUNCATE TABLE `category`;
 -- --------------------------------------------------------
 
 --
@@ -144,6 +180,11 @@ CREATE TABLE IF NOT EXISTS `category_img` (
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Картинки категорий';
 
+--
+-- Очистить таблицу перед добавлением данных `category_img`
+--
+
+TRUNCATE TABLE `category_img`;
 -- --------------------------------------------------------
 
 --
@@ -160,6 +201,11 @@ CREATE TABLE IF NOT EXISTS `city` (
   `longitude` decimal(11,8) DEFAULT NULL COMMENT 'Долгота'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Города';
 
+--
+-- Очистить таблицу перед добавлением данных `city`
+--
+
+TRUNCATE TABLE `city`;
 -- --------------------------------------------------------
 
 --
@@ -170,6 +216,11 @@ CREATE TABLE IF NOT EXISTS `feature` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Характеристики';
 
+--
+-- Очистить таблицу перед добавлением данных `feature`
+--
+
+TRUNCATE TABLE `feature`;
 -- --------------------------------------------------------
 
 --
@@ -180,6 +231,11 @@ CREATE TABLE IF NOT EXISTS `image` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения';
 
+--
+-- Очистить таблицу перед добавлением данных `image`
+--
+
+TRUNCATE TABLE `image`;
 -- --------------------------------------------------------
 
 --
@@ -190,6 +246,11 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Производители';
 
+--
+-- Очистить таблицу перед добавлением данных `manufacturer`
+--
+
+TRUNCATE TABLE `manufacturer`;
 -- --------------------------------------------------------
 
 --
@@ -201,6 +262,11 @@ CREATE TABLE IF NOT EXISTS `migration` (
   `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Очистить таблицу перед добавлением данных `migration`
+--
+
+TRUNCATE TABLE `migration`;
 --
 -- Дамп данных таблицы `migration`
 --
@@ -222,6 +288,11 @@ CREATE TABLE IF NOT EXISTS `offer` (
   `supplier_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор поставщика'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товарные предложения';
 
+--
+-- Очистить таблицу перед добавлением данных `offer`
+--
+
+TRUNCATE TABLE `offer`;
 -- --------------------------------------------------------
 
 --
@@ -233,6 +304,11 @@ CREATE TABLE IF NOT EXISTS `product` (
   `manufacturer_id` int(10) unsigned DEFAULT NULL COMMENT 'Идентификатор производителя'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товары';
 
+--
+-- Очистить таблицу перед добавлением данных `product`
+--
+
+TRUNCATE TABLE `product`;
 -- --------------------------------------------------------
 
 --
@@ -248,6 +324,11 @@ CREATE TABLE IF NOT EXISTS `product_img` (
   `date_upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения товаров';
 
+--
+-- Очистить таблицу перед добавлением данных `product_img`
+--
+
+TRUNCATE TABLE `product_img`;
 -- --------------------------------------------------------
 
 --
@@ -262,6 +343,11 @@ CREATE TABLE IF NOT EXISTS `region` (
   `district` varchar(32) NOT NULL COMMENT 'Округ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Регионы';
 
+--
+-- Очистить таблицу перед добавлением данных `region`
+--
+
+TRUNCATE TABLE `region`;
 -- --------------------------------------------------------
 
 --
@@ -274,6 +360,11 @@ CREATE TABLE IF NOT EXISTS `setting` (
   `value` varchar(128) NOT NULL COMMENT 'Значение настройки'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Настройки';
 
+--
+-- Очистить таблицу перед добавлением данных `setting`
+--
+
+TRUNCATE TABLE `setting`;
 -- --------------------------------------------------------
 
 --
@@ -292,6 +383,11 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `site` varchar(64) DEFAULT NULL COMMENT 'WEB-сайт'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Поставщики';
 
+--
+-- Очистить таблицу перед добавлением данных `supplier`
+--
+
+TRUNCATE TABLE `supplier`;
 -- --------------------------------------------------------
 
 --
@@ -311,6 +407,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Очистить таблицу перед добавлением данных `user`
+--
+
+TRUNCATE TABLE `user`;
+--
 -- Дамп данных таблицы `user`
 --
 
@@ -327,6 +428,11 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Склады';
 
+--
+-- Очистить таблицу перед добавлением данных `warehouse`
+--
+
+TRUNCATE TABLE `warehouse`;
 --
 -- Индексы сохранённых таблиц
 --
