@@ -121,6 +121,7 @@ a.desc:after {
 
 /*----------- SELF styles ------------------*/
 .no-padding { padding: 0; }
+.btn-a { border: 0px; background-color: inherit; }
 .window {
     border: 1px solid grey;
     border-radius: 4px;
