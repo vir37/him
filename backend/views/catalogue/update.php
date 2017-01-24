@@ -5,17 +5,21 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Catalogue */
 
-$this->title = 'Update Catalogue: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Catalogues', 'url' => ['index']];
+$this->title = 'Редактирование каталога: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
+$this->params['breadcrumbs'][] = ['label' => 'Список каталогов', 'url' => ['catalogue/list']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="catalogue-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <?= $this->render('_form2', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
 
 </div>

@@ -121,12 +121,16 @@ a.desc:after {
 
 /*----------- SELF styles ------------------*/
 .no-padding { padding: 0; }
-.btn-a { border: 0px; background-color: inherit; }
+.sub-wrap { flex: 1 0 auto; }
+.col { padding: 2px 2px 10px 2px; }
 .window {
     border: 1px solid grey;
     border-radius: 4px;
     padding:2px;
-    margin: 1px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 2px 10px grey;
 }
 .window h5 {
     text-transform: uppercase;
@@ -137,10 +141,11 @@ a.desc:after {
     float:left;
 }
 .window > footer {
+    flex: 0 0 auto;
     text-align: right;
     padding-right: 10px;
 }
-.window > section {
+.window section {
     padding-left: 10px;
 }
 

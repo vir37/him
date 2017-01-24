@@ -6,7 +6,8 @@
  * Time: 0:12
  */
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use yii\grid\GridView,
+    yii\grid\ActionColumn;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CatalogueSearch */
@@ -23,12 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Новый каталог', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php Pjax::begin(); ?>   <?= ListView::widget([
+    <?php Pjax::begin(); ?>   <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
-        },
+        'columns' => [
+            'id',
+            'name',
+            'description',
+            [
+                'header' => 'Действия',
+                'class' => ActionColumn::className(),
+                'contentOptions' => [ 'style' => 'width: 1%;' ],
+            ]
+        ],
     ]) ?>
     <?php Pjax::end(); ?>
 </div>
