@@ -148,4 +148,6 @@ a.desc:after {
 .window section {
     padding-left: 10px;
 }
-
+.selected {
+    box-shadow: 0 0 10px grey;
+}

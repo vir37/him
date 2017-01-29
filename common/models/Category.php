@@ -32,8 +32,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id'], 'integer'],
-            [['name', 'meta_desc', 'meta_keys'], 'required'],
+            [['catalogue_id', 'parent_id'], 'integer'],
+            [['catalogue_id', 'name', 'meta_desc', 'meta_keys'], 'required'],
             [['description'], 'string'],
             [['name', 'meta_desc', 'meta_keys'], 'string', 'max' => 128],
         ];
@@ -46,6 +46,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'catalogue_id' => 'ID каталога',
             'parent_id' => 'Родительская категория',
             'name' => 'Наименование',
             'description' => 'Описание',
