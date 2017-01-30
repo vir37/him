@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- База данных: `him`
 --
-DROP DATABASE `him`;
+-- DROP DATABASE `him`;
 CREATE DATABASE IF NOT EXISTS `him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `him`;
 

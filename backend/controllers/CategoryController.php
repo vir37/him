@@ -11,7 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-class CategoryController extends \yii\web\Controller
+class CategoryController extends Controller
 {
 
     public function behaviors()

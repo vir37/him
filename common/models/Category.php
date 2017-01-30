@@ -62,4 +62,19 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CategoryImg::className(), ['category_id' => 'id']);
     }
+
+
+    /**
+     * Как бы отношение, но при неинициализированной записи, выдает весь список каталогов
+     * Удобно при рендеринге форм ввода и редактирования записи
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCatalogue() {
+        if (is_null($this->catalogue_id)) {
+            $res = Catalogue::find();
+            return $res->all();
+        }
+        return $this->hasOne(Catalogue::className(), [ 'id' => 'catalogue_id' ]);
+    }
+
 }
