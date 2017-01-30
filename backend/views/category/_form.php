@@ -12,17 +12,21 @@ use yii\helpers\ArrayHelper;
 <div class="category-form">
 
     <?php $form = ActiveForm::begin([
-        'layout' => 'horizontal',
+        'layout' => 'inline',
+        'fieldConfig' => [
+            'labelOptions' => [ 'class' => 'control-label', ],
+        ]
     ]); ?>
 
     <?= $form->field($model, 'catalogue_id', [
-        'labelOptions' => [ 'class' => 'control-label col-sm-2 col-md-1 col-lg-1'],
-        'wrapperOptions' => [ 'class' => 'col-sm-5 col-md-4 col-lg-3'],
-    ])->label('Каталог')->dropDownList( ArrayHelper::map($model->catalogue, 'id', 'name'),
-        [
-            'prompt' => '...',
-            'options' => [ '2' => ['selected' => true]],
-        ]) ?>
+            'labelOptions' => [ 'class' => 'control-label col-lg-3 col-md-3'],
+            'inputTemplate' => '<div class="col-lg-8 col-md-8">{input}</div>',
+            'options' => [ 'class' => 'col-lg-6 col-md-6'],
+        ])->dropDownList( ArrayHelper::map($model->catalogue, 'id', 'name'),
+            [
+                'prompt' => '...',
+                'options' => [ '2' => ['selected' => true]],
+            ])->label('Каталог') ?>
 
     <?= $form->field($model, 'parent_id')->textInput(['maxlength' => true]) ?>
 
