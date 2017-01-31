@@ -118,7 +118,17 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
-
+/* BOOTSTRAP INLINE FORM */
+.form-inline .form-group > div.col-xs-8 {
+       padding-left: 0;
+       padding-right: 0;
+   }
+.form-inline label {
+       line-height: 34px;
+}
+.form-inline .form-control {
+       width: 100%;
+}
 /*----------- SELF styles ------------------*/
 .no-padding { padding: 0; }
 .sub-wrap { flex: 1 0 auto; }
@@ -151,3 +161,11 @@ a.desc:after {
 .selected {
     box-shadow: 0 0 10px grey;
 }
+
+.category-form .row { margin-bottom: 5px; }
+.panel-heading { position: relative; }
+.panel-heading .fa {
+    position: absolute;
+    right: 0.5em;
+}
+.panel-heading .fa-2x { top: 0.15em; }
