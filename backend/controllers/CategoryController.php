@@ -122,4 +122,16 @@ class CategoryController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+    public function actionList($catalogue_id){
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $data = Category::find()->asArray()
+                ->where(['catalogue_id' => $catalogue_id])->select(['id', 'name'])->all();
+            return $data;
+        } else {
+            throw new NotFoundHttpException('The request page does not exist');
+        }
+    }
 }

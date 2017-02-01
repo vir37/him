@@ -34,6 +34,7 @@ use yii\helpers\ArrayHelper;
                     'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>',
                     'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
                 ])->dropDownList( ArrayHelper::map($model->catalogue, 'id', 'name'), [
+                    'id' => 'catalogue_select',
                     'prompt' => '...',
                     'options' => [ '2' => ['selected' => true]],
                 ])->label('Каталог') ?>
