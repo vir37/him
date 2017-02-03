@@ -7,6 +7,12 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
+
+if ($model->catalogue_id) {
+    $catOptions = [ "$model->catalogue_id" => ["selected" => true], "disabled" => true ];
+} else {
+    $catOptions = [];
+}
 ?>
 
 <div class="category-form">
@@ -35,15 +41,16 @@ use yii\helpers\ArrayHelper;
                     'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
                 ])->dropDownList( ArrayHelper::map($model->catalogue, 'id', 'name'), [
                     'id' => 'catalogue_select',
+                    'disabled' => true,
                     'prompt' => '...',
-                    'options' => [ '2' => ['selected' => true]],
+                    'options' => $catOptions,
                 ])->label('Каталог') ?>
-
+                <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>
                 <?= $form->field($model, 'parent_id', [
                     'labelOptions' => ['class' => 'control-label col-lg-4 col-md-5'],
                     'inputTemplate' => '<div class="col-lg-6 col-md-5">{input}</div>',
                     'options' => ['class' => 'form-group col-lg-7 col-md-7'],
-                ])->dropDownList( ArrayHelper::map($model::find()->all(), 'id', 'name'), [
+                ])->dropDownList( ArrayHelper::map($model::find()->where(['catalogue_id' => $model->catalogue_id])->all(), 'id', 'name'), [
                     'prompt' => '...',
                 ]) ?>
             </div>

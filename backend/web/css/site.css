@@ -169,3 +169,5 @@ a.desc:after {
     right: 0.5em;
 }
 .panel-heading .fa-2x { top: 0.15em; }
+.loader-hide { display: none !important; }
+.loader-show { display: block; }
