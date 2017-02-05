@@ -162,6 +162,7 @@ a.desc:after {
     box-shadow: 0 0 10px grey;
 }
 
+.category-form { margin-bottom: 1em; }
 .category-form .row { margin-bottom: 5px; }
 .panel-heading { position: relative; }
 .panel-heading .fa {

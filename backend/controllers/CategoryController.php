@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Catalogue;
-use common\models\Category,
+use common\models\Catalogue,
+    common\models\Category,
     common\models\CategorySearch;
+use backend\models\ImageUploadForm;
+use yii\web\UploadedFile;
 use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,6 +23,7 @@ class CategoryController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'image-upload' => ['POST'],
                 ],
             ],
         ];
@@ -65,12 +68,16 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
+        $imageUploader = new ImageUploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (array_key_exists('create_n_stay', Yii::$app->request->post()))
+                return $this->redirect(['update', 'id' => $model->id]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'imageUploader' => $imageUploader,
             ]);
         }
     }
@@ -84,12 +91,15 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imageUploader = new ImageUploadForm();
+        $imageUploader->objectId = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'imageUploader' => $imageUploader,
             ]);
         }
     }
@@ -102,8 +112,11 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $catalogue_id = $model->catalogue_id;
+        $model->delete();
+        if ($catalogue_id)
+            return $this->redirect(['index', 'catalogue_id' => $catalogue_id]);
         return $this->redirect(['index']);
     }
 
@@ -128,10 +141,15 @@ class CategoryController extends Controller
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $data = Category::find()->asArray()
-                ->where(['catalogue_id' => $catalogue_id])->select(['id', 'name'])->all();
+                ->where(['catalogue_id' => $catalogue_id ])->select(['id', 'name'])->all();
             return $data;
         } else {
             throw new NotFoundHttpException('The request page does not exist');
         }
+    }
+
+    public function actionImageUpload(){
+        $imageModel = new ImageUploadForm();
+        $imageModel->imageFile = UploadedFile::getInstance($imageModel, 'imageFile');
     }
 }

@@ -23,7 +23,6 @@ function fillSelectData(target, dataUrl, dataFilters){
                     var _ =  ! elem.id ?'<option value>' : '<option value="' + elem.id + '">';
                     $(el).append(_+elem.name+'</option>');
                 });
-                console.log(elem);
             })
         },
         error: function(data, status, e){

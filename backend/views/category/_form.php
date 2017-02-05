@@ -8,15 +8,12 @@ use yii\helpers\ArrayHelper;
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 
-if ($model->catalogue_id) {
-    $catOptions = [ "$model->catalogue_id" => ["selected" => true], "disabled" => true ];
-} else {
-    $catOptions = [];
-}
+$catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
+if (! is_array($catalogueList))
+    $catalogueList = [$catalogueList];
 ?>
 
 <div class="category-form">
-
     <?php $form = ActiveForm::begin([
         'layout' => 'inline',
         'fieldConfig' => [
@@ -39,18 +36,20 @@ if ($model->catalogue_id) {
                     'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5'],
                     'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>',
                     'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
-                ])->dropDownList( ArrayHelper::map($model->catalogue, 'id', 'name'), [
+                ])->dropDownList( $catalogueList, [
                     'id' => 'catalogue_select',
-                    'disabled' => true,
+                    'disabled' => $model->catalogue_id,
                     'prompt' => '...',
-                    'options' => $catOptions,
+                    'options' => $model->catalogue_id ? ["$model->catalogue_id" => ["selected" => true]] : [],
                 ])->label('Каталог') ?>
                 <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>
                 <?= $form->field($model, 'parent_id', [
                     'labelOptions' => ['class' => 'control-label col-lg-4 col-md-5'],
                     'inputTemplate' => '<div class="col-lg-6 col-md-5">{input}</div>',
                     'options' => ['class' => 'form-group col-lg-7 col-md-7'],
-                ])->dropDownList( ArrayHelper::map($model::find()->where(['catalogue_id' => $model->catalogue_id])->all(), 'id', 'name'), [
+                ])->dropDownList( ArrayHelper::map($model::find()->
+                                    where(['catalogue_id' => $model->catalogue_id])->
+                                    andWhere(['not', ['id' => $model->id]])->all(), 'id', 'name'), [
                     'prompt' => '...',
                 ]) ?>
             </div>
@@ -81,9 +80,15 @@ if ($model->catalogue_id) {
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', [
+            'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+            'name' => $model->isNewRecord ? 'create' : 'save',
+        ])?>
+        <?php
+            if ($model->isNewRecord)
+                echo Html::submitButton('Создать и остаться', ['class' => 'btn btn-primary', 'name' => 'create_n_stay'])
+        ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
