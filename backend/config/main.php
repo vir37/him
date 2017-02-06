@@ -59,6 +59,6 @@ return [
     ],
     'params' => $params,
     'aliases' => [
-        '@images' => '@frontend/images',
+        '@images' => '@frontend/web/images',
     ],
 ];

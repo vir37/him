@@ -25,6 +25,7 @@ use yii\helpers\Html;
             'class' => 'btn btn-default'
         ])->label('Файл с изображением')
     ?>
+    <?= $form->field($model, 'isMain')->checkbox()?>
     <?= Html::submitButton('Загрузить', [
         'class' => 'btn btn-primary',
         'disabled' => $linkModel->id ? false: true,

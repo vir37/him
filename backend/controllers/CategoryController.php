@@ -150,6 +150,17 @@ class CategoryController extends Controller
 
     public function actionImageUpload(){
         $imageModel = new ImageUploadForm();
+        $imageModel->load(Yii::$app->request->post());
+        $model = Category::findOne($imageModel->objectId);
         $imageModel->imageFile = UploadedFile::getInstance($imageModel, 'imageFile');
+        $file_name = hash('md5', $model->name).'_'.
+            (count($model->categoryImgs) + 1).'.'.
+            explode('.', $imageModel->imageFile->name)[1];
+        if ($imageModel->upload(Yii::getAlias("@images/$file_name"))) {
+            return $this->renderPartial('_images', [
+                'model' => $imageModel,
+                'linkModel' => $model,
+            ]);
+        }
     }
 }
