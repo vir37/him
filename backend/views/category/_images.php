@@ -6,12 +6,16 @@
  * Time: 22:44
  */
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
+use yii\bootstrap\Alert;
 ?>
 
 <?php $form = ActiveForm::begin([
     'action' => 'image-upload',
-    'options' => ['enctype' => 'multipart/form-data'],
+    'options' => [
+        'enctype' => 'multipart/form-data',
+        'data-pjax' => 1,
+    ],
     'layout' => 'inline',
     'fieldConfig' => [
         'labelOptions' => [ 'class' => 'control-label' ],
@@ -24,15 +28,25 @@ use yii\helpers\Html;
             'options' => [ 'class' => 'form-group col-lg-6 col-md-6 col-sm-6'],
         ])->fileInput([
             'disabled' => $linkModel->id ? false: true,
-            'class' => 'btn btn-default col-lg-6 col-md-6'
+            'class' => 'btn btn-default'
         ])->label('Файл с изображением')
         ?>
-        <?= $form->field($model, 'isMain')->checkbox()?>
-    </div>
-    <div class="row">
-        <?= Html::submitButton('Загрузить', [
-            'class' => 'btn btn-primary',
+        <?= $form->field($model, 'isMain', [
+            'options' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3' ],
+        ])->checkbox()?>
+        <?= Html::submitButton('<span class="glyphicon glyphicon-save"></span>', [
+            'class' => 'btn btn-primary col-lg-offset-2 col-md-offset-2',
             'disabled' => $linkModel->id ? false: true,
         ])?>
     </div>
+<?php
+    if (isset($alert)) {
+        echo Alert::widget([
+            'options' => [
+                'class' => "alert-{$alert['type']}",
+            ],
+            'body' => $alert['body'],
+        ]);
+    }
+?>
 <?php ActiveForm::end() ?>

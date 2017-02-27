@@ -15,11 +15,20 @@ class ImageUploadForm extends Model{
     public $objectId;
     public $isMain;
     public $imageFile;
+    private $objectClass;
+    private $identField;
+
+    public function __construct($objectClass, $identField){
+        parent::__construct();
+        $this->objectClass = $objectClass;
+        $this->identField = $identField;
+    }
 
     public function rules(){
         return [
             [ 'objectId', 'required' ],
             [ 'isMain', 'boolean'],
+            [ 'isMain', 'validateOnlyOne'],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
@@ -39,5 +48,12 @@ class ImageUploadForm extends Model{
         } else {
             return false;
         }
+    }
+
+    public function validateOnlyOne($attribute, $params){
+        $class = $this->objectClass;
+        if ($class::find()->where([$this->identField => $this->objectId, 'is_main' => 1])->count() > 0 &&
+            $this->{$attribute} == 1)
+            $this->addError($attribute, "Может быть только одна главная фотография");
     }
 } 

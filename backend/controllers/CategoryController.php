@@ -68,7 +68,7 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-        $imageUploader = new ImageUploadForm();
+        $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (array_key_exists('create_n_stay', Yii::$app->request->post()))
@@ -91,7 +91,7 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $imageUploader = new ImageUploadForm();
+        $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
         $imageUploader->objectId = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -149,18 +149,26 @@ class CategoryController extends Controller
     }
 
     public function actionImageUpload(){
-        $imageModel = new ImageUploadForm();
+        $imageModel = new ImageUploadForm('common\models\CategoryImg', 'category_id');
         $imageModel->load(Yii::$app->request->post());
         $model = Category::findOne($imageModel->objectId);
         $imageModel->imageFile = UploadedFile::getInstance($imageModel, 'imageFile');
         $file_name = hash('md5', $model->name).'_'.
-            (count($model->categoryImgs) + 1).'.'.
+            (count($model->images) + 1).'.'.
             explode('.', $imageModel->imageFile->name)[1];
         if ($imageModel->upload(Yii::getAlias("@images/$file_name"))) {
-            return $this->renderPartial('_images', [
-                'model' => $imageModel,
-                'linkModel' => $model,
-            ]);
+            // тут надо сохранить запись в БД
+            if (($res = $model->addImage($file_name, $imageModel->isMain)) === true )
+                $alert = [ 'type' => 'info', 'body' => 'Изображение успешно добавлено' ];
+            else
+                $alert = [ 'type' => 'danger', 'body' => $res ];
+        } else {
+            $alert = [ 'type' => 'danger', 'body' => implode('\n', $imageModel->firstErrors) ];
         }
+        return $this->renderPartial('_images', [
+            'model' => $imageModel,
+            'linkModel' => $model,
+            'alert' => $alert,
+        ]);
     }
 }

@@ -34,6 +34,7 @@ class CategoryImg extends \yii\db\ActiveRecord
         return [
             [['category_id', 'name'], 'required'],
             [['category_id', 'is_main'], 'integer'],
+            ['is_main', 'validateOnlyOne'],
             [['date_add', 'date_upd'], 'safe'],
             [['name'], 'string', 'max' => 128],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -61,5 +62,11 @@ class CategoryImg extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    public function validateOnlyOne($attribute, $params){
+        if (self::find()->where(['category_id' => $this->category_id, 'is_main' => 1])->count() > 0 &&
+            $this->{$attribute} == 1)
+            $this->addError($attribute, "Может быть только одна главная фотография");
     }
 }

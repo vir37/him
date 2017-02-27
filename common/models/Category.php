@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Exception,
+    yii\db\IntegrityException;
 
 /**
  * This is the model class for table "category".
@@ -58,7 +60,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoryImgs()
+    public function getImages()
     {
         return $this->hasMany(CategoryImg::className(), ['category_id' => 'id']);
     }
@@ -77,4 +79,17 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasOne(Catalogue::className(), [ 'id' => 'catalogue_id' ]);
     }
 
+
+    public function addImage($file_name, $isMain) {
+        $image = new CategoryImg();
+        $image->category_id = $this->id;
+        $image->name = $file_name;
+        $image->is_main = $isMain;
+        try {
+            if ($image->save())
+                return true;
+        } catch (IntegrityException $e) {
+            return $e;
+        }
+    }
 }
