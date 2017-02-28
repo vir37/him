@@ -159,7 +159,7 @@ class CategoryController extends Controller
         if ($imageModel->upload(Yii::getAlias("@images/$file_name"))) {
             // тут надо сохранить запись в БД
             if (($res = $model->addImage($file_name, $imageModel->isMain)) === true )
-                $alert = [ 'type' => 'info', 'body' => 'Изображение успешно добавлено' ];
+                $alert = [ 'type' => 'success', 'body' => 'Изображение успешно добавлено' ];
             else
                 $alert = [ 'type' => 'danger', 'body' => $res ];
         } else {

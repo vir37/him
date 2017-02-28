@@ -8,6 +8,18 @@
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\bootstrap\Alert;
+use yii\bootstrap\Carousel;
+?>
+
+<?php
+if (isset($alert)) {
+    echo Alert::widget([
+        'options' => [
+            'class' => "alert-{$alert['type']}",
+        ],
+        'body' => $alert['body'],
+    ]);
+}
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -39,14 +51,26 @@ use yii\bootstrap\Alert;
             'disabled' => $linkModel->id ? false: true,
         ])?>
     </div>
-<?php
-    if (isset($alert)) {
-        echo Alert::widget([
-            'options' => [
-                'class' => "alert-{$alert['type']}",
-            ],
-            'body' => $alert['body'],
-        ]);
-    }
-?>
 <?php ActiveForm::end() ?>
+<hr/>
+<div class="row">
+<?php
+    $items = [];
+    foreach ($linkModel->images as $image) {
+        $a_main = '<a href="#" class="btn btn-default" role="button" title="Назначить главной"><span class="glyphicon glyphicon-check"></span></a>';
+        $a_del = '<a href="#" class="btn btn-default" role="button" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>';
+        $items[] = [
+            'content' => '<img src="/images/'.$image->name.'"/>',
+            'caption' =>  $image->is_main ? '<p>Главная фотография</p>'.$a_del : $a_main.$a_del,
+        ];
+    }
+    echo Carousel::widget([
+        'items' => $items,
+        'clientOptions' => [ 'interval' => false ],
+        'controls' => [
+            '<span class="glyphicon glyphicon-chevron-left"></span>',
+            '<span class="glyphicon glyphicon-chevron-right"></span>',
+        ],
+    ]);
+?>
+</div>

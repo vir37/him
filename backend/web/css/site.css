@@ -172,3 +172,21 @@ a.desc:after {
 .panel-heading .fa-2x { top: 0.15em; }
 .loader-hide { display: none !important; }
 .loader-show { display: block; }
+
+/* ---- Image carousel -----*/
+.carousel-inner img {
+    padding: 2px;
+    border: 1px solid #696969;
+    margin: 5px auto;
+    height: 18em !important;
+}
+.carousel-control {
+    background-image: none !important;
+    color: #5c5c5c !important;
+}
+.carousel-caption {
+    padding: 5px 0 0 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
