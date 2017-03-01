@@ -8,9 +8,13 @@ use yii\helpers\ArrayHelper;
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 
-$catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
-if (! is_array($catalogueList))
-    $catalogueList = [$catalogueList];
+if (is_array($model->catalogue))
+    $catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
+else
+    $catalogueList = ArrayHelper::map([$model->catalogue], 'id', 'name');
+
+#if (! is_array($catalogueList))
+#    $catalogueList = [$catalogueList];
 ?>
 
 <div class="category-form">

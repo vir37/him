@@ -34,43 +34,55 @@ if (isset($alert)) {
     ]])
 ?>
     <div class="row">
-        <?= $form->field($model, 'objectId', ['template' => '{input}'])->hiddenInput()->label(False) ?>
-        <?= $form->field($model, 'imageFile', [
-            'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5' ],
-            'options' => [ 'class' => 'form-group col-lg-6 col-md-6 col-sm-6'],
-        ])->fileInput([
-            'disabled' => $linkModel->id ? false: true,
-            'class' => 'btn btn-default'
-        ])->label('Файл с изображением')
-        ?>
-        <?= $form->field($model, 'isMain', [
-            'options' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3' ],
-        ])->checkbox()?>
-        <?= Html::submitButton('<span class="glyphicon glyphicon-save"></span>', [
-            'class' => 'btn btn-primary col-lg-offset-2 col-md-offset-2',
-            'disabled' => $linkModel->id ? false: true,
-        ])?>
+        <?= Html::beginTag('fieldset', [ 'disabled' => $linkModel->id ? false: true ]) ?>
+            <?= $form->field($model, 'objectId', ['template' => '{input}'])->hiddenInput()->label(False) ?>
+            <?= $form->field($model, 'imageFile', [
+                'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5' ],
+                'options' => [ 'class' => 'form-group col-lg-6 col-md-6 col-sm-6'],
+            ])->fileInput([
+                'class' => 'btn btn-default'
+            ])->label('Файл с изображением')
+            ?>
+            <?= $form->field($model, 'isMain', [ 'options' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3' ] ])->checkbox()?>
+            <?= Html::submitButton('<span class="glyphicon glyphicon-save"></span>', [
+                'class' => 'btn btn-primary col-lg-offset-2 col-md-offset-2',
+                'disabled' => $linkModel->id ? false: true,
+            ])?>
+        <?= Html::endTag('fieldset') ?>
     </div>
 <?php ActiveForm::end() ?>
 <hr/>
 <div class="row">
 <?php
     $items = [];
+    unset($linkModel->images);
     foreach ($linkModel->images as $image) {
-        $a_main = '<a href="#" class="btn btn-default" role="button" title="Назначить главной"><span class="glyphicon glyphicon-check"></span></a>';
-        $a_del = '<a href="#" class="btn btn-default" role="button" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>';
+        $a_main = Html::a('<span class="glyphicon glyphicon-check"></span>', '#', [
+            'id' => "img-set-main", 'class' => "btn btn-default btn-sm",
+            'role' => "button", 'title' => "Назначить главной",
+        ]);
+        $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', ['/category-img/delete', 'id' => $image->id], [
+            'id' => "img-del", 'class' => "btn btn-default btn-sm",
+            'role' => "button", 'title' => "Удалить",
+            'data' => [
+                'confirm' => 'Вы действительно хотите удалить изображение?',
+                'pjax' => 1,
+            ],
+        ]);
+        $content = $image->is_main ? '<img src="/images/'.$image->name.'"/>'.$a_del : '<img src="/images/'.$image->name.'"/>'.$a_del.$a_main;
         $items[] = [
-            'content' => '<img src="/images/'.$image->name.'"/>',
-            'caption' =>  $image->is_main ? '<p>Главная фотография</p>'.$a_del : $a_main.$a_del,
+            'content' => '<div class="img-container">'.$content.'</div>',
+            'caption' =>  $image->is_main ? '<p>Главная фотография</p>' : False,
         ];
     }
-    echo Carousel::widget([
-        'items' => $items,
-        'clientOptions' => [ 'interval' => false ],
-        'controls' => [
-            '<span class="glyphicon glyphicon-chevron-left"></span>',
-            '<span class="glyphicon glyphicon-chevron-right"></span>',
-        ],
-    ]);
+    if (sizeof($items) > 0)
+        echo Carousel::widget([
+            'items' => $items,
+            'clientOptions' => [ 'interval' => false ],
+            'controls' => [
+                '<span class="glyphicon glyphicon-chevron-left"></span>',
+                '<span class="glyphicon glyphicon-chevron-right"></span>',
+            ],
+        ]);
 ?>
 </div>

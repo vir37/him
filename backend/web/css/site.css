@@ -184,9 +184,14 @@ a.desc:after {
     background-image: none !important;
     color: #5c5c5c !important;
 }
+.carousel .item { text-align: center; }
 .carousel-caption {
     padding: 5px 0 0 0;
     bottom: 0;
     left: 0;
     right: 0;
 }
+.img-container { display: inline-block; position: relative; }
+.img-container a { position: absolute; opacity: 0.8; }
+.img-container #img-set-main { left: 5px; top: 10px; }
+.img-container #img-del { right: 5px; top: 10px; }
