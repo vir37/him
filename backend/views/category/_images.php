@@ -21,18 +21,18 @@ if (isset($alert)) {
     ]);
 }
 ?>
-
-<?php $form = ActiveForm::begin([
-    'action' => 'image-upload',
-    'options' => [
-        'enctype' => 'multipart/form-data',
-        'data-pjax' => 1,
-    ],
-    'layout' => 'inline',
-    'fieldConfig' => [
-        'labelOptions' => [ 'class' => 'control-label' ],
-    ]])
-?>
+<?php if (isset($model)): ?>
+    <?php $form = ActiveForm::begin([
+        'action' => 'image-upload',
+        'options' => [
+            'enctype' => 'multipart/form-data',
+            'data-pjax' => 1,
+        ],
+        'layout' => 'inline',
+        'fieldConfig' => [
+            'labelOptions' => [ 'class' => 'control-label' ],
+        ]])
+    ?>
     <div class="row">
         <?= Html::beginTag('fieldset', [ 'disabled' => $linkModel->id ? false: true ]) ?>
             <?= $form->field($model, 'objectId', ['template' => '{input}'])->hiddenInput()->label(False) ?>
@@ -50,8 +50,9 @@ if (isset($alert)) {
             ])?>
         <?= Html::endTag('fieldset') ?>
     </div>
-<?php ActiveForm::end() ?>
-<hr/>
+    <?php ActiveForm::end() ?>
+    <hr/>
+<?php endif; ?>
 <div class="row">
 <?php
     $items = [];

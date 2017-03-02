@@ -173,6 +173,8 @@ a.desc:after {
 .loader-hide { display: none !important; }
 .loader-show { display: block; }
 
+/* ---- Category tree -------*/
+.tree-header { margin-bottom: 1em; }
 /* ---- Image carousel -----*/
 .carousel-inner img {
     padding: 2px;

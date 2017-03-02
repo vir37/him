@@ -4,8 +4,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ButtonDropdown;
 use yii\widgets\Pjax;
-use yii\widgets\ListView;
 use execut\widget\TreeView;
+use yii\web\JsExpression;
 
 $this->title = 'Дерево категорий';
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,6 +17,13 @@ if ($catalogue)
             $label = $item['label'];
             $class = 'selected';
         }
+$onSelect = new JsExpression(<<<JS
+function (ev, item) {
+    console.log(item);
+    console.log(ev);
+}
+JS
+);
 ?>
 
 <div class="category-index">
@@ -37,9 +44,14 @@ if ($catalogue)
         </div>
     </div>
     <?= TreeView::widget([
-        'data' => $model->makeTree($dataProvider),
-        'header' => 'Дерево категорий',
-        'size' => TreeView::SIZE_MIDDLE,
+                'data' => $model->makeTree($dataProvider),
+                'header' => 'Дерево категорий',
+                'size' => TreeView::SIZE_MIDDLE,
+                'clientOptions' => [
+                    'onNodeSelected' => $onSelect,
+                    'showBorder' => false,
+                    'levels' => 1,
+                ],
     ])?>
     <?php Pjax::end(); ?>
 </div>

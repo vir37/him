@@ -4,9 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce23a1c88754f00fc0e1caa4a6f48453",
-    "content-hash": "3ace5056f382a0f16da7bc1ec50f779d",
+    "hash": "3af4497f82ed10fafa2e2b3a80305b54",
+    "content-hash": "7e0f38858cb8a4c6fd894689a89bcc40",
     "packages": [
+        {
+            "name": "bizley/quill",
+            "version": "2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bizley/yii2-quill.git",
+                "reference": "ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bizley/yii2-quill/zipball/ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc",
+                "reference": "ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bizley\\quill\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Bizley Brzozowski",
+                    "email": "pawel@positive.codes"
+                }
+            ],
+            "description": "Quill editor implementation for Yii 2.",
+            "keywords": [
+                "editor",
+                "quill",
+                "widget",
+                "wysiwyg",
+                "yii2"
+            ],
+            "time": "2017-02-06 16:37:13"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.7",

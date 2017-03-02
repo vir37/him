@@ -20,14 +20,15 @@ $this->params['breadcrumbs'][] = 'Редактирование';
     ]) ?>
     <div class="panel panel-default">
         <div class="panel-heading"><i class="fa fa-image fa-2x" aria-hidden="true"></i>
-            <h3 class="panel-title">Изображения категории</h3></div>
+            <h3 class="panel-title">Изображения категории</h3>
+        </div>
         <div class="panel-body">
-            <?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false ]); ?>
+            <?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false, 'timeout' => 6000 ]); ?>
             <?= $this->render('_images', [
                 'model' => $imageUploader,
                 'linkModel' => $model,
             ]) ?>
             <?php Pjax::end(); ?>
         </div>
-
+    </div>
 </div>

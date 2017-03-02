@@ -3024,5 +3024,50 @@
             "imagine",
             "yii2"
         ]
+    },
+    {
+        "name": "bizley/quill",
+        "version": "2.2",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/bizley/yii2-quill.git",
+            "reference": "ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/bizley/yii2-quill/zipball/ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc",
+            "reference": "ad8e1cb4f2e31b240903dd8fe631f1cc9e7791bc",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "^2.0.0"
+        },
+        "time": "2017-02-06 16:37:13",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "bizley\\quill\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Pawel Bizley Brzozowski",
+                "email": "pawel@positive.codes"
+            }
+        ],
+        "description": "Quill editor implementation for Yii 2.",
+        "keywords": [
+            "editor",
+            "quill",
+            "widget",
+            "wysiwyg",
+            "yii2"
+        ]
     }
 ]

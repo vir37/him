@@ -84,4 +84,13 @@ return array (
       '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
+  'bizley/quill' => 
+  array (
+    'name' => 'bizley/quill',
+    'version' => '2.2.0.0',
+    'alias' => 
+    array (
+      '@bizley/quill' => $vendorDir . '/bizley/quill',
+    ),
+  ),
 );

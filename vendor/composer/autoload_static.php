@@ -36,6 +36,10 @@ class ComposerStaticInit56f27f0ab55bdf2b5afa9564b3a3fcef
         array (
             'cebe\\markdown\\' => 14,
         ),
+        'b' => 
+        array (
+            'bizley\\quill\\' => 13,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -120,6 +124,10 @@ class ComposerStaticInit56f27f0ab55bdf2b5afa9564b3a3fcef
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
+        ),
+        'bizley\\quill\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bizley/quill',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (

@@ -18,6 +18,7 @@ return array(
     'execut\\yii\\' => array($vendorDir . '/execut/yii2-base'),
     'execut\\widget\\' => array($vendorDir . '/execut/yii2-widget-bootstraptreeview'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
+    'bizley\\quill\\' => array($vendorDir . '/bizley/quill'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),

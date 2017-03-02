@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -24,18 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'catalogue_id',
-            'parent_id',
-            'name',
-            'description:ntext',
-            'meta_desc',
-            'meta_keys',
-        ],
-    ]) ?>
-
+    <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'viewMode' => true,
+        ]) ?>
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="fa fa-image fa-2x" aria-hidden="true"></i>
+                <h3 class="panel-title">Изображения категории</h3>
+            </div>
+            <div class="panel-body">
+                <?= $this->render('_images', [
+                    'linkModel' => $model,
+                ]) ?>
+            </div>
+        </div>
+        <?= Html::endTag('fieldset') ?>
 </div>

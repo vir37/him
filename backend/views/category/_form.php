@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use bizley\quill\Quill;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
@@ -12,9 +13,6 @@ if (is_array($model->catalogue))
     $catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
 else
     $catalogueList = ArrayHelper::map([$model->catalogue], 'id', 'name');
-
-#if (! is_array($catalogueList))
-#    $catalogueList = [$catalogueList];
 ?>
 
 <div class="category-form">
@@ -62,7 +60,26 @@ else
                     'options' => [ 'class' => 'form-group col-lg-12 col-md-12'],
                     'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
                     'inputTemplate' => '<div class="col-lg-9 col-md-9">{input}</div>',
-                ])->textarea(['rows' => 6]) ?>
+                ])->widget(Quill::className(), [
+                    'modules' => [
+                        'formula' => true,
+                        'clipboard' => true,
+                        'history' => true,
+                    ],
+                    'toolbarOptions' => [
+                        [['font' => []], ['size' => ['small', false, 'large', 'huge']]],
+                        ['code', 'code-block'],
+                        [['script'=>'sub'],['script'=>'super']],
+                        ['bold', 'italic', 'strike', 'underline'],
+                        [['color' => []], ['background' => []]],
+                        [['header' => [1,2,3,4,5,6,false]], 'blockquote' ],
+                        [['indent' => '-1'], ['indent' => '+1'],
+                            ['list' => 'ordered'], ['list' => 'bullet'], ['align' => []], ['direction'=>'rtl'],
+                        ],
+                        ['formula', 'image', 'video'],
+                        ['clean']
+                    ]
+                ])?>
             </div>
         </div>
     </div>
@@ -83,16 +100,18 @@ else
         ])->textInput(['maxlength' => true])->label('Ключевые слова') ?>
         </div>
     </div>
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', [
-            'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
-            'name' => $model->isNewRecord ? 'create' : 'save',
-        ])?>
-        <?php
+    <?php
+        if (!isset($viewMode) || !$viewMode) {
+            echo Html::beginTag('div', ['class' => 'form-group']);
+            echo Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', [
+                'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+                'name' => $model->isNewRecord ? 'create' : 'save',
+            ]);
             if ($model->isNewRecord)
-                echo Html::submitButton('Создать и остаться', ['class' => 'btn btn-primary', 'name' => 'create_n_stay'])
-        ?>
-    </div>
+                echo Html::submitButton('Создать и остаться', ['class' => 'btn btn-primary', 'name' => 'create_n_stay']);
+            echo Html::endTag('div');
+        }
+    ?>
     <?php ActiveForm::end(); ?>
 
 </div>
