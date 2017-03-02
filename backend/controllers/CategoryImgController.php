@@ -31,14 +31,4 @@ class CategoryImgController extends Controller {
     public function actionError() {
         throw new NotFoundHttpException("Page not found");
     }
-
-    public function actionDelete($id) {
-        $model = CategoryImg::findOne($id);
-        if ($model and $model->delete()) {
-            // TODO: Нужно еще удалить сам файл
-            return true;
-
-        }
-        return false;
-    }
-} 
+}

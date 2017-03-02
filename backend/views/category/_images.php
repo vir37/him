@@ -57,11 +57,11 @@ if (isset($alert)) {
     $items = [];
     unset($linkModel->images);
     foreach ($linkModel->images as $image) {
-        $a_main = Html::a('<span class="glyphicon glyphicon-check"></span>', '#', [
+        $a_main = Html::a('<span class="glyphicon glyphicon-check"></span>', ['image-set-main', 'image_id' => $image->id, 'category_id' => $linkModel->id ], [
             'id' => "img-set-main", 'class' => "btn btn-default btn-sm",
             'role' => "button", 'title' => "Назначить главной",
         ]);
-        $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', ['/category-img/delete', 'id' => $image->id], [
+        $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', [ 'image-delete', 'image_id' => $image->id, 'category_id' => $linkModel->id ], [
             'id' => "img-del", 'class' => "btn btn-default btn-sm",
             'role' => "button", 'title' => "Удалить",
             'data' => [
@@ -69,7 +69,8 @@ if (isset($alert)) {
                 'pjax' => 1,
             ],
         ]);
-        $content = $image->is_main ? '<img src="/images/'.$image->name.'"/>'.$a_del : '<img src="/images/'.$image->name.'"/>'.$a_del.$a_main;
+        $img = '<img src="/images/'.$image->name.'" alt="Изображение не найдено"/>';
+        $content = $image->is_main ? $img.$a_del : $img.$a_del.$a_main;
         $items[] = [
             'content' => '<div class="img-container">'.$content.'</div>',
             'caption' =>  $image->is_main ? '<p>Главная фотография</p>' : False,

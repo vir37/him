@@ -5,7 +5,8 @@ namespace backend\controllers;
 use Yii;
 use common\models\Catalogue,
     common\models\Category,
-    common\models\CategorySearch;
+    common\models\CategorySearch,
+    common\models\CategoryImg;
 use backend\models\ImageUploadForm;
 use yii\web\UploadedFile;
 use yii\db\Expression;
@@ -170,5 +171,43 @@ class CategoryController extends Controller
             'linkModel' => $model,
             'alert' => $alert,
         ]);
+    }
+
+    public function actionImageDelete($image_id, $category_id) {
+        if (Yii::$app->request->isAjax) {
+            $image = CategoryImg::findOne($image_id);
+            if ($image && unlink(Yii::getAlias("@images/{$image->name}")) && $image->delete())
+                $alert = ['type' => 'success', 'body' => 'Изображение успешно удалено'];
+            else
+                $alert = ['type' => 'danger', 'body' => 'Ошибка удаления изображения'];
+            $model = $this->findModel($category_id);
+            $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
+            $imageUploader->objectId = $category_id;
+            return $this->renderPartial('_images', [
+                'model' => $imageUploader,
+                'linkModel' => $model,
+                'alert' => $alert,
+            ]);
+        } else
+            $this->redirect(['update', 'id' => $category_id]);
+    }
+
+    public function actionImageSetMain($image_id, $category_id) {
+        if (Yii::$app->request->isAjax) {
+            $image = CategoryImg::findOne($image_id);
+            if ($image && $image->setMain())
+                $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+            else
+                $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
+            $model = $this->findModel($category_id);
+            $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
+            $imageUploader->objectId = $category_id;
+            return $this->renderPartial('_images', [
+                'model' => $imageUploader,
+                'linkModel' => $model,
+                'alert' => $alert,
+            ]);
+        } else
+            $this->redirect(['update', 'id' => $category_id]);
     }
 }

@@ -18,6 +18,8 @@ use Yii;
  */
 class CategoryImg extends \yii\db\ActiveRecord
 {
+    const STATUS_MAIN = 1;
+    const STATUS_DEFAULT = 0;
     /**
      * @inheritdoc
      */
@@ -65,8 +67,18 @@ class CategoryImg extends \yii\db\ActiveRecord
     }
 
     public function validateOnlyOne($attribute, $params){
-        if (self::find()->where(['category_id' => $this->category_id, 'is_main' => 1])->count() > 0 &&
-            $this->{$attribute} == 1)
+        if (self::find()->where(['category_id' => $this->category_id, 'is_main' => self::STATUS_MAIN])->count() > 0 &&
+            $this->{$attribute} == self::STATUS_MAIN)
             $this->addError($attribute, "Может быть только одна главная фотография");
+    }
+
+    public function setMain() {
+        try {
+            self::updateAll(['is_main' => self::STATUS_DEFAULT]);
+            $this->is_main = self::STATUS_MAIN;
+            return $this->save();
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

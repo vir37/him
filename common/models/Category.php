@@ -62,7 +62,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(CategoryImg::className(), ['category_id' => 'id']);
+        return $this->hasMany(CategoryImg::className(), ['category_id' => 'id'])->orderBy(['is_main' => SORT_DESC]);
     }
 
 
