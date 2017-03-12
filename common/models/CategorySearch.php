@@ -61,10 +61,11 @@ class CategorySearch extends Category {
         return $dataProvider;
     }
 
-    public function makeTree($dataProvider) {
+    public function makeTree($dataProvider, $addit_params = []) {
         # $result = new ArrayDataProvider();
         $adata = TreeHelper::createTree($dataProvider, $id='id', $parent='parent_id', $name='name',
-                                        $replacement=['name' => 'text', 'children' => 'nodes'] );
+                                        $replacement=['name' => 'text', 'children' => 'nodes'],
+                                        $addit_params);
         return $adata;
 
     }

@@ -44,13 +44,17 @@ JS
         </div>
     </div>
     <?= TreeView::widget([
-                'data' => $model->makeTree($dataProvider),
+                'data' => $model->makeTree($dataProvider,
+                    []),
                 'header' => 'Дерево категорий',
                 'size' => TreeView::SIZE_MIDDLE,
                 'clientOptions' => [
                     'onNodeSelected' => $onSelect,
                     'showBorder' => false,
                     'levels' => 1,
+//                    'collapseIcon' => 'glyphicon glyphicon-folder-open',
+//                    'expandIcon' => 'glyphicon glyphicon-folder-close',
+                    'emptyIcon' => 'glyphicon glyphicon-tint',
                 ],
     ])?>
     <?php Pjax::end(); ?>

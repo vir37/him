@@ -9,15 +9,16 @@ namespace common\helpers;
 
 class TreeHelper
 {
-    private static function recurcion($rootId, &$arr, $id = 'id', $parent = 'parent_id', $name = 'name', $replacement=[]){
+    private static function recursion($rootId, &$arr, $id = 'id', $parent = 'parent_id', $name = 'name',
+                                      $replacement=[], $addit_params = []){
         $result = []; # потомки, элемент children
         foreach ($arr as $key=>$value) {
             if ($value->{$parent} == $rootId) {
                 $_id = $value->{$id};
                 $_name = $value->{$name};
                 unset($arr[$key]);
-                $_children = TreeHelper::recurcion($_id, $arr, $id, $parent, $name);
-                $el = [ 'id' => $_id, 'name' => $_name ];
+                $_children = TreeHelper::recursion($_id, $arr, $id, $parent, $name);
+                $el = is_array($addit_params) ? array_merge (['id' => $_id, 'name' => $_name ], $addit_params ) : ['id' => $_id, 'name' => $_name ];
                 if (sizeof($_children) > 0)
                     $el['children'] = $_children;
                 foreach($replacement as $_key=>$_value){
@@ -33,8 +34,8 @@ class TreeHelper
     }
 
 
-    public static function createTree($dataProvider, $id = 'id', $parent = 'parent_id', $name = 'name', $replacement=[])
-    {
+    public static function createTree($dataProvider, $id = 'id', $parent = 'parent_id', $name = 'name',
+                                      $replacement=[], $addit_params = []) {
 
         $result = [];
         $arr = $dataProvider->getModels();
@@ -44,8 +45,8 @@ class TreeHelper
                 $_id = $value->{$id};
                 $_name = $value->{$name};
                 unset($arr[$key]);
-                $_children = TreeHelper::recurcion($_id, $arr, $id, $parent, $name, $replacement);
-                $el = [ 'id' => $_id, 'name' => $_name ];
+                $_children = TreeHelper::recursion($_id, $arr, $id, $parent, $name, $replacement, $addit_params);
+                $el = is_array($addit_params) ? array_merge(['id' => $_id, 'name' => $_name], $addit_params) : ['id' => $_id, 'name' => $_name];
                 if (sizeof($_children) > 0)
                     $el['children'] = $_children;
                 foreach($replacement as $_key=>$_value){

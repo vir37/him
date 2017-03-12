@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 20 2017 г., 23:17
+-- Время создания: Мар 12 2017 г., 20:46
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.4.45
 
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `him`
 --
--- DROP DATABASE `him`;
 CREATE DATABASE IF NOT EXISTS `him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `him`;
 
@@ -33,11 +32,6 @@ CREATE TABLE IF NOT EXISTS `address` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Адреса';
 
---
--- Очистить таблицу перед добавлением данных `address`
---
-
-TRUNCATE TABLE `address`;
 -- --------------------------------------------------------
 
 --
@@ -50,11 +44,6 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Очистить таблицу перед добавлением данных `auth_assignment`
---
-
-TRUNCATE TABLE `auth_assignment`;
 --
 -- Дамп данных таблицы `auth_assignment`
 --
@@ -79,11 +68,6 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Очистить таблицу перед добавлением данных `auth_item`
---
-
-TRUNCATE TABLE `auth_item`;
---
 -- Дамп данных таблицы `auth_item`
 --
 
@@ -104,11 +88,6 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Очистить таблицу перед добавлением данных `auth_item_child`
---
-
-TRUNCATE TABLE `auth_item_child`;
 -- --------------------------------------------------------
 
 --
@@ -122,11 +101,6 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Очистить таблицу перед добавлением данных `auth_rule`
---
-
-TRUNCATE TABLE `auth_rule`;
 -- --------------------------------------------------------
 
 --
@@ -137,13 +111,16 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
 `id` int(5) unsigned NOT NULL,
   `name` varchar(32) NOT NULL COMMENT 'Наименование каталога',
   `description` text COMMENT 'Описание'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Каталоги';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Каталоги';
 
 --
--- Очистить таблицу перед добавлением данных `catalogue`
+-- Дамп данных таблицы `catalogue`
 --
 
-TRUNCATE TABLE `catalogue`;
+INSERT INTO `catalogue` (`id`, `name`, `description`) VALUES
+(1, 'Технический каталог', 'самый первый каталог. для теста'),
+(2, 'Интуитивный каталог', 'Интуитивно понятный каталог продукции');
+
 -- --------------------------------------------------------
 
 --
@@ -152,19 +129,28 @@ TRUNCATE TABLE `catalogue`;
 
 CREATE TABLE IF NOT EXISTS `category` (
 `id` int(10) unsigned NOT NULL,
+  `list_position` int(11) unsigned DEFAULT NULL COMMENT 'Позиция категории в списке',
   `catalogue_id` int(5) unsigned NOT NULL COMMENT 'ИД каталога',
   `parent_id` int(10) unsigned DEFAULT NULL COMMENT 'Родительская категория',
   `name` varchar(128) NOT NULL COMMENT 'Наименование',
   `description` text COMMENT 'Описание',
   `meta_desc` varchar(128) NOT NULL COMMENT 'SEO описание',
   `meta_keys` varchar(128) NOT NULL COMMENT 'SEO ключевые слова'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Категории продукции';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Категории продукции';
 
 --
--- Очистить таблицу перед добавлением данных `category`
+-- Дамп данных таблицы `category`
 --
 
-TRUNCATE TABLE `category`;
+INSERT INTO `category` (`id`, `list_position`, `catalogue_id`, `parent_id`, `name`, `description`, `meta_desc`, `meta_keys`) VALUES
+(1, 1, 1, 3, 'Эпоксидные смолы', '<p><span class="ql-size-large">Э</span>поксидная смола – продукт синтетического происхождения, получаемый в результате поликонденсации эпихлоргидрина в сочетании с фенолами. Данный материал отличается универсальностью, что определяет широкую сферу его использования: из всех видов смол только эпоксидная используется так часто при производстве материалов композитного состава. Высокая востребованность продукции данного вида неслучайна, так как именно эпоксидная смола дает лучшие результаты по прочности и иным качественным параметрам, сохраняя привлекательную цену и доступность.</p>', 'Эпоксидная смола', 'смола,эпоксидная'),
+(2, 2, 1, NULL, 'Отвердители', 'Отвердитель – соединение особого вида, вводимое в небольших дозах в отделочные и строительные материалы, а также в эпоксидную смолу.\r\nТакие соединения предназначены для перевода основного материала в твердую форму. В случае с эпоксидной смолой отвердители используются для полимеризации, при этом процесс перевода пластичной смолы в твердое состояние может происходить как с нагревом смеси, так и без него.\r\nРазличные типы отвердителей могут состоять из разнообразных соединений: амины, ангидриды, перекись бензоила, кислоты разного типа.', 'Отвердители', 'отвердитель'),
+(3, 3, 1, NULL, 'Добавки и катализаторы', 'В роли добавок и катализаторов для эпоксидных смол выступают вещества, добавляемые в малых дозах эпоксидную смолу с отвердителем, что стимулирует ускорение протекающих реакций.\r\nТочная дозировка добавок определяется потребностью в конечных свойствах, которыми будет обладать конечный продукт.\r\nПрименение ускорителей оправдано при значительных объемах выполняемых работ и небольших сроках на их проведение. Равно как при использовании в составе долготвердеющей эпоксидной смолы.\r\n ', 'добавки и отвердители', 'добавки, отвердители'),
+(4, 4, 1, 3, 'Алкофен (DMP-30) в Казани', 'Алкофен входит в группу добавок и катализаторов для эпоксидных смол и выступает в качестве компонента для изготовления композитной стеклопластиковой арматуры. С его помощью осуществляется ускорение полимеризации связующего агента, благодаря чему процесс производства армирующих материалов получил промышленный масштаб. При отсутствии ускорителя и температурного воздействия на процесс полимеризация эпоксидной смолы занимала бы несколько часов.\r\n\r\nПо внешнему виду Алкофен – однородная прозрачная жидкость вязкой структуры, может иметь несколько оттенков (от светлого до темно-янтарного). В отвердителе отсутствуют посторонние включения и примеси.', 'алкофен', 'алкофен'),
+(5, 5, 1, NULL, 'Ровинг (стекловолокно)', 'Ровинг представляет собой изделие стекловолоконного типа в виде тонкой нити c не скручивающимися между собой волокнами.\r\n\r\nДля лучшей пропитки изделия полиэфирными, эпоксидными и другими видами смол в его состав включаются замасливатели. Для удобства транспортировки и дальнейшего использования материал наматывается на бобины, обтягиваемые герметично прилегаемой пленкой.\r\n\r\nВ результате производственных процессов ровинг становится прочным материалом с отличными физико-механическими качествами. Лежащее в основе стекло наделяет материал невосприимчивостью к коррозии, а также воздействию других химвеществ, материал отличается легким весом, термоустойчивостью, проявляет свойства диэлектрика.', 'Ровинг (стекловолокно)', 'стекловолокно'),
+(6, 1, 2, NULL, 'Все для производства', 'Тестовая категория интуитивного каталога', 'Все для производства', 'для производства, '),
+(10, 2, 2, NULL, 'тест', 'тест изображений', 'тест', 'тест');
+
 -- --------------------------------------------------------
 
 --
@@ -178,13 +164,16 @@ CREATE TABLE IF NOT EXISTS `category_img` (
   `is_main` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак главной фотографии',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Картинки категорий';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Картинки категорий';
 
 --
--- Очистить таблицу перед добавлением данных `category_img`
+-- Дамп данных таблицы `category_img`
 --
 
-TRUNCATE TABLE `category_img`;
+INSERT INTO `category_img` (`id`, `category_id`, `name`, `is_main`, `date_add`, `date_upd`) VALUES
+(3, 1, '1c17b5ca1274670b3804754f0dc1e7a9_1.jpg', 1, 0x323031372d30332d30322032303a33303a3336, 0x323031372d30332d30322032303a33303a3433),
+(4, 1, '1c17b5ca1274670b3804754f0dc1e7a9_2.jpg', 0, 0x323031372d30332d30322032303a33323a3031, 0x323031372d30332d30322032303a33323a3031);
+
 -- --------------------------------------------------------
 
 --
@@ -201,11 +190,6 @@ CREATE TABLE IF NOT EXISTS `city` (
   `longitude` decimal(11,8) DEFAULT NULL COMMENT 'Долгота'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Города';
 
---
--- Очистить таблицу перед добавлением данных `city`
---
-
-TRUNCATE TABLE `city`;
 -- --------------------------------------------------------
 
 --
@@ -216,11 +200,6 @@ CREATE TABLE IF NOT EXISTS `feature` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Характеристики';
 
---
--- Очистить таблицу перед добавлением данных `feature`
---
-
-TRUNCATE TABLE `feature`;
 -- --------------------------------------------------------
 
 --
@@ -231,11 +210,6 @@ CREATE TABLE IF NOT EXISTS `image` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения';
 
---
--- Очистить таблицу перед добавлением данных `image`
---
-
-TRUNCATE TABLE `image`;
 -- --------------------------------------------------------
 
 --
@@ -246,11 +220,6 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Производители';
 
---
--- Очистить таблицу перед добавлением данных `manufacturer`
---
-
-TRUNCATE TABLE `manufacturer`;
 -- --------------------------------------------------------
 
 --
@@ -262,11 +231,6 @@ CREATE TABLE IF NOT EXISTS `migration` (
   `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `migration`
---
-
-TRUNCATE TABLE `migration`;
 --
 -- Дамп данных таблицы `migration`
 --
@@ -288,11 +252,6 @@ CREATE TABLE IF NOT EXISTS `offer` (
   `supplier_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор поставщика'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товарные предложения';
 
---
--- Очистить таблицу перед добавлением данных `offer`
---
-
-TRUNCATE TABLE `offer`;
 -- --------------------------------------------------------
 
 --
@@ -304,11 +263,6 @@ CREATE TABLE IF NOT EXISTS `product` (
   `manufacturer_id` int(10) unsigned DEFAULT NULL COMMENT 'Идентификатор производителя'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Товары';
 
---
--- Очистить таблицу перед добавлением данных `product`
---
-
-TRUNCATE TABLE `product`;
 -- --------------------------------------------------------
 
 --
@@ -324,11 +278,6 @@ CREATE TABLE IF NOT EXISTS `product_img` (
   `date_upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения товаров';
 
---
--- Очистить таблицу перед добавлением данных `product_img`
---
-
-TRUNCATE TABLE `product_img`;
 -- --------------------------------------------------------
 
 --
@@ -343,11 +292,6 @@ CREATE TABLE IF NOT EXISTS `region` (
   `district` varchar(32) NOT NULL COMMENT 'Округ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Регионы';
 
---
--- Очистить таблицу перед добавлением данных `region`
---
-
-TRUNCATE TABLE `region`;
 -- --------------------------------------------------------
 
 --
@@ -360,11 +304,6 @@ CREATE TABLE IF NOT EXISTS `setting` (
   `value` varchar(128) NOT NULL COMMENT 'Значение настройки'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Настройки';
 
---
--- Очистить таблицу перед добавлением данных `setting`
---
-
-TRUNCATE TABLE `setting`;
 -- --------------------------------------------------------
 
 --
@@ -383,11 +322,6 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `site` varchar(64) DEFAULT NULL COMMENT 'WEB-сайт'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Поставщики';
 
---
--- Очистить таблицу перед добавлением данных `supplier`
---
-
-TRUNCATE TABLE `supplier`;
 -- --------------------------------------------------------
 
 --
@@ -407,11 +341,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Очистить таблицу перед добавлением данных `user`
---
-
-TRUNCATE TABLE `user`;
---
 -- Дамп данных таблицы `user`
 --
 
@@ -428,11 +357,6 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 `id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Склады';
 
---
--- Очистить таблицу перед добавлением данных `warehouse`
---
-
-TRUNCATE TABLE `warehouse`;
 --
 -- Индексы сохранённых таблиц
 --
@@ -477,7 +401,7 @@ ALTER TABLE `catalogue`
 -- Индексы таблицы `category`
 --
 ALTER TABLE `category`
- ADD PRIMARY KEY (`id`), ADD KEY `name` (`name`), ADD KEY `catalogue_id` (`catalogue_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `uq_pos_catalogue_idx` (`list_position`,`catalogue_id`) COMMENT 'Позиция в каталоге уникальна', ADD KEY `name` (`name`), ADD KEY `catalogue_id` (`catalogue_id`), ADD KEY `parent_id` (`parent_id`), ADD KEY `list_position` (`list_position`);
 
 --
 -- Индексы таблицы `category_img`
@@ -576,17 +500,17 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `catalogue`
 --
 ALTER TABLE `catalogue`
-MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT для таблицы `category_img`
 --
 ALTER TABLE `category_img`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `city`
 --
@@ -674,7 +598,8 @@ ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_i
 -- Ограничения внешнего ключа таблицы `category`
 --
 ALTER TABLE `category`
-ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`catalogue_id`) REFERENCES `catalogue` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`catalogue_id`) REFERENCES `catalogue` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `category_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `category_img`

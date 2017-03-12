@@ -50,8 +50,7 @@ class Catalogue extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
-    {
-        return $this->hasMany(Category::className(), ['catalogue_id' => 'id']);
+    public function getCategories() {
+        return $this->hasMany(Category::className(), ['catalogue_id' => 'id'])->orderBy(['list_position' => SORT_ASC]);
     }
 }
