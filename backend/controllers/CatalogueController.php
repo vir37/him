@@ -33,7 +33,42 @@ class CatalogueController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $elements = [
+            [
+                'header' => [ 'text' => 'Категории товаров', 'link' => 'category/'],
+                'icon' => 'fa-server',
+                'description' => 'Модуль управления категориями: добавление, удаление, привязка ...',
+                'short_links'=> [
+                    [ 'text' => 'Новая категория', 'link' => 'category/create'],
+                ],
+            ],
+            [
+                'header' => [ 'text' => 'Товары', 'link' => 'product/'],
+                'icon' => 'fa-cubes',
+                'description' => 'Модуль управления товарами: добавление, удаление, привязка к категориям ...',
+                'short_links'=> [
+                    [ 'text' => 'Новый товар', 'link' => 'product/create'],
+                ],
+            ],
+            [
+                'header' => [ 'text' => 'Товарные предложения', 'link' => 'offer/'],
+                'icon' => 'fa-shopping-basket',
+            ],
+            [
+                'header' => [ 'text' => 'Поставщики', 'link' => 'supplier/'],
+                'icon' => 'fa-track',
+            ],
+            [
+                'header' => [ 'text' => 'Производители', 'link' => 'manufacturer/'],
+                'icon' => 'fa-industry',
+                'description' => 'Модуль управления поставщиками: добавление, удаление, редактирование ...',
+                'short_links'=> [
+                    [ 'text' => 'Новый производитель', 'link' => 'manufacturer/create'],
+                ],
+            ],
+        ];
+
+        return $this->render('index', ['elements' => $elements]);
     }
 
     /**

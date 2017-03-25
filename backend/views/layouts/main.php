@@ -47,9 +47,14 @@ AppAsset::register($this);
                 'url' => ['catalogue/']
             ],
             [
+                'label' => 'Справочники',
+                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                'url' => ['directory/']
+            ],
+            [
                 'label' => 'Настройки',
                 'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
-                'url' => ['settings/']
+                'url' => ['setting/']
             ]
         );
         $menuItems[] = '<li>'
