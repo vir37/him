@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\Exception,
     yii\db\IntegrityException;
+use common\models\Product;
 
 /**
  * This is the model class for table "category".
@@ -73,12 +74,17 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getCatalogue() {
         if (is_null($this->catalogue_id)) {
-            $res = Catalogue::find();
-            return $res->all();
+            #$res = Catalogue::find();
+            #return $res->all();
+            return Catalogue::find();
         }
         return $this->hasOne(Catalogue::className(), [ 'id' => 'catalogue_id' ]);
     }
 
+    public function getProduct(){
+        return $this->hasMany(Product::className(), [ 'id' => 'product_id'])
+            ->viaTable('category_product', [ 'category_id' => 'id']);
+    }
 
     public function addImage($file_name, $isMain) {
         $image = new CategoryImg();

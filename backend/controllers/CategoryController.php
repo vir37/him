@@ -166,48 +166,49 @@ class CategoryController extends Controller
         } else {
             $alert = [ 'type' => 'danger', 'body' => implode('\n', $imageModel->firstErrors) ];
         }
-        return $this->renderPartial('_images', [
+        return $this->renderPartial('/common/_images', [
             'model' => $imageModel,
             'linkModel' => $model,
             'alert' => $alert,
         ]);
     }
 
-    public function actionImageDelete($image_id, $category_id) {
+    public function actionImageDelete($image_id, $object_id) {
         if (Yii::$app->request->isAjax) {
-            $image = CategoryImg::findOne($image_id);
+            $model = $this->findModel($object_id);
+            $image = $model->getImages()->where([ 'id' => $image_id])->one();
             if ($image && unlink(Yii::getAlias("@images/{$image->name}")) && $image->delete())
                 $alert = ['type' => 'success', 'body' => 'Изображение успешно удалено'];
             else
                 $alert = ['type' => 'danger', 'body' => 'Ошибка удаления изображения'];
-            $model = $this->findModel($category_id);
-            $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
-            $imageUploader->objectId = $category_id;
-            return $this->renderPartial('_images', [
+            $imageUploader = new ImageUploadForm($model->className(), 'category_id');
+            $imageUploader->objectId = $object_id;
+            return $this->renderPartial('/common/_images', [
                 'model' => $imageUploader,
                 'linkModel' => $model,
                 'alert' => $alert,
             ]);
         } else
-            $this->redirect(['update', 'id' => $category_id]);
+            $this->redirect(['update', 'id' => $object_id]);
     }
 
-    public function actionImageSetMain($image_id, $category_id) {
+    public function actionImageSetMain($image_id, $object_id) {
         if (Yii::$app->request->isAjax) {
-            $image = CategoryImg::findOne($image_id);
+            $model = $this->findModel($object_id);
+            $image = $model->getImages()->where([ 'id' => $image_id])->one();
             if ($image && $image->setMain())
                 $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
             else
                 $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
-            $model = $this->findModel($category_id);
-            $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
-            $imageUploader->objectId = $category_id;
-            return $this->renderPartial('_images', [
+            $model = $this->findModel($object_id);
+           $imageUploader = new ImageUploadForm($model->className(), 'category_id');
+            $imageUploader->objectId = $object_id;
+            return $this->renderPartial('/common/_images', [
                 'model' => $imageUploader,
                 'linkModel' => $model,
                 'alert' => $alert,
             ]);
         } else
-            $this->redirect(['update', 'id' => $category_id]);
+            $this->redirect(['update', 'id' => $object_id]);
     }
 }

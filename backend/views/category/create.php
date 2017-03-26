@@ -8,6 +8,7 @@ use yii\widgets\Pjax;
 /* @var $model common\models\Category */
 
 $this->title = 'Новая категория';
+$this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="panel-body">
             <?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false, 'timeout' => 6000 ]); ?>
-            <?= $this->render('_images', [
+            <?= $this->render('/common/_images', [
                 'model' => $imageUploader,
                 'linkModel' => $model,
             ]) ?>

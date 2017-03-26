@@ -21,7 +21,7 @@ if (isset($alert)) {
     ]);
 }
 ?>
-<?php if (isset($model)): ?>
+<?php if (isset($model) && $model): ?>
     <?php $form = ActiveForm::begin([
         'action' => 'image-upload',
         'options' => [
@@ -58,11 +58,11 @@ if (isset($alert)) {
     $items = [];
     unset($linkModel->images);
     foreach ($linkModel->images as $image) {
-        $a_main = Html::a('<span class="glyphicon glyphicon-check"></span>', ['image-set-main', 'image_id' => $image->id, 'category_id' => $linkModel->id ], [
+        $a_main = Html::a('<span class="glyphicon glyphicon-check"></span>', ['image-set-main', 'image_id' => $image->id, 'object_id' => $linkModel->id ], [
             'id' => "img-set-main", 'class' => "btn btn-default btn-sm",
             'role' => "button", 'title' => "Назначить главной",
         ]);
-        $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', [ 'image-delete', 'image_id' => $image->id, 'category_id' => $linkModel->id ], [
+        $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', [ 'image-delete', 'image_id' => $image->id, 'object_id' => $linkModel->id ], [
             'id' => "img-del", 'class' => "btn btn-default btn-sm",
             'role' => "button", 'title' => "Удалить",
             'data' => [

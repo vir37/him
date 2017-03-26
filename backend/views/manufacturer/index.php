@@ -30,7 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => [ 'style' => 'width: 50px;'],
             ],
             'name',
-            'web_site',
+            [
+                'attribute' => 'web_site',
+                'format' => 'raw',
+                'value' => function($data) { return Html::a($data->web_site, $data->web_site); }
+            ],
             [
                 'attribute' => 'logo',
                 'format' => 'raw',

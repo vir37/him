@@ -8,6 +8,7 @@ use execut\widget\TreeView;
 use yii\web\JsExpression;
 
 $this->title = 'Дерево категорий';
+$this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
 $this->params['breadcrumbs'][] = $this->title;
 $label = 'Фильтр по каталогам';
 $class = '';

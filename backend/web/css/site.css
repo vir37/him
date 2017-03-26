@@ -133,6 +133,7 @@ a.desc:after {
 .no-padding { padding: 0; }
 .sub-wrap { flex: 1 0 auto; }
 .col { padding: 2px 2px 10px 2px; }
+.btn { margin-right: 5px; margin-bottom: 5px; }
 .window {
     border: 1px solid grey;
     border-radius: 4px;
@@ -163,7 +164,7 @@ a.desc:after {
 }
 
 .category-form { margin-bottom: 1em; }
-.category-form .row { margin-bottom: 5px; }
+.category-form .row, .product-form .row { margin-bottom: 5px; }
 .panel-heading { position: relative; }
 .panel-heading .fa {
     position: absolute;

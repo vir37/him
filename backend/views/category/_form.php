@@ -41,6 +41,7 @@ else
                 ])->dropDownList( $catalogueList, [
                     'id' => 'catalogue_select',
                     'disabled' => $model->catalogue_id,
+                    'data-target' => '#parent_category',   // Целевой контейнер, который будет заполняться списком категорий
                     'prompt' => '...',
                     'options' => $model->catalogue_id ? ["$model->catalogue_id" => ["selected" => true]] : [],
                 ])->label('Каталог') ?>
@@ -53,6 +54,7 @@ else
                                     where(['catalogue_id' => $model->catalogue_id])->
                                     andWhere(['not', ['id' => $model->id]])->all(), 'id', 'name'), [
                     'prompt' => '...',
+                    'id' => 'parent_category'
                 ]) ?>
             </div>
             <div class="row">

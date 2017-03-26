@@ -33,7 +33,7 @@ class Manufacturer extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['logo'], 'string'],
             [['name'], 'string', 'max' => 255],
-            ['web_site', 'url'],
+            ['web_site', 'url', 'defaultScheme' => 'http' ],
             [['web_site'], 'string', 'max' => 128],
         ];
     }

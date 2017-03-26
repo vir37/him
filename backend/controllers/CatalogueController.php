@@ -56,7 +56,7 @@ class CatalogueController extends Controller
             ],
             [
                 'header' => [ 'text' => 'Поставщики', 'link' => 'supplier/'],
-                'icon' => 'fa-track',
+                'icon' => 'fa-truck',
             ],
             [
                 'header' => [ 'text' => 'Производители', 'link' => 'manufacturer/'],

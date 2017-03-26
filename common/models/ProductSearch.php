@@ -12,13 +12,15 @@ use common\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $catalogue_id;
+    public $category_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'list_position', 'category_id', 'manufacturer_id'], 'integer'],
+            [['id', 'catalogue_id', 'category_id', 'manufacturer_id'], 'integer'],
             [['name', 'description', 'meta_desc', 'meta_keys'], 'safe'],
         ];
     }
@@ -60,8 +62,7 @@ class ProductSearch extends Product
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'list_position' => $this->list_position,
-            'category_id' => $this->category_id,
+//            'category_id' => $this->category_id,
             'manufacturer_id' => $this->manufacturer_id,
         ]);
 

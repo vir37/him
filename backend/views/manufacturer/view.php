@@ -33,7 +33,11 @@ $img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . bas
         'attributes' => [
             'id',
             'name',
-            'web_site',
+            [
+                'attribute' => 'web_site',
+                'format' => 'raw',
+                'value' => Html::a($model->web_site, $model->web_site),
+            ],
             [
                 'attribute' => 'logo',
                 'format' => 'raw',

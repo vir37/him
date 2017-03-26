@@ -3,6 +3,8 @@
  */
 
 function fillSelectData(target, dataUrl, dataFilters){
+    if (baseUrl && dataUrl[0] == '/')
+        dataUrl = baseUrl + dataUrl;
     $.ajax(dataUrl, {
         dataType: 'json',
         data: dataFilters,
@@ -47,5 +49,17 @@ function disableJqueryUI(selector, types){
 
 disableJqueryUI('.jquery-ui-disable', ['button']);
 $('#catalogue_select').on('change', function(){
-    fillSelectData('#category-parent_id', 'list', {catalogue_id: $(this).val()});
+    var target = $(this).data('target')
+    if (target != undefined)
+       fillSelectData(target, '/category/list', {catalogue_id: $(this).val()});
+    else
+        alert('Цель заполнения не назначена');
+});
+// На каждый элементс атрибутом data-submit вешаем обработчик события onchange
+$('input[data-submitform], select[data-submitform]').each(function(idx, elem){
+    var form = $(elem).data('submitform');
+    if (form != undefined)
+        $(elem).on('change', function(){
+            $(form).submit();
+        });
 });

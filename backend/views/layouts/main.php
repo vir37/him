@@ -21,6 +21,9 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script type="text/javascript">
+        baseUrl="<?= Yii::$app->request->baseUrl ?>";
+    </script>
 </head>
 <body>
 <?php $this->beginBody() ?>

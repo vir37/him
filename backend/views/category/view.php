@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Category */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index', 'catalogue_id' => $model->catalogue_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,10 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="panel-title">Изображения категории</h3>
             </div>
             <div class="panel-body">
-                <?= $this->render('_images', [
+                <?= $this->render('/common/_images', [
                     'linkModel' => $model,
                 ]) ?>
             </div>
         </div>
-        <?= Html::endTag('fieldset') ?>
+    <?= Html::endTag('fieldset') ?>
 </div>
