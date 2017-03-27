@@ -6,6 +6,7 @@
  * Time: 22:41
  */
 use yii\widgets\Pjax;
+
 use yii\helpers\Html;
 if (!isset($imageUploader))
     $imageUploader = null;

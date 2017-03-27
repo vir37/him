@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */

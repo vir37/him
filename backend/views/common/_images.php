@@ -79,6 +79,7 @@ if (isset($alert)) {
     }
     if (sizeof($items) > 0)
         echo Carousel::widget([
+            'id' => 'image-gallery',
             'items' => $items,
             'clientOptions' => [ 'interval' => false ],
             'controls' => [
