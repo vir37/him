@@ -12,7 +12,7 @@ function fillSelectData(target, dataUrl, dataFilters){
             $('.loader-hide').removeClass('loader-hide').addClass('loader-show');
         },
         success: function(data, status){
-            var defaults = []
+            var defaults = [];
             $(target).children('option').each(function(idx, elem){
                 if (!$(elem).val()) {
                     defaults[defaults.length] = {id: undefined, name: $(elem).text()};
