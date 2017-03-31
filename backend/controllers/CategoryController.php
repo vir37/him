@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\CategoryProduct;
+use common\models\Product;
 use Yii;
 use common\models\Catalogue,
     common\models\Category,
@@ -137,13 +139,27 @@ class CategoryController extends Controller
         }
     }
 
-
-    public function actionList($catalogue_id){
+    /**
+     * Выдает список категорий по заданным параметрам
+     * @param $catalogue_id - идентификатор каталога, для которого необходимо отобрать категории
+     * @param null $product_id - идентификатор продукта, для которого необходимо отобрать категории
+     * @param bool $include - отобрать категории, которые удовлетворяют параметру product_id или наоборот
+     * @throws NotFoundHttpException
+     */
+    public function actionList($catalogue_id, $product_id = null, $include = true){
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $data = Category::find()->asArray()
-                ->where(['catalogue_id' => $catalogue_id ])->select(['id', 'name'])->all();
-            return $data;
+            $data = Category::find()->asArray()->where("1");
+            if (isset($catalogue_id))
+                $data = $data->andWhere(['catalogue_id' => $catalogue_id ]);
+            if (isset($product_id)) {
+                $data = $data->joinWith(CategoryProduct::tableName(), true, 'LEFT JOIN');
+                if ($include)
+                    $data = $data->andWhere(['product_id' => $product_id ]);
+                else
+                    $data = $data->andWhere(['or', ['product_id' => null],['not', ['product_id' => $product_id ]]]);
+            }
+            return $data->select(['id', 'name'])->all();
         } else {
             throw new NotFoundHttpException('The request page does not exist');
         }

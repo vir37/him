@@ -6,12 +6,16 @@
  * Time: 22:41
  */
 use yii\helpers\Html,
-    yii\helpers\ArrayHelper;
+    yii\helpers\ArrayHelper,
+    yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use common\models\Catalogue,
-    common\models\Category;
+use common\models\Catalogue;
+use yii\widgets\Pjax;
+
 $product_id = isset($product_id) ? $product_id : null;
 ?>
+<?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false, 'timeout' => 6000 ]); ?>
+
 <?= Html::beginTag('fieldset', [ 'disabled' => ((isset($mode) && $mode == 'view') || !isset($product_id)) ]) ?>
 
 <div class="panel panel-default">
@@ -36,6 +40,8 @@ $product_id = isset($product_id) ? $product_id : null;
                         'id' => 'catalogue_select',
                         'prompt' => '...',
                         'data-target' => '#category_id',   // Целевой контейнер, который будет заполняться списком категорий
+//                        'data-url' => '/category/list?product_id='.$product_id,    // URL для AJAX-запроса данных
+                        'data-url' => '/category/list?product_id='.$product_id. '&include=0',    // URL для AJAX-запроса данных
                         'class' => 'form-control',
                     ])?>
                 </div>
@@ -60,3 +66,4 @@ $product_id = isset($product_id) ? $product_id : null;
 </div>
 
 <?= Html::endTag('fieldset') ?>
+<?php Pjax::end(); ?>

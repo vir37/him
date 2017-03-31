@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\CategoryProduct;
 use Yii;
 use yii\filters\VerbFilter;
 use common\models\Catalogue,
@@ -187,4 +188,20 @@ class ProductController extends \yii\web\Controller
             $this->redirect(['update', 'id' => $object_id]);
     }
 
+    public function actionAssignCategory(){
+        $model = new CategoryProduct();
+        $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('_tab3', [
+                'mode' => 'update',
+                'model' => new CategoryProduct(),
+                'product_id' => $model->product_id,
+                'alert' => $alert,
+            ]);
+        }
+        return $this->redirect(['update', 'id' => $model->product_id]);
+    }
 }

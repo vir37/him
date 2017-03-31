@@ -27,17 +27,19 @@ $catalogueList = ArrayHelper::map($catalogueList, 'id', 'name');
 
     <?= $form->field($model, 'catalogue_id', [
         'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5'],
-        'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>',
+        'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>
+                    <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>',
         'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
     ])->dropDownList( $catalogueList, [
         'id' => 'catalogue_select',
         'data-target' => '#category_id',   // Целевой контейнер, который будет заполняться списком категорий
+        'data-url' => '/category/list',    // URL для AJAX-запроса данных
 //        'disabled' => $model->catalogue_id,
         'prompt' => '...',
         'options' => $model->catalogue_id ? ["$model->catalogue_id" => ["selected" => true]] : [],
     ])->label('Каталог') ?>
 
-    <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>
+
 
     <?= $form->field($model, 'category_id', [
         'labelOptions' => ['class' => 'control-label col-lg-4 col-md-5'],

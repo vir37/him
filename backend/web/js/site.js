@@ -49,11 +49,12 @@ function disableJqueryUI(selector, types){
 
 disableJqueryUI('.jquery-ui-disable', ['button']);
 $('#catalogue_select').on('change', function(){
-    var target = $(this).data('target')
-    if (target != undefined)
-       fillSelectData(target, '/category/list', {catalogue_id: $(this).val()});
+    var target = $(this).data('target'),
+        url = $(this).data('url');
+    if (target != undefined && url != undefined)
+        fillSelectData(target, url, {catalogue_id: $(this).val()});
     else
-        alert('Цель заполнения не назначена');
+        alert('Не вся данные настроены');
 });
 // На каждый элементс атрибутом data-submit вешаем обработчик события onchange
 $('input[data-submitform], select[data-submitform]').each(function(idx, elem){

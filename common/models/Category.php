@@ -86,6 +86,10 @@ class Category extends \yii\db\ActiveRecord
             ->viaTable('category_product', [ 'category_id' => 'id']);
     }
 
+    public function getCategory_product(){
+        return $this->hasMany(CategoryProduct::className(), ['category_id' => 'id']);
+    }
+
     public function addImage($file_name, $isMain) {
         $image = new CategoryImg();
         $image->category_id = $this->id;
