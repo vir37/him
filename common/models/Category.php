@@ -102,4 +102,19 @@ class Category extends \yii\db\ActiveRecord
             return $e;
         }
     }
+
+    /**
+     * Возвращает массив хлебных крошек к текущей категории
+     * @return array
+     */
+    public function buildBreadcrumbs() {
+        $result = [];
+        $result[] = [ 'label' => $this->name, 'url' => [ 'category/view', 'id' => $this->id ]];
+        $parent = self::findOne($this->parent_id);
+        while ($parent){
+            $result[] = [ 'label' => $parent->name, 'url' => [ 'category/view', 'id' => $parent->id ]];
+            $parent = self::findOne($parent->parent_id);
+        }
+        return array_reverse($result);
+    }
 }

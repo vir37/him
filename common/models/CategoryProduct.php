@@ -32,6 +32,9 @@ class CategoryProduct extends \yii\db\ActiveRecord
         return [
             [['category_id', 'product_id'], 'required'],
             [['category_id', 'product_id', 'list_position'], 'integer'],
+            ['list_position', 'default', 'value' => function($model, $attribute) {
+                return (self::find()->where(['category_id' => $model->{$attribute}])->max($attribute) + 1);
+            }],
             [['category_id', 'product_id'], 'unique', 'targetAttribute' => ['category_id', 'product_id'], 'message' => 'The combination of ID категории and ID  товара has already been taken.'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],

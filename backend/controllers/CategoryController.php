@@ -217,7 +217,7 @@ class CategoryController extends Controller
             else
                 $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
             $model = $this->findModel($object_id);
-           $imageUploader = new ImageUploadForm($model->className(), 'category_id');
+            $imageUploader = new ImageUploadForm($model->className(), 'category_id');
             $imageUploader->objectId = $object_id;
             return $this->renderPartial('/common/_images', [
                 'model' => $imageUploader,

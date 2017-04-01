@@ -130,6 +130,11 @@ a.desc:after {
        width: 100%;
 }
 /*----------- SELF styles ------------------*/
+.delimiter {
+    width: 70%;
+    margin: 15px auto 25px auto;
+    border: 1px solid #b2a266;
+}
 .no-padding { padding: 0; }
 .sub-wrap { flex: 1 0 auto; }
 .col { padding: 2px 2px 10px 2px; }
@@ -198,3 +203,19 @@ a.desc:after {
 .img-container a { position: absolute; opacity: 0.8; }
 .img-container #img-set-main { left: 5px; top: 10px; }
 .img-container #img-del { right: 5px; top: 10px; }
+
+/* styles for tree breadcrumbs */
+.tree-breadcrumbs {
+    list-style: none;
+    padding:0 15px;
+    margin-bottom: 0px;
+}
+.tree-breadcrumbs > li {
+    display: inline-block;
+}
+.tree-breadcrumbs a:hover { text-decoration: none; }
+.tree-breadcrumbs > li + li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "\00bb";
+}

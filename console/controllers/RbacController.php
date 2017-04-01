@@ -66,4 +66,14 @@ class RbacController extends Controller {
         $auth->assign($auth->getRole('guest'), $user->getId());
         echo "User added";
     }
-} 
+
+    public function actionSetPassword($login, $pwd) {
+        if (($user = User::findOne(['username' => $login])) !== null) {
+            $user->setPassword($pwd);
+            $user->generateAuthKey();
+            $user->save(false);
+            echo "User password changed";
+        } else
+            echo "User not found";
+    }
+}

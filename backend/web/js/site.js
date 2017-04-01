@@ -48,7 +48,7 @@ function disableJqueryUI(selector, types){
 }
 
 disableJqueryUI('.jquery-ui-disable', ['button']);
-$('#catalogue_select').on('change', function(){
+$(document).on('change', '#catalogue_select', function(){
     var target = $(this).data('target'),
         url = $(this).data('url');
     if (target != undefined && url != undefined)
