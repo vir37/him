@@ -16,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('_search', ['model' => $searchModel]); ?>
         </div>
     </div>
-
+    <p>
+        <?= Html::a('Новый товар', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
     <?php Pjax::begin(['enablePushState' => false, 'enableReplaceState' => false]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

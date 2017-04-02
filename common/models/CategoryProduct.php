@@ -33,7 +33,7 @@ class CategoryProduct extends \yii\db\ActiveRecord
             [['category_id', 'product_id'], 'required'],
             [['category_id', 'product_id', 'list_position'], 'integer'],
             ['list_position', 'default', 'value' => function($model, $attribute) {
-                return (self::find()->where(['category_id' => $model->{$attribute}])->max($attribute) + 1);
+                return (self::find()->where(['category_id' => $model->category_id])->max($attribute) + 1);
             }],
             [['category_id', 'product_id'], 'unique', 'targetAttribute' => ['category_id', 'product_id'], 'message' => 'The combination of ID категории and ID  товара has already been taken.'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -67,5 +67,18 @@ class CategoryProduct extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * Сортирует товары в категории
+     * @param $category_id
+     */
+    public static function resortPositions($category_id) {
+        $pos = 1;
+        foreach (self::find()->where(['category_id' => $category_id])->orderBy(['list_position' => SORT_ASC])->all() as $rec){
+            $rec->list_position = $pos;
+            $rec->save();
+            $pos++;
+        }
     }
 }

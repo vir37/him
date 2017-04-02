@@ -32,7 +32,6 @@ $product_id = isset($product_id) ? $product_id : null;
         <h3 class="panel-title">Связанные категории</h3>
     </div>
     <div class="panel-body">
-        <div class="row">
             <?php
                 if ($product_id) {
                     foreach ($catalogues as $catalogue) {
@@ -45,12 +44,13 @@ $product_id = isset($product_id) ? $product_id : null;
                         if ($query->count() > 0) {
                             $dataProvider->query = $query;
                             $dataProvider->refresh();
+                            echo '<div class="row">';
                             echo GridView::widget([
                                 'dataProvider' => $dataProvider,
                                 'summary' => "<div class='col-lg-12 col-md-12'>
-                                                <h5 style='background: cornsilk;'><span class='glyphicon glyphicon-book'></span> {$catalogue->name}<span class='badge pull-right'>{totalCount}</span></h5>
+                                                <h5 style='background: cornsilk;'><span class='glyphicon glyphicon-book'></span> {$catalogue->name}</h5>
                                              </div>",
-                                'options' => ['class' => 'col-lg-12 col-md-12'],
+                                'options' => ['class' => 'col-lg-12 col-md-12 category-links'],
                                 'columns' => [
                                     [
                                         'attribute' => 'name',
@@ -82,9 +82,11 @@ $product_id = isset($product_id) ? $product_id : null;
                                                     [
                                                         'title' => 'Разорвать связь c категорией',
                                                         'data' => [
-                                                            'confirm' => 'Are you sure you want to delete this item?',
+//                                                            'confirm' => 'Are you sure you want to delete this item?',
                                                             'action-delete-link' => true,
-                                                        ]
+                                                            'pjax' => 0,
+                                                        ],
+                                                        'class' => 'test',
                                                     ]);
                                             },
                                             'change-position' => function($url, $model, $key) use ($product_id){
@@ -97,21 +99,21 @@ $product_id = isset($product_id) ? $product_id : null;
                                     ],
                                 ],
                             ]);
+                            echo '</div>';
                         }
                     }
                 }
             ?>
+        <div id="alert-placeholder">
+            <?php
+            if (isset($alert)) {
+                echo Alert::widget([
+                    'options' => [ 'class' => "alert-{$alert['type']}", ],
+                    'body' => $alert['body'],
+                ]);
+            }
+            ?>
         </div>
-        <?php
-        if (isset($alert)) {
-            echo Alert::widget([
-                'options' => [
-                    'class' => "alert-{$alert['type']}",
-                ],
-                'body' => $alert['body'],
-            ]);
-        }
-        ?>
         <?php if ($mode == 'update'): ?>
             <div class="delimiter"></div>
             <div class="row">
@@ -154,22 +156,31 @@ $product_id = isset($product_id) ? $product_id : null;
 <?= Html::endTag('fieldset') ?>
 <?php Pjax::end(); ?>
 <script type="text/javascript">
-    deleteLink = function(){};
-    window.onload = function () {
-        debugger;
-        $(document).on('click', '[data-action-delete-link]', function () {
-            event.preventDefault();
-            var url = $(this).href,
-                that = this;
-            $.ajax(url, {
-                dataType: 'json',
-                success: function (data, status) {
-                    debugger;
-                },
-                error: function (data, status, e) {
-                    alert('Request error');
+    deleteLink = function(){
+        var that = this;
+        event.preventDefault();
+        if (!confirm('Вы уверены, что хотите удалить связь?'))
+            return;
+        $.ajax(that.href, {
+            success: function (data, status) {
+                $('#alert-placeholder').html(data.response);
+                if (data.status == 'success' && (el = $(that).closest('tr'))){
+                    var tbody = $(el).closest('tbody');
+                    if ($(tbody).find('tr').size() == 1)
+                        el = $(tbody).closest('.row');
+                    el.hide(1000);
+                    var tm = setTimeout(function(){
+                        clearTimeout(tm);
+                        el.detach();
+                    }, 1000);
                 }
-            })
+            },
+            error: function (data, status, e) {
+                alert('Request error');
+            }
         })
+    };
+    window.onload = function () {
+        $(document).on('click', '[data-action-delete-link]', deleteLink);
     };
 </script>

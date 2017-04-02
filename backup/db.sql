@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Мар 26 2017 г., 22:31
+-- Время создания: Апр 02 2017 г., 23:25
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.6.28
 
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `him`
 --
-DROP DATABASE `him`;
 CREATE DATABASE IF NOT EXISTS `him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `him`;
 
@@ -187,6 +186,15 @@ CREATE TABLE IF NOT EXISTS `category_product` (
   `list_position` int(10) unsigned DEFAULT NULL COMMENT 'Позиция товара в списке категории'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Связка категорий с товарами';
 
+--
+-- Дамп данных таблицы `category_product`
+--
+
+INSERT INTO `category_product` (`category_id`, `product_id`, `list_position`) VALUES
+(1, 1, 1),
+(2, 1, 1),
+(2, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -327,14 +335,15 @@ CREATE TABLE IF NOT EXISTS `product` (
   `meta_desc` varchar(128) DEFAULT NULL COMMENT 'SEO описание',
   `meta_keys` varchar(128) DEFAULT NULL COMMENT 'SEO ключевые слова',
   `manufacturer_id` int(10) unsigned DEFAULT NULL COMMENT 'Идентификатор производителя'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Товары';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Товары';
 
 --
 -- Дамп данных таблицы `product`
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `meta_desc`, `meta_keys`, `manufacturer_id`) VALUES
-(1, 'Самый первый товар', '<p> мчсмчсч смап</p><p>вапвапа</p><p><br></p><p>вапвап</p><p><br></p>', 'товар самый первый', 'товар, первый', 1);
+(1, 'Самый первый товар', '<p> мчсмчсч смап</p><p>вапвапа</p><p><br></p><p>вапвап</p><p><br></p>', 'товар самый первый', 'товар, первый', 1),
+(2, 'Второй товар', '<p>Это уже второй товар на сайте!!!</p>', 'Второй товар', 'товар', 1);
 
 -- --------------------------------------------------------
 
@@ -356,9 +365,9 @@ CREATE TABLE IF NOT EXISTS `product_img` (
 --
 
 INSERT INTO `product_img` (`id`, `product_id`, `name`, `is_main`, `date_add`, `date_upd`) VALUES
-(3, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_1.png', 1, 0x323031372d30332d32362032313a31383a3138, 0x323031372d30332d32362031383a31383a3138),
-(4, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_2.jpg', 0, 0x323031372d30332d32362032313a31393a3135, 0x323031372d30332d32362031383a31393a3135),
-(5, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_3.png', 0, 0x323031372d30332d32362032313a32333a3338, 0x323031372d30332d32362031383a32333a3338);
+(3, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_1.png', 0, 0x323031372d30332d32362032313a31383a3138, 0x323031372d30332d32372031393a35373a3431),
+(4, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_2.jpg', 0, 0x323031372d30332d32362032313a31393a3135, 0x323031372d30332d32372031393a35383a3037),
+(5, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_3.png', 1, 0x323031372d30332d32362032313a32333a3338, 0x323031372d30332d32372031393a35383a3038);
 
 -- --------------------------------------------------------
 
@@ -427,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'sasha', 'ra0CWLbdGaQbnb2rdPp5E0mDoms-pJmz', '$2y$13$i9G5Gs/PUFXs9wQvFFBl9emJG4AmGg7hz7urR3kOc1Gdlh4KHiOja', NULL, 'vir37@rambler.ru', 10, 1484418942, 1484418942);
+(4, 'sasha', 'NTK6zmawOw5jO-g2o2Wj_Zb1o_wVeFvx', '$2y$13$GureOBdEEe.4fVSAF4WYL.Ci4M32EPrwyM.opqAMIdQ2BiYOCmTWi', NULL, 'vir37@rambler.ru', 10, 1484418942, 1491049516);
 
 -- --------------------------------------------------------
 
@@ -650,7 +659,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `product`
 --
 ALTER TABLE `product`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `product_img`
 --

@@ -153,11 +153,12 @@ class CategoryController extends Controller
             if (isset($catalogue_id))
                 $data = $data->andWhere(['catalogue_id' => $catalogue_id ]);
             if (isset($product_id)) {
-                $data = $data->joinWith(CategoryProduct::tableName(), true, 'LEFT JOIN');
+                $subQuery = CategoryProduct::find()->where(['product_id' => $product_id ])->select(['category_id']);
+                //$data = $data->joinWith(CategoryProduct::tableName(), true, 'LEFT JOIN');
                 if ($include)
-                    $data = $data->andWhere(['product_id' => $product_id ]);
+                    $data = $data->andWhere(['in', 'id', $subQuery ]);
                 else
-                    $data = $data->andWhere(['or', ['product_id' => null],['not', ['product_id' => $product_id ]]]);
+                    $data = $data->andWhere(['not in', 'id', $subQuery]);
             }
             return $data->select(['id', 'name'])->all();
         } else {

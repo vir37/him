@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\CategoryProduct;
+use yii\bootstrap\Alert;
 
 class CategoryProductController extends Controller {
 
@@ -38,14 +39,19 @@ class CategoryProductController extends Controller {
             $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E01'];
         elseif (!$model->delete())
             $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E02'];
-        else
-            $alert = ['type' => 'succes', 'body' => 'Операция выполнена успешно'];
+        else {
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+            CategoryProduct::resortPositions($category_id);
+        }
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return $alert;
+            $result = Alert::widget([
+                        'options' => ['id' => 'alerter', 'class' => "alert-{$alert['type']}",],
+                        'body' => $alert['body'],
+                    ]);
+;           return ['status' => $alert['type'], 'response' => $result];
         }
-
-        $a= 'test';
+        return $this->redirect(['index']);
     }
 
     public function actionChangePosition($category_id, $product_id, $new_position) {
