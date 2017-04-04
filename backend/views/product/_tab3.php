@@ -68,11 +68,30 @@ $product_id = isset($product_id) ? $product_id : null;
                                     [
                                         'attribute' => 'product_position',
                                         'enableSorting' => false,
-                                        'label' => 'Позиция в категории'
+                                        'label' => 'Позиция в категории',
+                                        'content' => function($model, $key, $index, $column) use ($product_id){
+                                            return \yii\bootstrap\ButtonDropdown::widget([
+                                                'label' => $model['product_position'],
+                                                //'split' => true,
+                                                'containerOptions' => [ 'class' => "col-lg-5 col-md-5"],
+                                                'options' => [
+                                                    'class' => 'btn-default btn-sm col-lg-12 col-md-12 position-selector',
+                                                    'data' => [
+                                                        'category' => $model['id'],
+                                                        'product' => $product_id,
+                                                        'url' => Url::toRoute(['/category-product/list']),
+                                                        'action-url' => Url::toRoute(['/category-product/change-position',
+                                                            'category_id' => $model['id'], 'product_id' => $product_id
+                                                        ]),
+                                                    ],
+                                                ],
+                                                'dropdown' => ['id' => "list_{$model['id']}_{$product_id}", ],
+                                            ]);
+                                        }
                                     ],
                                     [
                                         'class' => ActionColumn::className(),
-                                        'template' => '{delete}&nbsp;&nbsp;{change-position}',
+                                        'template' => '{delete}',
                                         'controller' => 'category-product',
                                         'buttons' => [
                                             'delete' => function($url, $model, $key) use ($product_id){
@@ -82,7 +101,6 @@ $product_id = isset($product_id) ? $product_id : null;
                                                     [
                                                         'title' => 'Разорвать связь c категорией',
                                                         'data' => [
-//                                                            'confirm' => 'Are you sure you want to delete this item?',
                                                             'action-delete-link' => true,
                                                             'pjax' => 0,
                                                         ],
@@ -93,7 +111,14 @@ $product_id = isset($product_id) ? $product_id : null;
                                                 return Html::a('<span class="fa fa-arrows-v"></span>',
                                                     Url::to(['category-product/change-position', 'category_id' => $model['id'],
                                                         'product_id' => $product_id]),
-                                                    ['title' => 'Сменить позицию в категории', 'id' => 'action-change-position']);
+                                                    [
+                                                        'title' => 'Сменить позицию в категории',
+                                                        'data' => [
+                                                            'action-change-position' => true,
+                                                            'pjax' => 0,
+                                                        ],
+                                                        'id' => 'action-change-position',
+                                                    ]);
                                             },
                                         ],
                                     ],
@@ -104,7 +129,7 @@ $product_id = isset($product_id) ? $product_id : null;
                     }
                 }
             ?>
-        <div id="alert-placeholder">
+        <div id="alert-placement">
             <?php
             if (isset($alert)) {
                 echo Alert::widget([
@@ -163,7 +188,7 @@ $product_id = isset($product_id) ? $product_id : null;
             return;
         $.ajax(that.href, {
             success: function (data, status) {
-                $('#alert-placeholder').html(data.response);
+                $('#alert-placement').html(data.response);
                 if (data.status == 'success' && (el = $(that).closest('tr'))){
                     var tbody = $(el).closest('tbody');
                     if ($(tbody).find('tr').size() == 1)
@@ -180,7 +205,29 @@ $product_id = isset($product_id) ? $product_id : null;
             }
         })
     };
+    changePosition = function(){
+        var url = $(this).data('url'),
+            action = $(this).data('action-url'),
+            category = $(this).data('category'),
+            product = $(this).data('product');
+        $.ajax(url+'?category_id='+category+'&product_id='+product, {
+            dataType: 'json',
+            async: false,
+            success: function (data, status) {
+                var list = $('#list_'+category+'_'+product);
+                list.html("");
+                while (data.length) {
+                    el = data.pop();
+                    list.append('<li><a href="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
+                }
+            },
+            error: function (data, status, e) {
+                alert('Request error');
+            }
+        });
+    }
     window.onload = function () {
         $(document).on('click', '[data-action-delete-link]', deleteLink);
+        $(document).on('click', '.position-selector', changePosition);
     };
 </script>
