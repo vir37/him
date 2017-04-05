@@ -81,4 +81,15 @@ class CategoryProduct extends \yii\db\ActiveRecord
             $pos++;
         }
     }
+
+    public function changePosition($newPosition) {
+        $step = $this->list_position > $newPosition ? 1 : -1;
+        $query = self::find()->where(['category_id' => $this->category_id])
+            ->andWhere(['between', 'list_position', $this->list_position, $newPosition])
+            ->orderBy(['list_position' => SORT_ASC]);
+        foreach ($query->all() as $model) {
+            $model->list_position += $step;
+            $model->save();
+        }
+    }
 }

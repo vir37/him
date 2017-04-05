@@ -79,6 +79,7 @@ $product_id = isset($product_id) ? $product_id : null;
                                                     'data' => [
                                                         'category' => $model['id'],
                                                         'product' => $product_id,
+                                                        'position' => $model['product_position'],
                                                         'url' => Url::toRoute(['/category-product/list']),
                                                         'action-url' => Url::toRoute(['/category-product/change-position',
                                                             'category_id' => $model['id'], 'product_id' => $product_id
@@ -105,19 +106,6 @@ $product_id = isset($product_id) ? $product_id : null;
                                                             'pjax' => 0,
                                                         ],
                                                         'class' => 'test',
-                                                    ]);
-                                            },
-                                            'change-position' => function($url, $model, $key) use ($product_id){
-                                                return Html::a('<span class="fa fa-arrows-v"></span>',
-                                                    Url::to(['category-product/change-position', 'category_id' => $model['id'],
-                                                        'product_id' => $product_id]),
-                                                    [
-                                                        'title' => 'Сменить позицию в категории',
-                                                        'data' => [
-                                                            'action-change-position' => true,
-                                                            'pjax' => 0,
-                                                        ],
-                                                        'id' => 'action-change-position',
                                                     ]);
                                             },
                                         ],
@@ -209,7 +197,8 @@ $product_id = isset($product_id) ? $product_id : null;
         var url = $(this).data('url'),
             action = $(this).data('action-url'),
             category = $(this).data('category'),
-            product = $(this).data('product');
+            product = $(this).data('product'),
+            position = $(this).data('position');
         $.ajax(url+'?category_id='+category+'&product_id='+product, {
             dataType: 'json',
             async: false,
@@ -217,8 +206,11 @@ $product_id = isset($product_id) ? $product_id : null;
                 var list = $('#list_'+category+'_'+product);
                 list.html("");
                 while (data.length) {
-                    el = data.pop();
-                    list.append('<li><a href="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
+                    el = data.shift();
+                    if (el.list_position == position)
+                        list.append('<li><a href="#" data-pjax=0>'+el.list_position+'</a></li>');
+                    else
+                        list.append('<li><a data-pjax=1 href="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
                 }
             },
             error: function (data, status, e) {

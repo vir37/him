@@ -55,12 +55,27 @@ class CategoryProductController extends Controller {
     }
 
     public function actionChangePosition($category_id, $product_id, $new_position) {
+        $model = CategoryProduct::findOne(['category_id' => $category_id, 'product_id' =>$product_id]);
+        if (!$model)
+            $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
+        else {
+            $model->changePosition($new_position);
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+        }
 
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $result = Alert::widget([
+                'options' => ['id' => 'alerter', 'class' => "alert-{$alert['type']}",],
+                'body' => $alert['body'],
+            ]);
+            return ['status' => $alert['type'], 'response' => $result];
+        }
+        return $this->redirect(['index']);
     }
 
     public function actionList($category_id, $product_id) {
         $result = CategoryProduct::find()->where(['category_id' => $category_id])
-            //->andWhere(['product_id' =>$product_id])->asArray()
             ->select(['list_position'])->all() or [];
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
