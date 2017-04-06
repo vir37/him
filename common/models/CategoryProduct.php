@@ -84,12 +84,16 @@ class CategoryProduct extends \yii\db\ActiveRecord
 
     public function changePosition($newPosition) {
         $step = $this->list_position > $newPosition ? 1 : -1;
+        $min = $step > 0 ? (int) $newPosition : (int) $this->list_position - $step;
+        $max = $step > 0 ? (int) $this->list_position - $step : (int) $newPosition;
         $query = self::find()->where(['category_id' => $this->category_id])
-            ->andWhere(['between', 'list_position', $this->list_position, $newPosition])
+            ->andWhere(['between', 'list_position', $min, $max])
             ->orderBy(['list_position' => SORT_ASC]);
         foreach ($query->all() as $model) {
             $model->list_position += $step;
             $model->save();
         }
+        $this->list_position = $newPosition;
+        $this->save();
     }
 }

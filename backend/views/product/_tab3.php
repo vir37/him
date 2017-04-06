@@ -72,7 +72,6 @@ $product_id = isset($product_id) ? $product_id : null;
                                         'content' => function($model, $key, $index, $column) use ($product_id){
                                             return \yii\bootstrap\ButtonDropdown::widget([
                                                 'label' => $model['product_position'],
-                                                //'split' => true,
                                                 'containerOptions' => [ 'class' => "col-lg-5 col-md-5"],
                                                 'options' => [
                                                     'class' => 'btn-default btn-sm col-lg-12 col-md-12 position-selector',
@@ -117,6 +116,7 @@ $product_id = isset($product_id) ? $product_id : null;
                     }
                 }
             ?>
+        <!-- Блок уведомлений -->
         <div id="alert-placement">
             <?php
             if (isset($alert)) {
@@ -127,6 +127,7 @@ $product_id = isset($product_id) ? $product_id : null;
             }
             ?>
         </div>
+        <!-- Блок добавления новой связки Товара с Категорией -->
         <?php if ($mode == 'update'): ?>
             <div class="delimiter"></div>
             <div class="row">
@@ -168,8 +169,9 @@ $product_id = isset($product_id) ? $product_id : null;
 </div>
 <?= Html::endTag('fieldset') ?>
 <?php Pjax::end(); ?>
+<!-- Скрипты -->
 <script type="text/javascript">
-    deleteLink = function(){
+    function deleteLink() {
         var that = this;
         event.preventDefault();
         if (!confirm('Вы уверены, что хотите удалить связь?'))
@@ -192,13 +194,14 @@ $product_id = isset($product_id) ? $product_id : null;
                 alert('Request error');
             }
         })
-    };
-    changePosition = function(){
-        var url = $(this).data('url'),
-            action = $(this).data('action-url'),
-            category = $(this).data('category'),
-            product = $(this).data('product'),
-            position = $(this).data('position');
+    }
+    function getPositions() {
+        debugger;
+        var that = $(this), url = that.attr('data-url'),
+            action = that.attr('data-action-url'),
+            category = that.attr('data-category'),
+            product = that.attr('data-product'),
+            position = that.attr('data-position');
         $.ajax(url+'?category_id='+category+'&product_id='+product, {
             dataType: 'json',
             async: false,
@@ -208,18 +211,39 @@ $product_id = isset($product_id) ? $product_id : null;
                 while (data.length) {
                     el = data.shift();
                     if (el.list_position == position)
-                        list.append('<li><a href="#" data-pjax=0>'+el.list_position+'</a></li>');
+                        list.append('<li><a data-pjax=0 href="#">'+el.list_position+'</a></li>');
                     else
-                        list.append('<li><a data-pjax=1 href="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
+                        list.append('<li><a data-pjax=0 class="new-position" href="#" data-action-url="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
                 }
             },
             error: function (data, status, e) {
                 alert('Request error');
             }
         });
+        return false;
     }
+    function changePosition(){
+        var btn = $(this).parentsUntil('td').find('button');
+        $.ajax($(this).attr('data-action-url'), {
+            dataType: 'json',
+            success: function(data, status) {
+                debugger;
+                if (data.status == 'success') {
+                    var html = btn.html().replace(/[0-9]*/, data.position);
+                    btn.html(html);
+                    btn.attr('data-position', +data.position);
+                }
+                $('#alert-placement').html(data.response);
+            },
+            error: function(data, status, e) {
+                alert('Response error: ' + e);
+            }
+        });
+    }
+
     window.onload = function () {
         $(document).on('click', '[data-action-delete-link]', deleteLink);
-        $(document).on('click', '.position-selector', changePosition);
+        $(document).on('click', '.position-selector', getPositions);
+        $(document).on('click', '.new-position', changePosition);
     };
 </script>

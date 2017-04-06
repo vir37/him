@@ -69,14 +69,14 @@ class CategoryProductController extends Controller {
                 'options' => ['id' => 'alerter', 'class' => "alert-{$alert['type']}",],
                 'body' => $alert['body'],
             ]);
-            return ['status' => $alert['type'], 'response' => $result];
+            return ['status' => $alert['type'], 'response' => $result, 'position' => $new_position];
         }
         return $this->redirect(['index']);
     }
 
     public function actionList($category_id, $product_id) {
         $result = CategoryProduct::find()->where(['category_id' => $category_id])
-            ->select(['list_position'])->all() or [];
+            ->select(['list_position'])->orderBy(['list_position' => SORT_ASC])->all() or [];
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return $result;

@@ -9,6 +9,7 @@ use common\models\Catalogue,
     common\models\Category,
     common\models\CategorySearch,
     common\models\CategoryImg;
+use yii\base\ErrorException;
 use backend\models\ImageUploadForm;
 use yii\web\UploadedFile;
 use yii\db\Expression;
@@ -194,9 +195,12 @@ class CategoryController extends Controller
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($object_id);
             $image = $model->getImages()->where([ 'id' => $image_id])->one();
-            if ($image && unlink(Yii::getAlias("@images/{$image->name}")) && $image->delete())
+            if ($image && $image->delete()) {
+                try {
+                    unlink(Yii::getAlias("@images/{$image->name}"));
+                } catch (ErrorException $e) { };
                 $alert = ['type' => 'success', 'body' => 'Изображение успешно удалено'];
-            else
+            } else
                 $alert = ['type' => 'danger', 'body' => 'Ошибка удаления изображения'];
             $imageUploader = new ImageUploadForm($model->className(), 'category_id');
             $imageUploader->objectId = $object_id;

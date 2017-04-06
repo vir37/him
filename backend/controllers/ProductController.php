@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\CategoryProduct;
 use Yii;
+use yii\base\ErrorException;
 use yii\filters\VerbFilter;
 use common\models\Catalogue,
     common\models\Product,
@@ -153,9 +154,12 @@ class ProductController extends \yii\web\Controller
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($object_id);
             $image = $model->getImages()->where([ 'id' => $image_id])->one();
-            if ($image && unlink(Yii::getAlias("@images/{$image->name}")) && $image->delete())
+            if ($image && $image->delete()) {
+                try {
+                    unlink(Yii::getAlias("@images/{$image->name}"));
+                } catch (ErrorException $e) { };
                 $alert = ['type' => 'success', 'body' => 'Изображение успешно удалено'];
-            else
+            } else
                 $alert = ['type' => 'danger', 'body' => 'Ошибка удаления изображения'];
             #$model = $this->findModel($object_id);
             $imageUploader = new ImageUploadForm($model->className(), 'product_id');
