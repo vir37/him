@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Апр 02 2017 г., 23:25
+-- Время создания: Апр 06 2017 г., 23:07
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.6.28
 
@@ -246,7 +246,8 @@ CREATE TABLE IF NOT EXISTS `feature` (
 `id` int(10) unsigned NOT NULL,
   `short_name` varchar(64) NOT NULL COMMENT 'Краткое наименование',
   `name` varchar(255) NOT NULL COMMENT 'Наименование',
-  `type` int(3) NOT NULL COMMENT 'Тип значения свойства'
+  `type_id` int(3) unsigned NOT NULL COMMENT 'Тип значения свойства',
+  `uom_id` int(5) unsigned DEFAULT NULL COMMENT 'ID единицы измерения'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Характеристики';
 
 -- --------------------------------------------------------
@@ -258,7 +259,15 @@ CREATE TABLE IF NOT EXISTS `feature` (
 CREATE TABLE IF NOT EXISTS `feature_type` (
 `id` int(3) unsigned NOT NULL,
   `type` varchar(32) NOT NULL COMMENT 'Наименование типа'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Типы значений свойств';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Типы значений свойств';
+
+--
+-- Дамп данных таблицы `feature_type`
+--
+
+INSERT INTO `feature_type` (`id`, `type`) VALUES
+(2, 'Строка'),
+(1, 'Число');
 
 -- --------------------------------------------------------
 
@@ -348,6 +357,21 @@ INSERT INTO `product` (`id`, `name`, `description`, `meta_desc`, `meta_keys`, `m
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `product_feature`
+--
+
+CREATE TABLE IF NOT EXISTS `product_feature` (
+`id` int(11) unsigned NOT NULL,
+  `feature_id` int(10) unsigned NOT NULL COMMENT 'Ссылка на характеристику',
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Ссылка на товар',
+  `value_numeric` float DEFAULT NULL COMMENT 'Числовое значение',
+  `value_string` varchar(255) DEFAULT NULL COMMENT 'Строковое значение',
+  `upd_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Значения характеристик товара';
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `product_img`
 --
 
@@ -412,6 +436,18 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `phone` varchar(16) DEFAULT NULL COMMENT 'Основной телефон',
   `site` varchar(64) DEFAULT NULL COMMENT 'WEB-сайт'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Поставщики';
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `uom`
+--
+
+CREATE TABLE IF NOT EXISTS `uom` (
+`id` int(5) unsigned NOT NULL,
+  `short_name` varchar(64) NOT NULL COMMENT 'Краткое наименование единицы измерения',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Наименование единицы измерения'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Единицы измерения';
 
 -- --------------------------------------------------------
 
@@ -522,7 +558,7 @@ ALTER TABLE `employee`
 -- Индексы таблицы `feature`
 --
 ALTER TABLE `feature`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `type_id` (`type_id`), ADD KEY `uom_id` (`uom_id`);
 
 --
 -- Индексы таблицы `feature_type`
@@ -561,6 +597,12 @@ ALTER TABLE `product`
  ADD PRIMARY KEY (`id`), ADD KEY `manufacturer_id` (`manufacturer_id`);
 
 --
+-- Индексы таблицы `product_feature`
+--
+ALTER TABLE `product_feature`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `product_id` (`product_id`), ADD UNIQUE KEY `product_id_2` (`product_id`,`feature_id`), ADD KEY `feature_id` (`feature_id`);
+
+--
 -- Индексы таблицы `product_img`
 --
 ALTER TABLE `product_img`
@@ -583,6 +625,12 @@ ALTER TABLE `setting`
 --
 ALTER TABLE `supplier`
  ADD PRIMARY KEY (`id`), ADD KEY `jur_address_id` (`jur_address_id`), ADD KEY `fact_address_id` (`fact_address_id`), ADD KEY `post_address_id` (`post_address_id`);
+
+--
+-- Индексы таблицы `uom`
+--
+ALTER TABLE `uom`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `user`
@@ -639,7 +687,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `feature_type`
 --
 ALTER TABLE `feature_type`
-MODIFY `id` int(3) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `image`
 --
@@ -661,6 +709,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `product`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT для таблицы `product_feature`
+--
+ALTER TABLE `product_feature`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `product_img`
 --
 ALTER TABLE `product_img`
@@ -680,6 +733,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `supplier`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `uom`
+--
+ALTER TABLE `uom`
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
@@ -734,6 +792,13 @@ ADD CONSTRAINT `category_product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES 
 ADD CONSTRAINT `category_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ограничения внешнего ключа таблицы `feature`
+--
+ALTER TABLE `feature`
+ADD CONSTRAINT `feature_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `feature_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `feature_ibfk_2` FOREIGN KEY (`uom_id`) REFERENCES `uom` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `offer`
 --
 ALTER TABLE `offer`
@@ -745,6 +810,13 @@ ADD CONSTRAINT `offer_ibfk_2` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` 
 --
 ALTER TABLE `product`
 ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `product_feature`
+--
+ALTER TABLE `product_feature`
+ADD CONSTRAINT `product_feature_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `feature` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `product_feature_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `product_img`

@@ -54,7 +54,7 @@ $(document).on('change', '#catalogue_select', function(){
     if (target != undefined && url != undefined)
         fillSelectData(target, url, {catalogue_id: $(this).val()});
     else
-        alert('Не вся данные настроены');
+        alert('Не все данные настроены');
 });
 // На каждый элементс атрибутом data-submit вешаем обработчик события onchange
 $('input[data-submitform], select[data-submitform]').each(function(idx, elem){
@@ -63,4 +63,16 @@ $('input[data-submitform], select[data-submitform]').each(function(idx, elem){
         $(elem).on('change', function(){
             $(form).submit();
         });
+});
+
+// Выравнивание высот элементов плитки
+$('.catalogue-menu').each(function(){
+    debugger;
+    var highestBox = 0;
+    $('.col-sm-4.col-md-3.col-lg-3').each(function(){
+        if($(this).height() > highestBox) {
+            highestBox = $(this).height();
+        }
+    });
+    $('.col-sm-4.col-md-3.col-lg-3').height(highestBox);
 });

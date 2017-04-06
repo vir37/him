@@ -23,16 +23,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    window.onload = function(){
-        $('.catalogue-menu').each(function(){
-            var highestBox = 0;
-            $('.col-sm-4.col-md-3.col-lg-3').each(function(){
-                if($(this).height() > highestBox) {
-                    highestBox = $(this).height();
-                }
-            });
-            $('.col-sm-4.col-md-3.col-lg-3').height(highestBox);
-        });
-    };
-</script>
