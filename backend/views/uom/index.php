@@ -23,6 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 <?php Pjax::begin(); ?>
+    <?php if (isset($model)): ?>
+    <div class="row">
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
+    <?php endif; ?>
     <div class="row">
         <?= GridView::widget([
             'options' => [ 'class' => 'col-lg-8 col-md-8'],

@@ -63,13 +63,17 @@ class UomController extends Controller
      */
     public function actionCreate()
     {
+        $searchModel = new UomSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Uom();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->render('index', [
                 'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
             ]);
         }
     }

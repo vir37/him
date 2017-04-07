@@ -25,7 +25,7 @@ use bizley\quill\Quill;
         <div class="panel-body">
             <div class="row">
                 <?= $form->field($model, 'name', [
-                   'options' => [ 'class' => 'form-group col-lg-7 col-md-7'],
+                    'options' => [ 'class' => 'form-group col-lg-7 col-md-7'],
                     'labelOptions' => [ 'class' => 'control-label col-lg-3 col-md-3'],
                     'inputTemplate' => '<div class="col-lg-9 col-md-9">{input}</div>',
                 ])->textInput(['maxlength' => true]) ?>

@@ -211,7 +211,7 @@ $product_id = isset($product_id) ? $product_id : null;
                 while (data.length) {
                     el = data.shift();
                     if (el.list_position == position)
-                        list.append('<li><a data-pjax=0 href="#">'+el.list_position+'</a></li>');
+                        list.append('<li class="disabled"><a data-pjax=0 href="#">'+el.list_position+'</a></li>');
                     else
                         list.append('<li><a data-pjax=0 class="new-position" href="#" data-action-url="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
                 }

@@ -67,7 +67,6 @@ $('input[data-submitform], select[data-submitform]').each(function(idx, elem){
 
 // Выравнивание высот элементов плитки
 $('.catalogue-menu').each(function(){
-    debugger;
     var highestBox = 0;
     $('.col-sm-4.col-md-3.col-lg-3').each(function(){
         if($(this).height() > highestBox) {
