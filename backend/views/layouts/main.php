@@ -45,7 +45,7 @@ AppAsset::register($this);
     } else {
         array_push($menuItems,
             [
-                'label' => 'Каталоги',
+                'label' => 'Каталог',
                 'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
                 'url' => ['catalogue/']
             ],

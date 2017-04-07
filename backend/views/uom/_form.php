@@ -23,13 +23,13 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'name', [
         'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
-        'options' => [ 'class' => 'form-group col-lg-7 col-md-7'],
-        'labelOptions' => [ 'class' => 'control-label col-lg-4 col-md-4'],
-        'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
-    ])->textInput(['maxlength' => true])->label('Полное наименование') ?>
+        'options' => [ 'class' => 'form-group col-lg-6 col-md-6'],
+        'labelOptions' => [ 'class' => 'control-label col-lg-3 col-md-3'],
+        'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
+    ])->textInput(['maxlength' => true])->label('Наименование') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -29,19 +29,22 @@ class UomController extends Controller
         ];
     }
 
+    private function renderMain($model=null) {
+        $searchModel = new UomSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Lists all Uom models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UomSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->renderMain();
     }
 
     /**
@@ -63,18 +66,11 @@ class UomController extends Controller
      */
     public function actionCreate()
     {
-        $searchModel = new UomSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Uom();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('index', [
-                'model' => $model,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+            return $this->renderMain($model);
         }
     }
 
@@ -89,11 +85,9 @@ class UomController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->renderMain($model);
         }
     }
 
