@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Апр 06 2017 г., 23:07
+-- Время создания: Апр 08 2017 г., 21:07
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.6.28
 
@@ -192,8 +192,8 @@ CREATE TABLE IF NOT EXISTS `category_product` (
 
 INSERT INTO `category_product` (`category_id`, `product_id`, `list_position`) VALUES
 (1, 1, 1),
-(2, 1, 1),
-(2, 2, 2);
+(2, 1, 2),
+(2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -248,7 +248,15 @@ CREATE TABLE IF NOT EXISTS `feature` (
   `name` varchar(255) NOT NULL COMMENT 'Наименование',
   `type_id` int(3) unsigned NOT NULL COMMENT 'Тип значения свойства',
   `uom_id` int(5) unsigned DEFAULT NULL COMMENT 'ID единицы измерения'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Характеристики';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Характеристики';
+
+--
+-- Дамп данных таблицы `feature`
+--
+
+INSERT INTO `feature` (`id`, `short_name`, `name`, `type_id`, `uom_id`) VALUES
+(1, 'Вес', 'Вес', 1, 3),
+(2, 'Материал', 'Материал', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -367,7 +375,15 @@ CREATE TABLE IF NOT EXISTS `product_feature` (
   `value_numeric` float DEFAULT NULL COMMENT 'Числовое значение',
   `value_string` varchar(255) DEFAULT NULL COMMENT 'Строковое значение',
   `upd_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Значения характеристик товара';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Значения характеристик товара';
+
+--
+-- Дамп данных таблицы `product_feature`
+--
+
+INSERT INTO `product_feature` (`id`, `feature_id`, `product_id`, `value_numeric`, `value_string`, `upd_date`) VALUES
+(4, 2, 1, NULL, 'Бетон марки М-350', 0x323031372d30342d30382032303a35363a3435),
+(5, 1, 1, 4444, '', 0x323031372d30342d30382032313a30303a3233);
 
 -- --------------------------------------------------------
 
@@ -447,7 +463,15 @@ CREATE TABLE IF NOT EXISTS `uom` (
 `id` int(5) unsigned NOT NULL,
   `short_name` varchar(64) NOT NULL COMMENT 'Краткое наименование единицы измерения',
   `name` varchar(255) DEFAULT NULL COMMENT 'Наименование единицы измерения'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Единицы измерения';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Единицы измерения';
+
+--
+-- Дамп данных таблицы `uom`
+--
+
+INSERT INTO `uom` (`id`, `short_name`, `name`) VALUES
+(2, 'т', 'тонна'),
+(3, 'кг', 'килограмм');
 
 -- --------------------------------------------------------
 
@@ -600,7 +624,7 @@ ALTER TABLE `product`
 -- Индексы таблицы `product_feature`
 --
 ALTER TABLE `product_feature`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `product_id` (`product_id`), ADD UNIQUE KEY `product_id_2` (`product_id`,`feature_id`), ADD KEY `feature_id` (`feature_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `product_id_2` (`product_id`,`feature_id`), ADD KEY `feature_id` (`feature_id`), ADD KEY `product_id` (`product_id`);
 
 --
 -- Индексы таблицы `product_img`
@@ -682,7 +706,7 @@ MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT для таблицы `feature`
 --
 ALTER TABLE `feature`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `feature_type`
 --
@@ -712,7 +736,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT для таблицы `product_feature`
 --
 ALTER TABLE `product_feature`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `product_img`
 --
@@ -737,7 +761,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT для таблицы `uom`
 --
 ALTER TABLE `uom`
-MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --

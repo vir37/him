@@ -23,6 +23,14 @@ class DirectoryController extends \yii\web\Controller
                     [ 'text' => 'Новая единица измерения', 'link' => 'uom/create' ],
                 ],
             ],
+            [
+                'header' => [ 'text' => 'Характеристики товаров', 'link' => 'feature/' ],
+                'icon' => 'fa-sliders',
+                'description' => 'Модуль управления характеристиками товаров',
+                'short_links' => [
+                    [ 'text' => 'Новая характеристика', 'link' => 'feature/create'],
+                 ],
+            ],
         ];
         return $this->render('index', [ 'elements' => $elements ]);
     }

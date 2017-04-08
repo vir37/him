@@ -8,7 +8,8 @@ use yii\base\ErrorException;
 use yii\filters\VerbFilter;
 use common\models\Catalogue,
     common\models\Product,
-    common\models\ProductSearch;
+    common\models\ProductSearch,
+    common\models\ProductFeature;
 use common\models\ProductImg;
 use backend\models\ImageUploadForm;
 use yii\web\NotFoundHttpException;
@@ -202,6 +203,23 @@ class ProductController extends \yii\web\Controller
             return $this->renderPartial('_tab3', [
                 'mode' => 'update',
                 'model' => new CategoryProduct(),
+                'product_id' => $model->product_id,
+                'alert' => $alert,
+            ]);
+        }
+        return $this->redirect(['update', 'id' => $model->product_id]);
+    }
+
+    public function actionAddFeature(){
+        $model = new ProductFeature();
+        $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('_tab2', [
+                'mode' => 'update',
+                'model' => new ProductFeature(),
                 'product_id' => $model->product_id,
                 'alert' => $alert,
             ]);

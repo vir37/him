@@ -52,8 +52,8 @@ class Feature extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'short_name' => Yii::t('app', 'Краткое наименование'),
             'name' => Yii::t('app', 'Наименование'),
-            'type_id' => Yii::t('app', 'Тип значения свойства'),
-            'uom_id' => Yii::t('app', 'ID единицы измерения'),
+            'type_id' => Yii::t('app', 'Тип значения'),
+            'uom_id' => Yii::t('app', 'Ед-ца измерения'),
         ];
     }
 

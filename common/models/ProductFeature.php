@@ -38,7 +38,6 @@ class ProductFeature extends \yii\db\ActiveRecord
             [['value_numeric'], 'number'],
             [['upd_date'], 'safe'],
             [['value_string'], 'string', 'max' => 255],
-            [['product_id'], 'unique'],
             [['product_id', 'feature_id'], 'unique', 'targetAttribute' => ['product_id', 'feature_id'], 'message' => 'The combination of Ссылка на характеристику and Ссылка на товар has already been taken.'],
             [['feature_id'], 'exist', 'skipOnError' => true, 'targetClass' => Feature::className(), 'targetAttribute' => ['feature_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
