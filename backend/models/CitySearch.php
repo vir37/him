@@ -1,28 +1,26 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Product;
+use common\models\City;
 
 /**
- * ProductSearch represents the model behind the search form about `common\models\Product`.
+ * CitySearch represents the model behind the search form about `common\models\City`.
  */
-class ProductSearch extends Product
+class CitySearch extends City
 {
-    public $catalogue_id;
-    public $category_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            //[['category_id'], 'required' ],
-            [['id', 'catalogue_id', 'category_id', 'manufacturer_id'], 'integer'],
-            [['name', 'description', 'meta_desc', 'meta_keys'], 'safe'],
+            [['index'], 'integer'],
+            [['name', 'uri_name'], 'safe'],
+            [['latitude', 'longitude'], 'number'],
         ];
     }
 
@@ -44,7 +42,7 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        $query = City::find();
 
         // add conditions that should always apply here
 
@@ -56,19 +54,21 @@ class ProductSearch extends Product
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->joinWith('category', true, 'LEFT JOIN');
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'category_id' => $this->category_id,
-            'manufacturer_id' => $this->manufacturer_id,
+            'region_id' => $this->region_id,
+            'index' => $this->index,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'uri_name', $this->uri_name]);
 
         return $dataProvider;
     }
