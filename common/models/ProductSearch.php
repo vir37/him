@@ -59,17 +59,15 @@ class ProductSearch extends Product
             return $dataProvider;
         }
 
+        $query->joinWith('category', true, 'LEFT JOIN');
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-//            'category_id' => $this->category_id,
+            'category_id' => $this->category_id,
             'manufacturer_id' => $this->manufacturer_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'meta_desc', $this->meta_desc])
-            ->andFilterWhere(['like', 'meta_keys', $this->meta_keys]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

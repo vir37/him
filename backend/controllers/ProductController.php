@@ -210,6 +210,27 @@ class ProductController extends \yii\web\Controller
         return $this->redirect(['update', 'id' => $model->product_id]);
     }
 
+    public function actionUnlinkCategory($category_id, $product_id){
+        $model = CategoryProduct::findOne(['category_id' => $category_id, 'product_id' =>$product_id]);
+        if (!$model)
+            $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E01'];
+        elseif (!$model->delete())
+            $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E02'];
+        else {
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+            CategoryProduct::resortPositions($category_id);
+        }
+        if (\Yii::$app->request->isPjax) {
+            $res = $this->render('_tab3', [
+                'alert' => $alert,
+                'mode' => 'update',
+                'model' => new CategoryProduct(),
+                'product_id' => $product_id]);
+            return $res;
+        }
+        return $this->redirect(['update', 'id' => $product_id]);
+    }
+
     public function actionAddFeature(){
         $model = new ProductFeature();
         $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции'];
@@ -226,4 +247,27 @@ class ProductController extends \yii\web\Controller
         }
         return $this->redirect(['update', 'id' => $model->product_id]);
     }
+
+    public function actionDeleteFeature($id, $product_id){
+        $model = ProductFeature::findOne($id);
+        if ($model && $model->delete())
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+        else
+            $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E01'];
+
+        if (\Yii::$app->request->isPjax) {
+            $res = $this->render('_tab2', [
+                'alert' => $alert,
+                'mode' => 'update',
+                'model' => new ProductFeature(),
+                'product_id' => $product_id]);
+            return $res;
+        }
+        return $this->redirect(['update', 'id' => $product_id]);
+    }
+
+    public function actionUpdateFeature($id, $product_id){
+        //TODO: функционал пока не доработан
+    }
+
 }

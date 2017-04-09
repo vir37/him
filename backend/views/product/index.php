@@ -21,19 +21,21 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?php Pjax::begin(['enablePushState' => false, 'enableReplaceState' => false]); ?>
     <?= GridView::widget([
+        'summary' => 'Показано {begin}-{end} из {totalCount}',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'id',
-                'headerOptions' => [ 'style' => 'width: 50px;'],
+                'headerOptions' => [ 'class' => 'col-lg-1 col-md-1'],
             ],
-            'name',
-
+            [
+                'attribute' => 'name',
+                'headerOptions' => [ 'class' => 'col-lg-10 col-md-10'],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
     <?php Pjax::end(); ?>
-
 </div>

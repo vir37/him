@@ -23,7 +23,12 @@ $catalogues = Catalogue::find()->all();
 $dataProvider = new \yii\data\ActiveDataProvider();
 $product_id = isset($product_id) ? $product_id : null;
 ?>
-<?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false, 'timeout' => 6000 ]); ?>
+<?php Pjax::begin([
+    'enableReplaceState' => false,
+    'enablePushState' => false,
+    'timeout' => 10000,
+    'id' => 'tab3_pjax',
+]); ?>
 
 <?= Html::beginTag('fieldset', [ 'disabled' => ((isset($mode) && $mode == 'view') || !isset($product_id)) ]) ?>
 <div class="panel panel-default">
@@ -31,7 +36,18 @@ $product_id = isset($product_id) ? $product_id : null;
         <h3 class="panel-title">Связанные категории</h3>
     </div>
     <div class="panel-body">
+        <!-- Блок уведомлений -->
+        <div id="alert-placement">
             <?php
+            if (isset($alert)) {
+                echo Alert::widget([
+                    'options' => [ 'class' => "alert-{$alert['type']}", ],
+                    'body' => $alert['body'],
+                ]);
+            }
+            ?>
+        </div>
+        <?php
                 if ($product_id) {
                     foreach ($catalogues as $catalogue) {
                         $query = new Query();
@@ -95,15 +111,14 @@ $product_id = isset($product_id) ? $product_id : null;
                                         'buttons' => [
                                             'delete' => function($url, $model, $key) use ($product_id){
                                                 return Html::a('<span class="fa fa-chain-broken"></span>',
-                                                    Url::to(['category-product/delete', 'category_id' => $model['id'],
+                                                    Url::to(['product/unlink-category', 'category_id' => $model['id'],
                                                              'product_id' => $product_id]),
                                                     [
                                                         'title' => 'Разорвать связь c категорией',
                                                         'data' => [
-                                                            'action-delete-link' => true,
-                                                            'pjax' => 0,
+                                                            'confirm' => 'Вы дествительно хотите отвязать категорию?',
+                                                            'pjax' => 1,
                                                         ],
-                                                        'class' => 'test',
                                                     ]);
                                             },
                                         ],
@@ -114,7 +129,7 @@ $product_id = isset($product_id) ? $product_id : null;
                         }
                     }
                 }
-            ?>
+        ?>
         <!-- Блок добавления новой связки Товара с Категорией -->
         <?php if ($mode == 'update'): ?>
             <div class="delimiter"></div>
@@ -157,3 +172,54 @@ $product_id = isset($product_id) ? $product_id : null;
 </div>
 <?= Html::endTag('fieldset') ?>
 <?php Pjax::end(); ?>
+<!-- Скрипты -->
+<script type="text/javascript">
+    function getPositions() {
+        var that = $(this), url = that.attr('data-url'),
+            action = that.attr('data-action-url'),
+            category = that.attr('data-category'),
+            product = that.attr('data-product'),
+            position = that.attr('data-position');
+        $.ajax(url+'?category_id='+category+'&product_id='+product, {
+            dataType: 'json',
+            async: false,
+            success: function (data, status) {
+                var list = $('#list_'+category+'_'+product);
+                list.html("");
+                while (data.length) {
+                    el = data.shift();
+                    if (el.list_position == position)
+                        list.append('<li class="disabled"><a data-pjax=0 href="#">'+el.list_position+'</a></li>');
+                    else
+                        list.append('<li><a data-pjax=0 class="new-position" href="#" data-action-url="'+action+'&new_position='+el.list_position+'">'+el.list_position+'</a></li>');
+                }
+            },
+            error: function (data, status, e) {
+                alert('Request error: ' + e);
+            }
+        });
+        return false;
+    }
+    function changePosition(){
+        var btn = $(this).parentsUntil('td').find('button');
+        $.ajax($(this).attr('data-action-url'), {
+            dataType: 'json',
+            success: function(data, status) {
+                if (data.status == 'success') {
+                    var html = btn.html().replace(/[0-9]*/, data.position);
+                    btn.html(html);
+                    btn.attr('data-position', +data.position);
+                }
+                $('#alert-placement').html(data.response);
+            },
+            error: function(data, status, e) {
+                alert('Response error: ' + e);
+            }
+        });
+    }
+
+    window.addEventListener('load', function () {
+        $(document).on('click', '.position-selector', getPositions);
+        $(document).on('click', '.new-position', changePosition);
+    });
+</script>

@@ -12,7 +12,8 @@ use yii\bootstrap\ActiveForm;
 use common\models\Feature,
     common\models\ProductFeature;
 use yii\db\Query;
-use yii\widgets\Pjax;
+use yii\widgets\Pjax,
+    yii\bootstrap\Alert;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -23,13 +24,26 @@ $dataProvider = new ActiveDataProvider();
 $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_id]);
 
 ?>
-<?php Pjax::begin([ 'enableReplaceState' => false, 'enablePushState' => false, 'timeout' => 6000 ]); ?>
+<?php Pjax::begin([
+    'enableReplaceState' => false,
+    'enablePushState' => false,
+    'timeout' => 10000,
+    'id' => 'tab2_pjax'
+]); ?>
 <?= Html::beginTag('fieldset', [ 'disabled' => (isset($mode) && $mode == 'view') ]) ?>
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>
         <h3 class="panel-title">Характеристики</h3>
     </div>
     <div class="panel-body">
+        <?php
+        if (isset($alert)) {
+            echo Alert::widget([
+                'options' => [ 'class' => "alert-{$alert['type']}", ],
+                'body' => $alert['body'],
+            ]);
+        }
+        ?>
         <div class="row">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -62,11 +76,13 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
                                 'class' => 'col-lg-11 col-md-11',
                                 'disabled' => true,
                             ]).' '.Html::a('<span class="glyphicon glyphicon-ok"></span>',
-                                Url::to(["product-feature/update", "id" => $model->id]),
+                                Url::to(["product/update-feature", "id" => $model->id]),
                                 [
                                     'class' => 'btn-icon',
+                                    'style' => 'display: none;',
                                     'data' => [
                                         'pjax' => 0,
+                                        'action-update' => true,
                                     ],
                                 ]
                             );
@@ -75,21 +91,24 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
                     [
                         'class' => \yii\grid\ActionColumn::className(),
                         'controller' => 'product-feature',
-                        'template' => '{update}&nbsp;&nbsp;{delete}',
+//                        'template' => '{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{delete}',
                         'contentOptions' => [ 'class' => 'action'],
                         'buttons' => [
                             'update' => function($url, $model, $key) {
                                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
                                     'title' => 'Update',
-                                    'aria-label' => 'Update',
-                                    'data' => [ 'pjax' => 0 ],
+                                    'data' => [ 'pjax' => 0, 'action-edit' => true ],
                                 ]);
                             },
-                            'delete' => function($url, $model, $key) {
-                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                    'title' => 'Delete',
-                                    'aria-label' => 'Delete',
-                                    'data' => [ 'pjax' => 0, 'method' => 'post' ],
+                            'delete' => function($url, $model, $key) use ($product_id){
+                                return Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                                    Url::to(['product/delete-feature', 'id'=>$key, 'product_id' => $product_id]), [
+                                    'title' => 'Удалить характеристику',
+                                    'data' => [
+                                        'pjax' => 1,
+                                        'confirm' => 'Вы действительно хотите удалить характеристику?',
+                                    ],
                                 ]);
                             },
                         ],
@@ -170,11 +189,18 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
             }
         });
 
-        $(document).on('click', 'td.action a', function() {
-            debugger;
-            event.preventDefault();
-            alert('click');
+        $(document).on('click', 'td.action a[data-action-edit]', function() {
+            var tr = $(this).closest('tr');
+            if (tr) {
+                var input = tr.find('input');
+                if (input.attr('disabled'))
+                    input.removeAttr('disabled');
+                else
+                    input.attr('disabled', true);
+                tr.find('a[data-action-update]').toggle();
+            }
             return false;
         });
+
     });
 </script>

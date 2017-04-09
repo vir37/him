@@ -8,6 +8,7 @@ use backend\models\ProductFeatureSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Alert;
 
 /**
  * ProductFeatureController implements the CRUD actions for ProductFeature model.
@@ -23,7 +24,7 @@ class ProductFeatureController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -101,8 +102,19 @@ class ProductFeatureController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        if (!$this->findModel($id)->delete())
+            $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E01'];
+        else {
+            $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
+        }
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $result = Alert::widget([
+                'options' => ['id' => 'alerter', 'class' => "alert-{$alert['type']}",],
+                'body' => $alert['body'],
+            ]);
+            return ['status' => $alert['type'], 'response' => $result];
+        }
         return $this->redirect(['index']);
     }
 
