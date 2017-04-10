@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             [
                 'headerOptions' => [ 'class' => 'col-lg-2 col-md-2'],
                 'label' => 'Регион',
@@ -35,8 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->region->name;
                 },
             ],
-            'name',
-            'uri_name',
+            [
+                'headerOptions' => [ 'class' => 'col-lg-6 col-md-6'],
+                'attribute' => 'name'
+            ],
+            [
+                'headerOptions' => [ 'class' => 'col-lg-2 col-md-2'],
+                'attribute' => 'uri_name',
+                'label' => 'URL-адрес',
+            ],
             'index',
             // 'latitude',
             // 'longitude',
