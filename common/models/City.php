@@ -36,6 +36,7 @@ class City extends \yii\db\ActiveRecord
             [['latitude', 'longitude'], 'number'],
             [['name', 'uri_name'], 'string', 'max' => 32],
             [['index'], 'unique'],
+            [['fake_address'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
@@ -53,7 +54,7 @@ class City extends \yii\db\ActiveRecord
             'index' => 'Почтовый индекс',
             'latitude' => 'Широта',
             'longitude' => 'Долгота',
-
+            'fake_address' => 'Адрес для поисковых систем',
         ];
     }
 

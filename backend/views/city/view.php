@@ -7,35 +7,31 @@ use yii\widgets\DetailView;
 /* @var $model common\models\City */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Cities', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
+$this->params['breadcrumbs'][] = ['label' => 'Города', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="city-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить эту запись?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'region_id',
-            'name',
-            'uri_name',
-            'index',
-            'latitude',
-            'longitude',
-        ],
-    ]) ?>
+    <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'mode' => 'view',
+        ]) ?>
+    <?= Html::endTag('fieldset') ?>
+
 
 </div>
