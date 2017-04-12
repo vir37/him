@@ -13,6 +13,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
+use frontend\components\UrlManagerCityBehavior;
+
 /**
  * Site controller
  */
@@ -45,6 +47,9 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            [
+                'class' => UrlManagerCityBehavior::className(),
             ],
         ];
     }
@@ -205,7 +210,6 @@ class SiteController extends Controller
 
             return $this->goHome();
         }
-
         return $this->render('resetPassword', [
             'model' => $model,
         ]);

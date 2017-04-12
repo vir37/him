@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 11 2017 г., 17:37
+-- Время создания: Апр 12 2017 г., 17:54
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.6.22
 
@@ -689,6 +689,7 @@ ALTER TABLE `category_product`
 ALTER TABLE `city`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `index` (`index`),
+  ADD UNIQUE KEY `uri_name` (`uri_name`),
   ADD KEY `name` (`name`),
   ADD KEY `region_id` (`region_id`);
 

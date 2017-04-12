@@ -14,6 +14,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'baseUrl' => '',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -39,11 +40,29 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'baseUrl' => '/',
+            'enableStrictParsing' => true,
             'suffix' => '.html',
             'rules' => [
-                '<controller:>' => '<controller>/index',
-                '<controller:>/<action:>' => '<controller>/<action>',
+                [
+                    'pattern' => '',
+                    'suffix' => '/',
+                    'route' => '/',
+                    'normalizer' => [
+                        'class' => 'yii\web\UrlNormalizer',
+                        'action' => yii\web\UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
+                    ],
+                    'defaults' => [ 'city' => 'kzn'],
+                ],
+                [
+                    'pattern' => '<city:>',
+                    'route' => 'site/index',
+                    'suffix' => '/',
+                    'normalizer' => false,
+                ],
+
+//                '<city:>/' => 'site/index',
+                '<city:[\w-]+>/<controller:>' => '<controller>/index',
+                '<city:[\w-]+>/<controller:>/<action:>' => '<controller>/<action>',
             ],
         ],
     ],
