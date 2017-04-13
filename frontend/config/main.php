@@ -44,25 +44,19 @@ return [
             'suffix' => '.html',
             'rules' => [
                 [
-                    'pattern' => '',
-                    'suffix' => '/',
-                    'route' => '/',
-                    'normalizer' => [
-                        'class' => 'yii\web\UrlNormalizer',
-                        'action' => yii\web\UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
-                    ],
-                    'defaults' => [ 'city' => 'kzn'],
-                ],
-                [
-                    'pattern' => '<city:>',
+                    'pattern' => '<city:[\w-]+>',
                     'route' => 'site/index',
                     'suffix' => '/',
                     'normalizer' => false,
                 ],
-
-//                '<city:>/' => 'site/index',
-                '<city:[\w-]+>/<controller:>' => '<controller>/index',
-                '<city:[\w-]+>/<controller:>/<action:>' => '<controller>/<action>',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:>' => '<controller>/<action>',
+                '<city:[\w-]+>/<controller:[\w-]+>' => '<controller>/index',
+                [ // Редиректное правило для переброски на дефолтны город
+                    'class' => 'frontend\components\RedirectUrlRule',
+                    'pattern' => '',
+                    'route' => 'kzn/',
+                    'suffix' => '/',
+                ],
             ],
         ],
     ],

@@ -1,5 +1,5 @@
 <?php
-
+/* новый дизайн*/
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -7,10 +7,10 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
+use frontend\assets\NewAppAsset;
 use common\widgets\Alert;
 
-AppAsset::register($this);
+NewAppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,10 +28,11 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'ООО "ТЕРА-ИНВЕСТ"',
+        'brandOptions' => [ 'class' => 'navbar-brand-tera'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-fixed-top',
+            'class' => 'navbar navbar-default navbar-fixed-top navbar-tera',
         ],
     ]);
     $menuItems = [

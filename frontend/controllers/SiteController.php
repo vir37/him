@@ -20,6 +20,7 @@ use frontend\components\UrlManagerCityBehavior;
  */
 class SiteController extends Controller
 {
+    public $layout = "new";
     /**
      * @inheritdoc
      */
