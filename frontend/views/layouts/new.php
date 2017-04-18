@@ -39,9 +39,10 @@ $phone = "8 800 888 88 88";
         ],
     ]);
     $menuItems = [
+        [ 'label' => $city, 'url' => '#', 'options' => [ 'class' => 'city-chooser']],
         '<li><a href="tel:'.$phone.'"><span class="phone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
-        [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contact', 'city' => $city ]],
-        [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search']],
+        [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contact', 'city' => $city ], 'options' => [ 'class' => 'navbar-link']],
+        [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
     ];
     /*
     if (Yii::$app->user->isGuest) {
@@ -75,9 +76,7 @@ $phone = "8 800 888 88 88";
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ" <?= date('Y') ?></p>
     </div>
 </footer>
 

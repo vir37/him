@@ -120,14 +120,18 @@ a.desc:after {
 }
 
 /**                                  Self classes                                     **/
+.font-arial { font-family: Arial, Helvetica Neue, Helvetica, sans-serif !important; }
+.font-bold { font-weight: bolder; }
 .navbar-tera {
     font-family: 'Fira Sans', sans-serif;
     font-feature-settings: 'liga';
     font-size: 14px;
     background: none;
     border:none;
+    padding-top: 15px;
 }
 .navbar-brand-tera {
+    color: #000000 !important;
     font-size: 35px;
     line-height: 42px;
     font-weight: 300;
@@ -139,13 +143,30 @@ a.desc:after {
     margin-top: 21px;
     text-align: center;
 }
-.navbar-nav-tera .phone { font-size: 23px; }
+.navbar-nav-tera > li > a { padding-left: 25px; padding-right: 25px; }
+.navbar-nav-tera .phone { font-size: 23px; color: #000000 !important; }
 .navbar-nav-tera .subline {
     font-size: 10px;
     line-height: 12px;
     position: relative;
     top: -20px;
 }
+
+.navbar-link a { color: #02275E !important; }
+.navbar-link a:hover, .city-chooser a:hover { color: #CD1041 !important; }
+
+.search a { display: inline-block !important; }
 .search:after {
-    content: url("/images/icons/looking_glass.jpg");
+    content: url("/icons/looking_glass.jpg");
+    position: relative;
+    left: -10px;
+}
+.city-chooser { margin-right: 180px; }
+.city-chooser a { display: inline-block !important; text-decoration: underline; }
+.city-chooser:before {
+    content: url('/icons/location.png');
+    width: 8px;
+    height: 13px;
+    position: relative;
+    right: -20px;
 }
