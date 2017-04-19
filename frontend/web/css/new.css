@@ -11,7 +11,7 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 110px 15px 20px;
 }
 
 .footer {
@@ -170,3 +170,18 @@ a.desc:after {
     position: relative;
     right: -20px;
 }
+/*   Slider on main  */
+.main-slider {
+    height: 470px;
+    width: 100%;
+}
+.main-slider .carousel-inner { height: inherit; }
+.main-slider .carousel-inner .item { height: inherit; }
+.main-slider .carousel-indicators li {
+    width: 25px;
+    height: 6px;
+    border-radius: 0;
+    border: none;
+    background-color: white;
+}
+.main-slider .carousel-indicators .active { background-color: #CD1041; }

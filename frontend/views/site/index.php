@@ -1,11 +1,29 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\bootstrap\Carousel;
 
-$this->title = 'My Yii Application';
+$this->title = 'ООО "ТЕРА-ИНВЕСТ"';
 ?>
 <div class="site-index">
 
+    <?= Carousel::widget([
+        'id' => 'main-slider',
+        'controls' => false,
+        'options' => [ 'class' => 'main-slider' ],
+        'items' => [
+            [
+                'content' => '<img src="/icons/slide1.jpg" style="height:inherit; width: inherit;"/>',
+            ],
+            [
+                'content' => '<div style="width:inherit; height: inherit; background-color: #00275F"></div>'
+            ],
+            [
+                'content' => '<div style="width:inherit; height: inherit; background-color: #CD1041"></div>'
+            ],
+        ],
+    ]) ?>
+    <!--
     <div class="jumbotron">
         <h1>Congratulations!</h1>
 
@@ -13,7 +31,7 @@ $this->title = 'My Yii Application';
 
         <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
-
+    -->
     <div class="body-content">
 
         <div class="row">
