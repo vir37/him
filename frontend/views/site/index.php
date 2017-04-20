@@ -14,6 +14,11 @@ $this->title = 'ООО "ТЕРА-ИНВЕСТ"';
         'items' => [
             [
                 'content' => '<img src="/icons/slide1.jpg" style="height:inherit; width: inherit;"/>',
+                'caption' => '<div class="caption">
+                                <p>Всё в наличии,</p><p>либо под заказ</p>
+                                <div></div>
+                                <span>Описание наших преимуществ. Того, что мы можем для вас сделать. Чем можем помочь и т.д.</span>
+                              </div>',
             ],
             [
                 'content' => '<div style="width:inherit; height: inherit; background-color: #00275F"></div>'
