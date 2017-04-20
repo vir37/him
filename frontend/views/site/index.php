@@ -2,11 +2,13 @@
 
 /* @var $this yii\web\View */
 use yii\bootstrap\Carousel;
+use yii\helpers\Html, yii\helpers\Url;
 
-$this->title = 'ООО "ТЕРА-ИНВЕСТ"';
+$city = Yii::$app->params['city'];
+$this->title = 'ООО "ТЕРА-ИНВЕСТ"'.' - '.$city;
 ?>
 <div class="site-index">
-
+    <div class="row">
     <?= Carousel::widget([
         'id' => 'main-slider',
         'controls' => false,
@@ -14,6 +16,11 @@ $this->title = 'ООО "ТЕРА-ИНВЕСТ"';
         'items' => [
             [
                 'content' => '<img src="/icons/slide1.jpg" style="height:inherit; width: inherit;"/>',
+                'caption' => '<div class="caption">
+                                <p>Всё в наличии,</p><p>либо под заказ</p>
+                                <div></div>
+                                <span>Описание наших преимуществ. Того, что мы можем для вас сделать. Чем можем помочь и т.д.</span>
+                              </div>',
             ],
             [
                 'content' => '<div style="width:inherit; height: inherit; background-color: #00275F"></div>'
@@ -23,49 +30,20 @@ $this->title = 'ООО "ТЕРА-ИНВЕСТ"';
             ],
         ],
     ]) ?>
-    <!--
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
-    -->
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <?= Html::tag('h1', "Каталог химической продукции в г.$city", [ 'class' => 'main-h1'])?>
         </div>
-
+        <div class="row">
+            <?= Html::a('<img src="/icons/book_white.png"><p>ПЕРЕЙТИ В КАТАЛОГ <span>>></span></p>',
+                [ 'catalogue/index', 'city'=>$city ], [ 'class'=>"col-lg-3 col-md-3", 'id'=>"catalogue" ]) ?>
+        </div>
+        <div class="row main-links">
+            <?= Html::a('<p>О НАС</p>', [ 'site/about', 'city' => $city ]) ?>
+            <?= Html::a('<p>АКЦИИ</p>', [ 'stocks/index', 'city' => $city ]) ?>
+            <?= Html::a('<p>МЕНЕДЖЕРЫ</p>', [ 'site/managers', 'city' => $city ]) ?>
+            <?= Html::a('<p>КОНТАКТЫ</p>', [ 'site/contacts', 'city' => $city ]) ?>
+        </div>
     </div>
 </div>

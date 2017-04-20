@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 .wrap {
@@ -16,7 +17,8 @@ body {
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: #00275F;
+    color: white;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
@@ -126,7 +128,7 @@ a.desc:after {
     font-family: 'Fira Sans', sans-serif;
     font-feature-settings: 'liga';
     font-size: 14px;
-    background: none;
+    background: white;
     border:none;
     padding-top: 15px;
 }
@@ -177,6 +179,7 @@ a.desc:after {
 }
 .main-slider .carousel-inner { height: inherit; }
 .main-slider .carousel-inner .item { height: inherit; }
+.main-slider .carousel-indicators { bottom: 0; left: 90%; }
 .main-slider .carousel-indicators li {
     width: 25px;
     height: 6px;
@@ -185,3 +188,57 @@ a.desc:after {
     background-color: white;
 }
 .main-slider .carousel-indicators .active { background-color: #CD1041; }
+.main-slider .carousel-caption {
+    left: 1%;
+    bottom: -20px;
+}
+.main-slider .caption {
+    width: 50%;
+    height: 343px;
+    background-color: #CD1041;
+    opacity: 0.9;
+    text-align: left;
+    padding: 60px 20px 0 20px;
+}
+.main-slider .caption p { font-size: 50px; font-weight: 100; margin: 0; line-height: initial; }
+.main-slider .caption div { border-top: 1px solid; width: 40%; margin: 40px auto 35px; }
+.main-slider .caption span {
+    font-size: 14px;
+    font-weight: 400;
+}
+.main-h1 {
+    font-size: 30px;
+    text-align: center;
+    color: #00275F;
+}
+.main-links { padding: 30px 0; margin-top:40px;}
+.main-links a{
+    text-transform: capitalize;
+    color: #CD1041;
+    font-size: 20px;
+    font-weight: 300;
+    border:1px solid #CD1041;
+    margin: 20px 5px 20px 0;
+    padding: 26px 0;
+}
+.main-links p {
+    width: 140px;
+    text-align: center;
+    display: inline-block;
+}
+.main-links:hover {
+    text-decoration: none;
+    border-color: #00275F;
+}
+a#catalogue {
+    background-color: #00275F;
+    padding: 20px 0 0 0;
+    text-align: center;
+}
+a#catalogue p {
+    margin-top: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 100;
+    text-decoration: underline;
+}
