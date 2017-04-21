@@ -5,7 +5,7 @@ use yii\bootstrap\Carousel;
 use yii\helpers\Html, yii\helpers\Url;
 
 $city = Yii::$app->params['city'];
-$this->title = 'ООО "ТЕРА-ИНВЕСТ"'.' - '.$city->name;
+$this->title = "Химическая продукция в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
 ?>
 <div class="site-index">
     <div class="row">
@@ -35,13 +35,20 @@ $this->title = 'ООО "ТЕРА-ИНВЕСТ"'.' - '.$city->name;
         <div class="row">
             <?= Html::tag('h1', "Каталог химической продукции в г.{$city->name}", [ 'class' => 'main-h1'])?>
         </div>
-        <div class="row">
+        <div class="row direct-links">
+            <div class="col-lg-3 col-md-3" id="catalogue" >
             <?= Html::a('<img src="/icons/book_white.png"><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',
-                [ 'catalogue/index', 'city'=>$city->uri_name ], [ 'class'=>"col-lg-3 col-md-3", 'id'=>"catalogue" ]) ?>
+                [ 'catalogue/index', 'city'=>$city->uri_name ]) ?>
+            </div>
             <?php
                 $branches = \common\models\Catalogue::findOne(2);
-                foreach ($branches->getPopulateProducts(2) as $elem){
-
+                foreach ($branches->getPopulateProducts(2) as $elem) {
+                    $data = $this->render("product_elem", [
+                        'product' => $elem['product'],
+                        'category' => $elem['category'],
+                        'elem_class' => "product col-lg-2 col-md-2",
+                    ]);
+                    echo $data;
                 }
             ?>
         </div>

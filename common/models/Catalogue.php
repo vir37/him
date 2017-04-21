@@ -59,7 +59,7 @@ class Catalogue extends \yii\db\ActiveRecord
         $result = [];
         $categories = $this->getCategories()->limit($limit)->all();
         foreach ($categories as $category) {
-            $product = $category->getProduct()->limit(1)->all();
+            $product = $category->getProduct()->limit(1)->one();
             if ($product) {
                 $result[] = [ 'product' => $product, 'category' => $category];
             }

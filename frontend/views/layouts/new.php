@@ -64,7 +64,7 @@ $phone = "8 800 888 88 88";
     ]);
     NavBar::end();
     ?>
-
+    <?= $this->render('city_choose') ?>
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
