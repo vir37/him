@@ -13,6 +13,7 @@ if (is_array($model->catalogue))
     $catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
 else
     $catalogueList = ArrayHelper::map([$model->catalogue], 'id', 'name');
+$img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->icon) : '/images/no_logo.png';
 ?>
 
 <div class="category-form">
@@ -60,7 +61,7 @@ else
             <div class="row">
                 <?= $form->field($model, 'description', [
                     'options' => [ 'class' => 'form-group col-lg-12 col-md-12'],
-                    'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
+                    'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2' ],
                     'inputTemplate' => '<div class="col-lg-9 col-md-9">{input}</div>',
                 ])->widget(Quill::className(), [
                     'modules' => [
@@ -82,6 +83,20 @@ else
                         ['clean']
                     ]
                 ])?>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12">
+                    <?= Html::label('Иконка', null, [ 'class' => 'control-label col-lg-2 col-md-2' ]) ?>
+                    <div class="col-lg-3 col-md-3">
+                        <?= Html::img($img,[
+                            'style' => 'width: 150px',
+                            'alt' => 'NO PHOTO',
+                        ]) ?>
+                    </div>
+                    <?= $form->field($model, 'icon', [
+                        'options' => [ 'class' => 'col-lg-3 col-md-3'],
+                    ])->fileInput([ 'accept' => 'image/jpeg,image/png'])->label(false) ?>
+                </div>
             </div>
         </div>
     </div>

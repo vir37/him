@@ -74,10 +74,13 @@ class CategoryController extends Controller
         $model = new Category();
         $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (array_key_exists('create_n_stay', Yii::$app->request->post()))
-                return $this->redirect(['update', 'id' => $model->id]);
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (($file = UploadedFile::getInstance($model, 'icon')))
+                $model->icon = file_get_contents($file->tempName);
+            if ($model->save())
+                if (array_key_exists('create_n_stay', Yii::$app->request->post()))
+                    return $this->redirect(['update', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -98,8 +101,11 @@ class CategoryController extends Controller
         $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
         $imageUploader->objectId = $id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (($file = UploadedFile::getInstance($model, 'icon')))
+                $model->icon = file_get_contents($file->tempName);
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

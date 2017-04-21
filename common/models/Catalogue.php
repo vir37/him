@@ -53,4 +53,17 @@ class Catalogue extends \yii\db\ActiveRecord
     public function getCategories() {
         return $this->hasMany(Category::className(), ['catalogue_id' => 'id'])->orderBy(['list_position' => SORT_ASC]);
     }
+
+
+    public function getPopulateProducts($limit = 1){
+        $result = [];
+        $categories = $this->getCategories()->limit($limit)->all();
+        foreach ($categories as $category) {
+            $product = $category->getProduct()->limit(1)->all();
+            if ($product) {
+                $result[] = [ 'product' => $product, 'category' => $category];
+            }
+        }
+        return $result;
+    }
 }

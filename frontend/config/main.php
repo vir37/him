@@ -43,15 +43,19 @@ return [
             'enableStrictParsing' => true,
             'suffix' => '.html',
             'rules' => [
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:>' => '<controller>/<action>',
                 [
                     'pattern' => '<city:[\w-]+>',
                     'route' => 'site/index',
                     'suffix' => '/',
                     'normalizer' => false,
                 ],
-                '<city:[\w-]+>/<controller:[\w-]+>/<action:>' => '<controller>/<action>',
-                '<city:[\w-]+>/<controller:[\w-]+>' => '<controller>/index',
-                [ // Редиректное правило для переброски на дефолтны город
+                [
+                    'pattern' => '<city:[\w-]+>/<controller:[\w-]+>',
+                    'route' => '<controller>/index',
+                    'suffix' => '/',
+                ],
+                [ // Редиректное правило для переброски на дефолтный город
                     'class' => 'frontend\components\RedirectUrlRule',
                     'pattern' => '',
                     'route' => 'kzn/',

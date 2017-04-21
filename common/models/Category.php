@@ -55,6 +55,7 @@ class Category extends \yii\db\ActiveRecord
             'description' => 'Описание',
             'meta_desc' => 'SEO описание',
             'meta_keys' => 'SEO ключевые слова',
+            'icon' => 'Иконка',
         ];
     }
 

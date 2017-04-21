@@ -39,9 +39,9 @@ $phone = "8 800 888 88 88";
         ],
     ]);
     $menuItems = [
-        [ 'label' => $city, 'url' => '#', 'options' => [ 'class' => 'city-chooser']],
+        [ 'label' => $city->name, 'url' => '#', 'options' => [ 'class' => 'city-chooser']],
         '<li><a href="tel:'.$phone.'"><span class="phone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
-        [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city ], 'options' => [ 'class' => 'navbar-link']],
+        [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
         [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
     ];
     /*
