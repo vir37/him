@@ -8,10 +8,12 @@
 use common\models\City;
 use yii\helpers\Html;
 ?>
-<div class="city-choose">
+<div class="city-choose" style="display:none;">
+    <div id="cities" >
     <?php
         foreach (City::find()->all() as $city ){
             echo Html::a($city->name, [ "", 'city' => $city->uri_name]);
         }
     ?>
+    </div>
 </div>

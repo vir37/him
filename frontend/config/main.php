@@ -44,6 +44,8 @@ return [
             'suffix' => '.html',
             'rules' => [
                 '<city:[\w-]+>/<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>/<category:\d+>' => '<controller>/view',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
                 '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
                 [
                     'pattern' => '<city:[\w-]+>',

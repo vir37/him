@@ -2,10 +2,11 @@
 
 /* @var $this yii\web\View */
 use yii\bootstrap\Carousel;
-use yii\helpers\Html, yii\helpers\Url;
+use yii\helpers\Html;
 
 $city = Yii::$app->params['city'];
 $this->title = "Химическая продукция в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+//TODO: нужно сделать сохранение ИД каталога в сессии
 ?>
 <div class="site-index">
     <div class="row">
@@ -38,7 +39,7 @@ $this->title = "Химическая продукция в {$city->name} - ОО�
         <div class="row direct-links">
             <div class="col-lg-3 col-md-3" id="catalogue" >
             <?= Html::a('<img src="/icons/book_white.png"><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',
-                [ 'catalogue/index', 'city'=>$city->uri_name ]) ?>
+                [ 'catalogue/view', 'city'=>$city->uri_name, 'id' => 1 /* дефолтный каталог */ ]) ?>
             </div>
             <?php
                 $branches = \common\models\Catalogue::findOne(2);

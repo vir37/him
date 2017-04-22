@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3af4497f82ed10fafa2e2b3a80305b54",
-    "content-hash": "7e0f38858cb8a4c6fd894689a89bcc40",
+    "hash": "1188227d22924d71425dc19b812992f8",
+    "content-hash": "e94ef336e1866a41c0f039a45b36c169",
     "packages": [
         {
             "name": "bizley/quill",

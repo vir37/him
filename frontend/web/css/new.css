@@ -164,7 +164,7 @@ a.desc:after {
     left: -10px;
 }
 .city-chooser { margin-right: 180px; }
-.city-chooser a { display: inline-block !important; text-decoration: underline; }
+.city-chooser a { display: inline-block !important; text-decoration: underline; text-transform: uppercase; }
 .city-chooser:before {
     content: url('/icons/location.png');
     width: 8px;
@@ -172,6 +172,13 @@ a.desc:after {
     position: relative;
     right: -20px;
 }
+.city-choose {
+    display: inline-block; text-decoration: none; text-transform: uppercase;
+    min-height: 120px;
+    position: fixed;
+    border: 1px solid #02275E; padding: 5px; background: #D7E0E3; border-radius: 5px;
+}
+.city-choose a { padding: 10px 20px; }
 /*   Slider on main  */
 .main-slider {
     height: 470px;
@@ -252,3 +259,36 @@ a.desc:after {
 }
 .direct-links .product { background-color: #D7E0E3; }
 .direct-links .product a { color: #000000; font-weight: 300; }
+/* Catalogue */
+.ui-accordion-content {
+    padding:0 !important;
+    background-color: #F2F2F2 !important;
+    border: none !important;
+}
+.ui-widget-content {
+    background: none;
+}
+.ui-accordion .ui-accordion-header { font-size: 21px; font-family: "Fira Sans", sans-serif; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background-color: transparent ;
+    background-image: none;
+    border: none !important;
+}
+.ui-state-active, .ui-state-active .ui-state-hover {
+    background-color: #CD1041 !important;
+    color: white !important;
+    border: none !important;
+}
+.ui-state-hover { background-color: #F2F2F2; }
+.catalogue-accordion a {
+    text-decoration: none;
+    text-transform: uppercase;
+    outline: none !important;
+    border-radius: 0;
+}
+.ui-accordion-header.catalogue-accordion-content {
+    text-transform: none;
+    font-size: 17px;
+    font-weight: 300;
+    border:1px solid #D7E0E3;
+}

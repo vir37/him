@@ -18,7 +18,7 @@ $phone = "8 800 888 88 88";
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
@@ -39,7 +39,8 @@ $phone = "8 800 888 88 88";
         ],
     ]);
     $menuItems = [
-        [ 'label' => $city->name, 'url' => '#', 'options' => [ 'class' => 'city-chooser']],
+        [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser']],
+        $this->render('_city_choose'),
         '<li><a href="tel:'.$phone.'"><span class="phone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
         [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
         [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
@@ -62,11 +63,12 @@ $phone = "8 800 888 88 88";
         'options' => ['class' => 'navbar-nav navbar-right navbar-nav-tera'],
         'items' => $menuItems,
     ]);
+    //echo $this->render('city_choose');
     NavBar::end();
     ?>
-    <?= $this->render('city_choose') ?>
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => [ 'label' => 'Главная', 'url' => Yii::$app->homeUrl ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
@@ -77,6 +79,7 @@ $phone = "8 800 888 88 88";
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ" <?= date('Y') ?></p>
+        <p class="pull-right"><?= $city->fake_address ?></p>
     </div>
 </footer>
 
