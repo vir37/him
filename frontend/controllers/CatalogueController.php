@@ -74,6 +74,9 @@ class CatalogueController extends Controller{
         $categoryTree = TreeHelper::createTree($catDataProvider);
         return $this->render('view', [
             'categories' => $categoryTree,
+            'catalogue' => $id,
+            'catalogue_type1' => 1,     // ИД каталога общего типа
+            'catalogue_type2' => 2,     // ИД отраслевого кталога
         ]);
     }
 } 

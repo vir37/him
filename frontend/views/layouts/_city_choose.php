@@ -12,7 +12,7 @@ use yii\helpers\Html;
     <div id="cities" >
     <?php
         foreach (City::find()->all() as $city ){
-            echo Html::a($city->name, [ "", 'city' => $city->uri_name]);
+            echo Html::a($city->name, [ "site/index", 'city' => $city->uri_name]);
         }
     ?>
     </div>
