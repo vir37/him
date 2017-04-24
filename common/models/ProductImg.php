@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "product_img".
@@ -16,7 +19,7 @@ use Yii;
  *
  * @property Product $product
  */
-class ProductImg extends \yii\db\ActiveRecord
+class ProductImg extends ActiveRecord
 {
 
     const STATUS_MAIN = 1;
@@ -28,6 +31,20 @@ class ProductImg extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'product_img';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_add', 'date_upd'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_upd'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

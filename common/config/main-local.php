@@ -3,7 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=him',
+            'dsn' => 'mysql:host=localhost;dbname=terainvest_him',
             'username' => 'him',
             'password' => 'HimiK',
             'charset' => 'utf8',

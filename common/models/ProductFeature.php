@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "product_feature".
@@ -17,7 +20,7 @@ use Yii;
  * @property Feature $feature
  * @property Product $product
  */
-class ProductFeature extends \yii\db\ActiveRecord
+class ProductFeature extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -25,6 +28,20 @@ class ProductFeature extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'product_feature';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['upd_date'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['upd_date'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

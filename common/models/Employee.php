@@ -4,6 +4,9 @@ namespace common\models;
 
 use Yii;
 use common\models\User;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "employee".
@@ -18,7 +21,7 @@ use common\models\User;
  * @property integer $is_chief
  * @property string $create_dt
  */
-class Employee extends \yii\db\ActiveRecord
+class Employee extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -26,6 +29,19 @@ class Employee extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'employee';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_dt'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

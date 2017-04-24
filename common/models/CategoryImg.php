@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "category_img".
@@ -16,7 +19,7 @@ use Yii;
  *
  * @property Category $category
  */
-class CategoryImg extends \yii\db\ActiveRecord
+class CategoryImg extends ActiveRecord
 {
     const STATUS_MAIN = 1;
     const STATUS_DEFAULT = 0;
@@ -28,6 +31,19 @@ class CategoryImg extends \yii\db\ActiveRecord
         return 'category_img';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_add', 'date_upd'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_upd'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
