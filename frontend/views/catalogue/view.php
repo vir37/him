@@ -9,12 +9,19 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 $city = Yii::$app->params['city'];
-$this->title = "Каталог химической продукции в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+if ($current_category) {
+    $this->title = "{$current_category->name} в г.{$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $this->registerMetaTag([ 'name' => 'description', 'content' => $current_category->meta_desc]);
+    $this->registerMetaTag([ 'name' => 'keywords', 'content' => $current_category->meta_keys]);
+} else {
+    $this->title = "Каталог химической продукции в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $this->registerMetaTag([ 'name' => 'description', 'content' => $this->title]);
+}
 $this->params['breadcrumbs'][] = 'Каталог';
 ?>
 <div class="catalogue-index">
     <div class="row">
-        <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 60000 ]); ?>
+        <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 6000 ]); ?>
         <div class="col-lg-3 col-md-3 catalogue">
             <p>Формирование каталога:</p>
             <div class="row">

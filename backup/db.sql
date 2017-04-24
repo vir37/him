@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 21 2017 г., 16:52
+-- Время создания: Апр 24 2017 г., 17:05
 -- Версия сервера: 5.6.21-log
 -- Версия PHP: 5.6.22
 
@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `him`
 --
-CREATE DATABASE IF NOT EXISTS `him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `him`;
+CREATE DATABASE IF NOT EXISTS `terainvest_him` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `terainvest_him`;
 
 -- --------------------------------------------------------
 
@@ -163,8 +163,8 @@ CREATE TABLE `category_img` (
   `category_id` int(10) UNSIGNED NOT NULL COMMENT 'Идентификатор категории',
   `name` varchar(128) NOT NULL COMMENT 'Наименование файла изображения',
   `is_main` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак главной фотографии',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+  `date_add` datetime NOT NULL COMMENT 'Дата создания',
+  `date_upd` datetime NOT NULL COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Картинки категорий';
 
 --
@@ -195,7 +195,8 @@ INSERT INTO `category_product` (`category_id`, `product_id`, `list_position`) VA
 (1, 2, 1),
 (2, 1, 1),
 (2, 2, 2),
-(6, 1, 1);
+(6, 1, 1),
+(10, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,8 @@ CREATE TABLE `city` (
 --
 
 INSERT INTO `city` (`id`, `region_id`, `name`, `uri_name`, `index`, `latitude`, `longitude`, `fake_address`) VALUES
-(1, 143, 'Казань', 'kzn', 420000, NULL, NULL, '');
+(1, 143, 'Казань', 'kzn', 420000, NULL, NULL, 'пр.Победы, д.100'),
+(2, 129, 'Уфа', 'ufa', 430001, NULL, NULL, 'ул.Ленина, д.1');
 
 -- --------------------------------------------------------
 
@@ -236,7 +238,7 @@ CREATE TABLE `employee` (
   `email` varchar(128) DEFAULT NULL COMMENT 'Адрес электронной почты',
   `phone` varchar(64) DEFAULT NULL COMMENT 'Телефон',
   `is_chief` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак руководителя',
-  `create_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Время создания'
+  `create_dt` datetime NOT NULL COMMENT 'Время создания'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Сотрудники';
 
 --
@@ -384,7 +386,7 @@ CREATE TABLE `product_feature` (
   `product_id` int(10) UNSIGNED NOT NULL COMMENT 'Ссылка на товар',
   `value_numeric` float DEFAULT NULL COMMENT 'Числовое значение',
   `value_string` varchar(255) DEFAULT NULL COMMENT 'Строковое значение',
-  `upd_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+  `upd_date` datetime NOT NULL COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Значения характеристик товара';
 
 --
@@ -406,8 +408,8 @@ CREATE TABLE `product_img` (
   `product_id` int(10) UNSIGNED NOT NULL COMMENT 'Идентификатор товара',
   `name` varchar(128) NOT NULL COMMENT 'Наименование файла изображения',
   `is_main` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Признак главной фотографии',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
-  `date_upd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления'
+  `date_add` datetime NOT NULL COMMENT 'Дата создания',
+  `date_upd` datetime NOT NULL COMMENT 'Дата обновления'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Изображения товаров';
 
 --
@@ -415,9 +417,9 @@ CREATE TABLE `product_img` (
 --
 
 INSERT INTO `product_img` (`id`, `product_id`, `name`, `is_main`, `date_add`, `date_upd`) VALUES
-(3, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_1.png', 0, '2017-03-26 21:18:18', '2017-03-27 19:57:41'),
-(4, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_2.jpg', 0, '2017-03-26 21:19:15', '2017-03-27 19:58:07'),
-(5, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_3.png', 1, '2017-03-26 21:23:38', '2017-03-27 19:58:08');
+(3, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_1.png', 0, '2017-03-26 21:18:18', '2017-03-27 22:57:41'),
+(4, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_2.jpg', 0, '2017-03-26 21:19:15', '2017-03-27 22:58:07'),
+(5, 1, 'e53a4f5e1bdf3a14f066ef97010c5d53_3.png', 1, '2017-03-26 21:23:38', '2017-03-27 22:58:08');
 
 -- --------------------------------------------------------
 
@@ -837,7 +839,7 @@ ALTER TABLE `category_img`
 -- AUTO_INCREMENT для таблицы `city`
 --
 ALTER TABLE `city`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `employee`
 --

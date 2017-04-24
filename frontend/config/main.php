@@ -43,10 +43,6 @@ return [
             'enableStrictParsing' => true,
             'suffix' => '.html',
             'rules' => [
-                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>/<category:\d+>' => '<controller>/<action>',
-                '<city:[\w-]+>/<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
-                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
-                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
                 [
                     'pattern' => '<city:[\w-]+>',
                     'route' => 'site/index',
@@ -58,6 +54,10 @@ return [
                     'route' => '<controller>/index',
                     'suffix' => '/',
                 ],
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>/<category:\d+>' => '<controller>/<action>',
+                '<city:[\w-]+>/<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
                 [ // Редиректное правило для переброски на дефолтный город
                     'class' => 'frontend\components\RedirectUrlRule',
                     'pattern' => '',
