@@ -12,7 +12,7 @@ use common\widgets\Alert;
 
 NewAppAsset::register($this);
 $city = \Yii::$app->params['city'];
-$phone = "8 800 888 88 88";
+$phone = \Yii::$app->params['phone']; //TODO: сохранять в настройках, дергать оттуда
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

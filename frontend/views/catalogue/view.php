@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
             </div>
             <div class="row">
                 <?php
+                    // Отрисовка дерева категорий
                     $items = [];
                     $i = -1;
                     $active = false;
@@ -74,6 +75,20 @@ $this->params['breadcrumbs'][] = 'Каталог';
             </div>
         </div>
         <div class="col-lg-9 col-md-9 catalogue-content">
+            <div class="row">
+                <h1><?= $this->title?></h1>
+            </div>
+            <div class="row">
+                <?php
+                    if ($current_category) {
+                        foreach ($current_category->product as $product){
+                            echo '<div class="col-lg-6 col-md-6">';
+                            echo $this->render('_product_card', [ 'product' => $product ]);
+                            echo '</div>';
+                        }
+                    }
+                ?>
+            </div>
 
         </div>
         <?php Pjax::end(); ?>

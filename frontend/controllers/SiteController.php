@@ -215,4 +215,11 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    /*
+     * Страница контактов
+     */
+    public function actionContacts(){
+        return $this->render('contacts');
+    }
 }

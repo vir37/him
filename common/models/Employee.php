@@ -37,7 +37,7 @@ class Employee extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_dt'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt'],
                 ],
                 'value' => new Expression('NOW()'),
             ],
