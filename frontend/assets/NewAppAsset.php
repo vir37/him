@@ -15,6 +15,7 @@ class NewAppAsset extends AssetBundle
         'css/new.css',
     ];
     public $js = [
+        'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
         'js/navbar.js',
     ];
     public $depends = [

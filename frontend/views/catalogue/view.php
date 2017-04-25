@@ -75,9 +75,9 @@ $this->params['breadcrumbs'][] = 'Каталог';
             </div>
         </div>
         <div class="col-lg-9 col-md-9 catalogue-content">
-            <div class="row">
+            <header class="row">
                 <h1><?= $this->title?></h1>
-            </div>
+            </header>
             <div class="row">
                 <?php
                     if ($current_category) {

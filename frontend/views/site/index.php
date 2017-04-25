@@ -33,9 +33,9 @@ $this->title = "Химическая продукция в {$city->name} - ОО�
     ]) ?>
     </div>
     <div class="body-content">
-        <div class="row">
+        <header class="row">
             <?= Html::tag('h1', "Каталог химической продукции в г.{$city->name}", [ 'class' => 'main-h1'])?>
-        </div>
+        </header>
         <div class="row direct-links">
             <div class="col-lg-3 col-md-3" id="catalogue" >
             <?= Html::a('<img src="/icons/book_white.png"><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',

@@ -8,7 +8,7 @@ use yii\helpers\Html,
 use yii\bootstrap\ActiveForm;
 use common\models\User;
 $users = User::find()->all();
-$img = strlen($model->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->photo) : '/images/no_photo.png';
+$img = strlen($model->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->photo) : '/icons/no_photo.png';
 ?>
 
 <div class="employee-form">

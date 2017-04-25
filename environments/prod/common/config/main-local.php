@@ -3,9 +3,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
-            'username' => 'root',
-            'password' => '',
+            'dsn' => 'mysql:host=localhost;dbname=terainvest_him',
+            'username' => 'terainvest',
+            'password' => '1cf51ca0',
             'charset' => 'utf8',
         ],
         'mailer' => [
