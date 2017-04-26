@@ -10,7 +10,7 @@ $this->title = $model->fio." ({$model->id})";
 $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
 $this->params['breadcrumbs'][] = ['label' => 'Сотрудники', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$img = strlen($model->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->photo) : '/images/no_photo.png';
+$img = strlen($model->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->photo) : '/icons/no_photo.png';
 
 ?>
 <div class="employee-view">

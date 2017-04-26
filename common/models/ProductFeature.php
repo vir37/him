@@ -76,6 +76,23 @@ class ProductFeature extends ActiveRecord
         ];
     }
 
+    /*
+     * Возвращает значение характеристики
+     */
+    public function value(){
+        switch ($this->feature->type_id) {
+            case 1: return $this->value_numeric; break;
+            case 2: return $this->value_string; break;
+            default: return '';
+        }
+    }
+
+    public function uom(){
+        if (($uom = $this->feature->uom))
+            return $uom;
+        return '';
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

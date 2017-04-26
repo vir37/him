@@ -98,6 +98,10 @@ class Product extends \yii\db\ActiveRecord
         #return $this->hasOne(Category::className(), [ 'id' => 'category_id' ]);
     }
 
+    public function getFeatures(){
+        return $this->hasMany(ProductFeature::className(), ['product_id' => 'id' ]);
+    }
+
     public function addImage($file_name, $isMain) {
         $image = new ProductImg();
         $image->product_id = $this->id;

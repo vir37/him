@@ -71,7 +71,10 @@ return [
 
     ],
     'params' => $params,
+/*
     'aliases' => [
         '@images' => '@frontend/web/images',
+        '@icons' => '@frontend/web/icons'
     ],
+*/
 ];

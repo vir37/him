@@ -67,8 +67,9 @@ class EmployeeController extends Controller
         $model = new Employee();
 
         if ($model->load(Yii::$app->request->post())) {
-            if (($file = UploadedFile::getInstance($model, 'photo')->tempName))
-                $model->photo = file_get_contents($file);
+            $file = UploadedFile::getInstance($model, 'photo');
+            if ($file && $file->tempName)
+                $model->photo = file_get_contents($file->tempName);
             if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
         }

@@ -38,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'photo',
                 'format' => 'raw',
                 'value' => function($data) {
-                    return Html::img('data:image/jpeg;charset=utf-8;base64,' . base64_encode($data->photo), ['style' => 'width:100px;']);
+                    $img = strlen($data->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($data->photo) : '/icons/no_photo.png';
+                    return Html::img($img, ['style' => 'width:100px;']);
                 },
             ],
             [

@@ -10,11 +10,11 @@ use yii\widgets\Pjax;
 
 $city = Yii::$app->params['city'];
 if ($current_category) {
-    $this->title = "{$current_category->name} в г.{$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $this->title = "{$current_category->name} в г.{$city->name} | ООО \"ТЕРА-ИНВЕСТ\"";
     $this->registerMetaTag([ 'name' => 'description', 'content' => $current_category->meta_desc]);
     $this->registerMetaTag([ 'name' => 'keywords', 'content' => $current_category->meta_keys]);
 } else {
-    $this->title = "Каталог химической продукции в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $this->title = "Каталог химической продукции в {$city->name} | ООО \"ТЕРА-ИНВЕСТ\"";
     $this->registerMetaTag([ 'name' => 'description', 'content' => $this->title]);
 }
 $this->params['breadcrumbs'][] = 'Каталог';
@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = 'Каталог';
         <div class="col-lg-3 col-md-3 catalogue">
             <p>Формирование каталога:</p>
             <div class="row">
-                <?= Html::a('Карточки', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
+                <?= Html::a('Каталог', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
                     [ 'class' => "col-lg-6 col-md-6 catalogue-type" ]) ?>
-                <?= Html::a('Список', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
+                <?= Html::a('Отрасли', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
                     [ 'class' => "col-lg-6 col-md-6 catalogue-type" ]) ?>
             </div>
             <div class="row">
