@@ -26,7 +26,6 @@ $img = $img ? \common\helpers\ImageHelper::getImagePath($img->name) : \common\he
         <div class="row"> <!-- Кнопка Подробнее -->
             <a href="#" class="product-button">Подробности</a>
         </div>
-
     </div>
     <div class="col-lg-7 col-md-7 right-column">
         <div class="row">

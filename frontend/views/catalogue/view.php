@@ -89,17 +89,31 @@ $this->params['breadcrumbs'][] = 'Каталог';
                     }
                 ?>
             </div>
-
         </div>
         <?php Pjax::end(); ?>
     </div>
 </div>
 <script type="text/javascript">
+    function alignBlockHeight() {
+        // выравниваем высоту блоков
+        var maxHeight = 0;
+        $('.product-card').each(function(){
+            var height = $(this).height();
+            maxHeight = Math.max(maxHeight, height);
+            $(this).on('trigger.align', '.aligner', function(event){
+                $(this).height(maxHeight-height);
+            });
+        });
+        $('.aligner').trigger('trigger.align');
+    }
+
     window.onload = function() {
         $(document).on('click', '.catalogue-accordion a', function (event) {
             var container = $(this).closest('[data-pjax-container]');
             $.pjax({url: this.href, container: container });
             event.preventDefault();
         });
+        alignBlockHeight();
+        $(document).on('pjax:end', alignBlockHeight);
     };
 </script>
