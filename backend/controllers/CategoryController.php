@@ -26,7 +26,6 @@ class CategoryController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
                     'image-upload' => ['POST'],
                 ],
             ],
@@ -73,7 +72,6 @@ class CategoryController extends Controller
     {
         $model = new Category();
         $imageUploader = new ImageUploadForm('common\models\CategoryImg', 'category_id');
-
         if ($model->load(Yii::$app->request->post())) {
             if (($file = UploadedFile::getInstance($model, 'icon')))
                 $model->icon = file_get_contents($file->tempName);
@@ -82,6 +80,7 @@ class CategoryController extends Controller
                     return $this->redirect(['update', 'id' => $model->id]);
                 return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $model->catalogue_id = Yii::$app->request->get('catalogue_id', null);
             return $this->render('create', [
                 'model' => $model,
                 'imageUploader' => $imageUploader,

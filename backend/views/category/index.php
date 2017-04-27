@@ -6,29 +6,39 @@ use yii\bootstrap\ButtonDropdown;
 use yii\widgets\Pjax;
 use execut\widget\TreeView;
 use yii\web\JsExpression;
+use yii\helpers\Url;
 
-$this->title = 'Дерево категорий';
+$this->title = 'Категории';
 $this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
 $this->params['breadcrumbs'][] = $this->title;
 $label = 'Фильтр по каталогам';
 $class = '';
-if ($catalogue)
+$url_params = [];
+if ($catalogue) {
+    $url_params['catalogue_id'] = $catalogue->id;
     foreach ($filter_items as $item)
         if ($item['id'] == $catalogue->id) {
             $label = $item['label'];
             $class = 'selected';
         }
+}
 $onSelect = new JsExpression(<<<JS
 function (ev, item) {
-    console.log(item);
-    console.log(ev);
+    $("#button-update").each(function(){
+        $(this).removeAttr('disabled');
+        $(this).attr('href', item.href + '/update?id=' + item.id);
+    });
+    $("#button-delete").each(function(){
+        $(this).removeAttr('disabled');
+        $(this).attr('href', item.href + '/delete?id=' + item.id);
+    });
 }
 JS
 );
 ?>
 
 <div class="category-index">
-    <h3><?= Html::encode($this->title) ?></h3>
+    <h3>Дерево категорий</h3>
     <?php Pjax::begin(['enablePushState' => true, 'enableReplaceState' => true]); ?>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -44,9 +54,10 @@ JS
             ])?>
         </div>
     </div>
-    <?= TreeView::widget([
-                'data' => $model->makeTree($dataProvider,
-                    []),
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <?= TreeView::widget([
+                'data' => $model->makeTree($dataProvider, [ 'href' => Url::to(['/category'])]),
                 'header' => 'Дерево категорий',
                 'size' => TreeView::SIZE_MIDDLE,
                 'clientOptions' => [
@@ -57,6 +68,31 @@ JS
 //                    'expandIcon' => 'glyphicon glyphicon-folder-close',
                     'emptyIcon' => 'glyphicon glyphicon-tint',
                 ],
-    ])?>
+            ])?>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <?= Html::a('Добавить', array_merge(['/category/create'], $url_params), [
+                        'class' => 'btn btn-default',
+                        'title' => 'Добавить новую категорию'
+                    ]) ?>
+                    <?= Html::a('Редактировать', ['#'], [
+                        'class' => 'btn btn-default',
+                        'disabled' => true,
+                        'id' => 'button-update',
+                        'title' => 'Редактировать категорию'
+                    ]) ?>
+                    <?= Html::a('Удалить', ['#'], [
+                        'class' => 'btn btn-danger',
+                        'data-confirm' => 'Вы действительно хотите удалить?',
+                        'disabled' => true,
+                        'id' => 'button-delete',
+                        'title' => 'Удалить категорию'
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php Pjax::end(); ?>
 </div>

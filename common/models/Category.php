@@ -74,11 +74,6 @@ class Category extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getCatalogue() {
-        if (is_null($this->catalogue_id)) {
-            #$res = Catalogue::find();
-            #return $res->all();
-            return Catalogue::find();
-        }
         return $this->hasOne(Catalogue::className(), [ 'id' => 'catalogue_id' ]);
     }
 

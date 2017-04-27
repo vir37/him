@@ -4,13 +4,14 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use bizley\quill\Quill;
+use common\models\Catalogue;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 
-if (is_array($model->catalogue))
-    $catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
+if (is_null($model->catalogue_id))
+    $catalogueList = ArrayHelper::map(Catalogue::find()->all(), 'id', 'name');
 else
     $catalogueList = ArrayHelper::map([$model->catalogue], 'id', 'name');
 $img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->icon) : '/icons/no_image.png';
@@ -37,16 +38,18 @@ $img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . bas
             <div class="row">
                 <?= $form->field($model, 'catalogue_id', [
                     'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5'],
-                    'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>',
+                    'inputTemplate' => '<div class="col-lg-7 col-md-7">{input}</div>
+                        <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>',
                     'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
                 ])->dropDownList( $catalogueList, [
                     'id' => 'catalogue_select',
-                    'disabled' => $model->catalogue_id,
+                    'disabled' => $model->id,
                     'data-target' => '#parent_category',   // Целевой контейнер, который будет заполняться списком категорий
+                    'data-url' => '/category/list',    // URL для AJAX-запроса данных
                     'prompt' => '...',
                     'options' => $model->catalogue_id ? ["$model->catalogue_id" => ["selected" => true]] : [],
                 ])->label('Каталог') ?>
-                <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>
+
                 <?= $form->field($model, 'parent_id', [
                     'labelOptions' => ['class' => 'control-label col-lg-4 col-md-5'],
                     'inputTemplate' => '<div class="col-lg-6 col-md-5">{input}</div>',

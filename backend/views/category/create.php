@@ -6,10 +6,10 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
-
+$url_params = !is_null($model->catalogue_id) ? [ 'catalogue_id' => $model->catalogue_id ] : [];
 $this->title = 'Новая категория';
 $this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
-$this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => array_merge(['index'], $url_params)];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-create">
