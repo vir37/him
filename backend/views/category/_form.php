@@ -13,7 +13,7 @@ if (is_array($model->catalogue))
     $catalogueList = ArrayHelper::map($model->catalogue, 'id', 'name');
 else
     $catalogueList = ArrayHelper::map([$model->catalogue], 'id', 'name');
-$img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->icon) : '/images/no_logo.png';
+$img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->icon) : '/icons/no_image.png';
 ?>
 
 <div class="category-form">

@@ -361,3 +361,6 @@ h2 {
 .site-contacts .chief { font-size: 30px; font-weight: 300; }
 .site-contacts .sales { font-size: 19px;}
 .site-contacts .partners-card a { font-size: 15px; color: #00275F; }
+
+.ql-editor { text-align: justify !important; color: #00275F; }
+.ql-editor p { text-indent: 2em; }

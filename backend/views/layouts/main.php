@@ -17,6 +17,7 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -38,7 +39,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Главная', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -46,17 +47,18 @@ AppAsset::register($this);
         array_push($menuItems,
             [
                 'label' => 'Каталог',
-                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                //'visible' => !is_null(Yii::$app->authManager->getAssignment('manager', Yii::$app->user->getId())),
+                'visible' => Yii::$app->user->can('manager'),
                 'url' => ['catalogue/']
             ],
             [
                 'label' => 'Справочники',
-                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                'visible' => Yii::$app->user->can('manager'),
                 'url' => ['directory/']
             ],
             [
                 'label' => 'Настройки',
-                'visible' => !is_null(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->getId())),
+                'visible' => Yii::$app->user->can('manager'),
                 'url' => ['setting/']
             ]
         );
@@ -78,6 +80,7 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => [ 'label' => 'Главная', 'url' => Yii::$app->homeUrl ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
