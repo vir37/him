@@ -42,7 +42,7 @@ AppAsset::register($this);
         ['label' => 'Главная', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
         array_push($menuItems,
             [
