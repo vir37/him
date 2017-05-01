@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
                     if ($current_category) {
                         foreach ($current_category->product as $product){
                             echo '<div class="col-lg-6 col-md-6 col-sm-12">';
-                            echo $this->render('_product_card', [ 'product' => $product ]);
+                            echo $this->render('_product_card', [ 'product' => $product, 'city' => $city ]);
                             echo '</div>';
                         }
                     }

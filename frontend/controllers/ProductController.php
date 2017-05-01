@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use frontend\components\UrlManagerCityBehavior;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\Product;
 
 
 class ProductController extends Controller {
@@ -46,6 +47,9 @@ class ProductController extends Controller {
 
 
     public function actionView($id){
-        return $this->render('view');
+        if (($model = Product::findOne($id)) !== null)
+            return $this->render('view', [ 'model' => $model]);
+        else
+            throw new NotFoundHttpException();
     }
 }

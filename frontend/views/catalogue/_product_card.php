@@ -24,7 +24,8 @@ $img = $img ? \common\helpers\ImageHelper::getImagePath($img->name) : \common\he
             <a href="#" class="product-button red">Купить</a>
         </div>
         <div class="row"> <!-- Кнопка Подробнее -->
-            <a href="#" class="product-button">Подробности</a>
+            <?= Html::a('Подробности', [ 'product/view', 'city' => $city->uri_name, 'id' =>$product->id ],
+                [ 'class' => 'product-button']) ?>
         </div>
     </div>
     <div class="col-lg-7 col-md-7 col-sm-8 right-column">
