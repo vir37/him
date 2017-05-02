@@ -54,7 +54,7 @@ return [
                     'route' => '<controller>/index',
                     'suffix' => '/',
                 ],
-                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>/<category:\d+>' => '<controller>/<action>',
+                '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<parent_id:\d+>/<id:\d+>' => '<controller>/<action>',
                 '<city:[\w-]+>/<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
                 '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
                 '<city:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',

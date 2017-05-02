@@ -11,8 +11,11 @@ use yii\filters\VerbFilter;
 use frontend\components\UrlManagerCityBehavior;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\models\Product;
-
+use common\models\Product,
+    common\models\Category,
+    common\models\Catalogue;
+use yii\data\ActiveDataProvider;
+use common\helpers\TreeHelper;
 
 class ProductController extends Controller {
     public $layout = "new";
@@ -46,10 +49,22 @@ class ProductController extends Controller {
     }
 
 
-    public function actionView($id){
-        if (($model = Product::findOne($id)) !== null)
-            return $this->render('view', [ 'model' => $model]);
-        else
+    public function actionView($parent_id, $id){
+        $category = Category::findOne($parent_id);
+        $model = Product::findOne($id);
+
+        if (!$model or !$category)
             throw new NotFoundHttpException();
+
+        $catDataProvider = new ActiveDataProvider();
+        $catDataProvider->query = $category->catalogue->getCategories();
+        return $this->render('view', [
+            'model' => $model,
+            'categories' => TreeHelper::createTree($catDataProvider),
+            'catalogue' => $category->catalogue->id,
+            'catalogue_type1' => Catalogue::CATALOGUE_TYPE1,     // ИД каталога общего типа
+            'catalogue_type2' => Catalogue::CATALOGUE_TYPE2,     // ИД отраслевого каталога
+            'current_category' => $category,
+       ]);
     }
 }

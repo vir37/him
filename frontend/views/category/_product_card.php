@@ -7,9 +7,10 @@
  *                                       Шаблон одной карточки
  */
 use yii\helpers\Html;
+use \common\helpers\ImageHelper;
 
 $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
-$img = $img ? \common\helpers\ImageHelper::getImagePath($img->name) : \common\helpers\ImageHelper::$no_image;
+$img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
 ?>
 <div class="row product-card">
     <div class="col-lg-12 col-md-12">
@@ -24,8 +25,8 @@ $img = $img ? \common\helpers\ImageHelper::getImagePath($img->name) : \common\he
             <a href="#" class="product-button red">Купить</a>
         </div>
         <div class="row"> <!-- Кнопка Подробнее -->
-            <?= Html::a('Подробности', [ 'product/view', 'city' => $city->uri_name, 'id' =>$product->id ],
-                [ 'class' => 'product-button']) ?>
+            <?= Html::a('Подробности', [ 'product/view', 'city' => $city->uri_name, 'id' =>$product->id, 'parent_id' => $category ],
+                [ 'class' => 'product-button', 'data-pjax' => 0]) ?>
         </div>
     </div>
     <div class="col-lg-7 col-md-7 col-sm-8 right-column">

@@ -66,22 +66,4 @@ class CatalogueController extends Controller{
     {
         return $this->render('index');
     }
-
-    public function actionView($id) {
-        if (($catalogue = Catalogue::findOne($id)) == null)
-            throw new NotFoundHttpException();
-        if (($current_category = \Yii::$app->request->get('category', null)) !== null){
-            $current_category = Category::findOne($current_category);
-        }
-        $catDataProvider = new ActiveDataProvider();
-        $catDataProvider->query = $catalogue->getCategories();
-        $categoryTree = TreeHelper::createTree($catDataProvider);
-        return $this->render('view', [
-            'categories' => $categoryTree,
-            'catalogue' => $id,
-            'catalogue_type1' => 1,     // ИД каталога общего типа
-            'catalogue_type2' => 2,     // ИД отраслевого каталога
-            'current_category' => $current_category,
-        ]);
-    }
-} 
+}

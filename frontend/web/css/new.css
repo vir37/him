@@ -305,6 +305,13 @@ h2 {
     border: none !important;
 }
 .ui-state-hover { background-color: #F2F2F2; }
+.catalogue-accordion .ui-accordion-header {
+    /*padding: 0.5em 0.5em 0.5em 0.7em;*/
+    padding: 0;
+}
+.catalogue-accordion a {
+    padding: 0.5em 0.5em 0.5em 0.7em !important;
+}
 .catalogue-accordion div, .catalogue-accordion a {
     text-decoration: none;
     text-transform: uppercase;
@@ -320,7 +327,7 @@ h2 {
 }
 .subcategory-active { background-color: #D7E0E3; }
 
-.catalogue-content { padding-left: 25px}
+.catalogue-content { padding-left: 25px; }
 /*** Product card ***/
 .product-card {
     margin: 0 -10px 10px;
@@ -371,7 +378,7 @@ h2 {
       background-color: #D7E0E3;
 }
 .product-view .ql-editor { padding: 0; }
-
+.product-view .ui-state-disabled { opacity: 0.9 !important; }
 
 .ql-editor { text-align: justify !important; color: #00275F; }
 .ql-editor p { text-indent: 2em; }

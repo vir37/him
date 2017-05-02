@@ -15,6 +15,9 @@ use Yii;
  */
 class Catalogue extends \yii\db\ActiveRecord
 {
+    const CATALOGUE_TYPE1 = 1;
+    const CATALOGUE_TYPE2 = 2;
+
     /**
      * @inheritdoc
      */

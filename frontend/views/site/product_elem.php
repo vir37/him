@@ -10,5 +10,6 @@ $img = strlen($category->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . 
 ?>
 <div class="<?= $elem_class ?>">
     <img src="<?= $img ?>" alt="NO PHOTO"/>
-    <p><?= Html::a($product->name, ['/product/view', 'city' => \Yii::$app->params['city']->uri_name,'id' => $product->id ]) ?></p>
+    <p><?= Html::a($product->name, ['/product/view', 'city' => \Yii::$app->params['city']->uri_name,
+            'id' => $product->id, 'parent_id' => $category->id ]) ?></p>
 </div>

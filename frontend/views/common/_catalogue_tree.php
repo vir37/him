@@ -12,31 +12,29 @@ use yii\helpers\Html;
 <div class="catalogue">
     <p>Формирование каталога:</p>
     <div class="row">
-        <?= Html::a('Каталог', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
+        <?= Html::a('Каталог', [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
             [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
-        <?= Html::a('Отрасли', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
+        <?= Html::a('Отрасли', [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
             [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
     </div>
     <div class="row">
         <?php
         // Отрисовка дерева категорий
         $items = [];
+        $id = isset($current_category) ? $current_category->id : -1;
         $i = -1;
         $active = false;
-        $request_url = explode('?', \Yii::$app->request->url)[0];
         foreach ($categories as $category) {
             $i++;
-            $url = \yii\helpers\Url::to([ 'catalogue/view','city' => $city->uri_name,'id' => $catalogue,
-                'category' => $category['id'] ]);
-            $active = $url == $request_url ? $i : $active;
+            $url = \yii\helpers\Url::to([ 'category/view','city' => $city->uri_name, 'id' => $category['id'] ]);
+            $active = $id == $category['id'] ? $i : $active;
             $elem = [ 'header' => Html::a($category['name'], $url, [ 'data-pjax' => 1 ]), 'content' => '' ];
             if (isset($category['children'])) {
                 $content = '';
                 foreach($category['children'] as $child){
-                    $url = \yii\helpers\Url::to([ 'catalogue/view', 'city' => $city->uri_name,
-                        'id' => $catalogue, 'category' => $child['id'] ]);
-                    $active = $url == $request_url ? $i : $active;
-                    $class = $url == $request_url ? 'subcategory-active' : '';
+                    $url = \yii\helpers\Url::to([ 'category/view', 'city' => $city->uri_name, 'id' => $child['id'] ]);
+                    $active = $id == $child['id'] ? $i : $active;
+                    $class = $id == $child['id'] ? 'subcategory-active' : '';
                     $content .= Html::a($child['name'], $url, [ 'class' => 'ui-accordion-header catalogue-accordion-content '.$class , 'data-pjax' => 0]);
                 }
                 $elem['content'] = $content;
