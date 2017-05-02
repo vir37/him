@@ -14,6 +14,7 @@ class NewAppAsset extends AssetBundle
     public $css = [
         'css/quill.snow.css',
         'css/new.css',
+        'css/font-awesome.min.css',
     ];
     public $js = [
         'https://api-maps.yandex.ru/2.1/?lang=ru_RU',

@@ -22,59 +22,13 @@ $this->params['breadcrumbs'][] = 'Каталог';
 <div class="catalogue-index">
     <div class="row">
         <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 6000 ]); ?>
-        <div class="col-lg-3 col-md-3 col-sm-4 catalogue">
-            <p>Формирование каталога:</p>
-            <div class="row">
-                <?= Html::a('Каталог', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
-                    [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
-                <?= Html::a('Отрасли', [ 'catalogue/view', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
-                    [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
-            </div>
-            <div class="row">
-                <?php
-                    // Отрисовка дерева категорий
-                    $items = [];
-                    $i = -1;
-                    $active = false;
-                    $request_url = explode('?', \Yii::$app->request->url)[0];
-                    foreach ($categories as $category) {
-                        $i++;
-                        $url = \yii\helpers\Url::to([ 'catalogue/view','city' => $city->uri_name,'id' => $catalogue,
-                            'category' => $category['id'] ]);
-                        $active = $url == $request_url ? $i : $active;
-                        $elem = [ 'header' => Html::a($category['name'], $url, [ 'data-pjax' => 1 ]), 'content' => '' ];
-                        if (isset($category['children'])) {
-                            $content = '';
-                            foreach($category['children'] as $child){
-                                $url = \yii\helpers\Url::to([ 'catalogue/view', 'city' => $city->uri_name,
-                                    'id' => $catalogue, 'category' => $child['id'] ]);
-                                $active = $url == $request_url ? $i : $active;
-                                $class = $url == $request_url ? 'subcategory-active' : '';
-                                $content .= Html::a($child['name'], $url, [ 'class' => 'ui-accordion-header catalogue-accordion-content '.$class , 'data-pjax' => 0]);
-                            }
-                            $elem['content'] = $content;
-                        }
-                        $items[] = $elem;
-                    }
-                ?>
-                <?= \yii\jui\Accordion::widget([
-                    'items' => $items,
-                    'id' => 'catalogue_accordion',
-                    'options' => [ 'class' => 'catalogue-accordion'],
-                    'clientEvents' => [
-                        'changestart' => 'function() { console.log("test"); }',
-                    ],
-                    'clientOptions' => [
-                        'collapsible' => true,
-                        'active' => $active,
-                        'heightStyle' => 'content',
-                        'icons' => false,
-                    ],
-                    'headerOptions' => [ 'tag' => 'div' ],
-                ]) ?>
-            </div>
+        <div class="col-lg-3 col-md-3 col-sm-4">
+            <?= $this->render( '_catalogue_tree', [ 'city' => $city, 'catalogue_type1' => $catalogue_type1,
+                                                    'catalogue_type2' => $catalogue_type2, 'categories' => $categories,
+                                                    'current_category' => $current_category, 'catalogue' => $catalogue ] ) ?>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 catalogue-content">
+            <div style="position:absolute; margin: 0 auto; "><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>
             <header class="row">
                 <h1><?= $this->title?></h1>
             </header>

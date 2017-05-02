@@ -366,6 +366,11 @@ h2 {
 .product-view {color: #00275F; }
 .product-view h1 { font-size: 20px; font-weight: 500; text-align: left; margin-bottom: 25px; }
 .product-view .features-header { font-weight: 500; margin-bottom: 15px; }
+.product-view .left { text-align: right; }
+.product-view .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #D7E0E3;
+}
+.product-view .ql-editor { padding: 0; }
 
 
 .ql-editor { text-align: justify !important; color: #00275F; }

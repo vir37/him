@@ -29,26 +29,27 @@ $this->params['breadcrumbs'][] = $model->name;
                     <article class="ql-editor">
                         <?= $model->description ?>
                     </article>
-                    <p class="features-header">Технические подробности</p>
+                    <p class="features-header">Технические подробности:</p>
                     <table class="table table-striped table-condensed features">
+                    <tbody>
                     <?php
                         foreach($model->features as $productFeature) {
                             echo '<tr>';
                             $value = $productFeature->value();
                             $uom = $productFeature->uom();
-                            $value = $value ? $value . ($uom ? ', ' . $uom->short_name : '') : $value;
-                            echo Html::tag('td', $productFeature->feature->name , ['class' => 'col-lg-6 col-md-6 col-sm-6 left']);
+                            echo Html::tag('td', $uom ? $productFeature->feature->name.", {$uom->short_name}" : $productFeature->feature->name , ['class' => 'col-lg-6 col-md-6 col-sm-6 left']);
                             echo Html::tag('td', $value, [ 'class' => 'col-lg-6 col-md-6 col-sm-6 right']);
                             echo '</tr>';
                         }
                     ?>
+                    </tbody>
                     </table>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-5">
+                <div class="col-lg-4 col-md-4 col-sm-5" style="padding:0;">
                     <?php
                         $img = $model->getImages()->orderBy(['is_main' => SORT_DESC])->one();
                         $img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
-                        echo Html::img($img);
+                        echo Html::img($img, [ 'style' => 'width:100%;']);
                     ?>
                 </div>
             </div>
