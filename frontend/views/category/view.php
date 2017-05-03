@@ -20,14 +20,14 @@ if (isset($current_category)) {
 }
 $this->params['breadcrumbs'][] = 'Каталог';
 ?>
-<div class="catalogue-index">
+<div class="category-view">
     <div class="row">
-        <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 6000 ]); ?>
         <div class="col-lg-3 col-md-3 col-sm-4">
             <?= $this->render( '/common/_catalogue_tree', [ 'city' => $city, 'catalogue_type1' => $catalogue_type1,
                                                     'catalogue_type2' => $catalogue_type2, 'categories' => $categories,
                                                     'current_category' => $current_category, 'catalogue' => $catalogue ] ) ?>
         </div>
+        <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 6000 ]); ?>
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 catalogue-content">
             <div id="loading" style="position:absolute; width: 100%; height: 100%; background-color: white; opacity: 0.8; z-index: 9999; display: none">
                 <div style="text-align: center; position: relative; top: 50px;">
@@ -60,29 +60,31 @@ $this->params['breadcrumbs'][] = 'Каталог';
     </div>
 </div>
 <script type="text/javascript">
-    function alignBlockHeight(flag) {
+    function alignBlockHeight() {
         // выравниваем высоту блоков
         var maxHeight = 0;
         $('.product-card .left-column').each(function(){
             var  height = $(this).height();
             maxHeight = Math.max(maxHeight, height);
             $(this).on('trigger.align', '.aligner', function(event){
-                if (height)
-                    $(this).height(maxHeight-height);
+                if (height) {
+                    $(this).height(maxHeight - height);
+                }
             });
         });
         $('.aligner').trigger('trigger.align');
     }
 
     window.onload = function() {
+
         $(document).on('click', '.catalogue-accordion a', function (event) {
-            var container = $(this).closest('[data-pjax-container]');
-            $.pjax({url: this.href, container: container });
+            var container = $(this).closest('.category-view').find('[data-pjax-container]');
             event.preventDefault();
+            $.pjax({url: this.href, container: container });
         });
-        alignBlockHeight('no pjax');
+        alignBlockHeight();
         $(document).on('pjax:send', function(){ $('#loading').show(); });
         $(document).on('pjax:complete', function(){ $('#loading').hide(); });
-        $(document).on('pjax:end', alignBlockHeight);
+        $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 30); });
     };
 </script>

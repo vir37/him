@@ -28,7 +28,7 @@ use yii\helpers\Html;
             $i++;
             $url = \yii\helpers\Url::to([ 'category/view','city' => $city->uri_name, 'id' => $category['id'] ]);
             $active = $id == $category['id'] ? $i : $active;
-            $elem = [ 'header' => Html::a($category['name'], $url, [ 'data-pjax' => 1 ]), 'content' => '' ];
+            $elem = [ 'header' => Html::a($category['name'], $url, [ 'data-pjax' => 0 ]), 'content' => '' ];
             if (isset($category['children'])) {
                 $content = '';
                 foreach($category['children'] as $child){

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <?php
 /* новый дизайн*/
 /* @var $this \yii\web\View */
@@ -15,7 +16,6 @@ $city = \Yii::$app->params['city'];
 $phone = \Yii::$app->params['phone']; //TODO: сохранять в настройках, дергать оттуда
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
