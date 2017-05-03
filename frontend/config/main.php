@@ -44,6 +44,11 @@ return [
             'suffix' => '.html',
             'rules' => [
                 [
+                    'pattern' => 'sitemap.xml',
+                    'route' => 'sitemap/index',
+                    'suffix' => '',
+                ],
+                [
                     'pattern' => '<city:[\w-]+>',
                     'route' => 'site/index',
                     'suffix' => '/',

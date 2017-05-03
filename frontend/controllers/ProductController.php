@@ -18,6 +18,7 @@ use yii\data\ActiveDataProvider;
 use common\helpers\TreeHelper;
 
 class ProductController extends Controller {
+
     public $layout = "new";
 
     public function behaviors()
