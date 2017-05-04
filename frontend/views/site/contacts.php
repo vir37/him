@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Контакты, реквизиты, адреса';
+$this->title = 'Контакты';
 $this->params['breadcrumbs'][] = $this->title;
 $chief = \common\models\Employee::find()->where(['is_chief' => true])->one();
 if ($chief)
@@ -22,7 +22,7 @@ else
     </header>
     <div class="row">
         <div class="col-lg-7 col-md-7">
-            <h2>КОНТАКТЫ</h2>
+            <h2>РУКОВОДСТВО</h2>
             <?php if($chief): ?>
                 <div class="row">
                     <div class="col-lg-5 col-md-5">

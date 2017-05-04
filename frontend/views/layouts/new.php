@@ -20,6 +20,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 <head>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="yandex-verification" content="8dfec7a53838f7d3" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <?= Html::csrfMetaTags() ?>
@@ -64,7 +65,6 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
         'options' => ['class' => 'navbar-nav navbar-right navbar-nav-tera'],
         'items' => $menuItems,
     ]);
-    //echo $this->render('city_choose');
     NavBar::end();
     ?>
     <div class="container">
