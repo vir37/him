@@ -48,7 +48,7 @@ else
     <div class="row">
         <div class="col-lg-7 col-md-7">
             <h2>АДРЕС</h2>
-            <p><?= \Yii::$app->params['jur_address'] ?></p>
+            <p><?= $city->index.', '.$city->fake_address ?></p>
             <div id="map" style="width:80%; height: 300px; margin-top: 10px;"></div>
         </div>
         <div class="col-lg-5 col-md-5">
@@ -62,7 +62,7 @@ else
 </div>
 <script type="text/javascript">
     function mapsInit() {
-        var coords = ymaps.geocode("<?= \Yii::$app->params['jur_address']?>"),
+        var coords = ymaps.geocode("<?= $city->index.', '.$city->fake_address ?>"),
             mp, place;
         coords.then(
             function(res){

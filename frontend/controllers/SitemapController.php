@@ -33,6 +33,7 @@ class SitemapController  extends Controller {
             Response::FORMAT_XML => [
                 'class' => 'frontend\components\SitemapXmlResponseFormatter',
                 'rootNS' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                'itemTag' => 'url',
             ],
         ];
         \Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
@@ -41,18 +42,51 @@ class SitemapController  extends Controller {
     }
 
     public function actionIndex() {
-        $cities = City::find()->all();
-        $catalogues = Catalogue::find()->all();
-        $categories = Category::find()->all();
-        $products = Product::find()->all();
-        $baseUri = \Yii::$app->request->getHostName();
+        $urlManager = \Yii::$app->urlManager;
+        $lastmod = date(DATE_W3C);
+        $items = [];
+        // Цикл по городам
+        foreach (City::find()->all() as $city) {
+            $items[] = ['loc' => $urlManager->createAbsoluteUrl(['site/index', 'city' => $city->uri_name]),
+                'lastmod' => $lastmod,
+                'changefreq' => self::FREQ_WEEKLY,
+                'priority' => 0.5 ];
 
-        return $this->renderPartial('index', [
-            'baseUri' => $baseUri,
-            'cities' => $cities,
-            'catalogues' => $catalogues,
-            'categories' => $categories,
-            'products' => $products,
-        ]);
+            // контакты
+            $items[] = [ 'loc' => $urlManager->createAbsoluteUrl(['site/contacts', 'city' => $city->uri_name]),
+                'lastmod' => $lastmod,
+                'changefreq' => self::FREQ_MONTHLY,
+                'priority' => 0.5 ];
+
+            // цикл по каталогам
+            foreach (Catalogue::find()->all() as $catalogue) {
+                /*
+                $items[] = ['loc' => $urlManager->createAbsoluteUrl(['category/list', 'city' => $city->uri_name, 'id' => $catalogue->id]),
+                    'lastmod' => $lastmod,
+                    'changefreq' => self::FREQ_WEEKLY,
+                    'priority' => 0.5 ];
+                */
+                // цикл по категориям
+                foreach ($catalogue->categories as $category) {
+                    $items[] = [
+                        'loc' => $urlManager->createAbsoluteUrl(['category/view', 'city' => $city->uri_name, 'id' => $category->id]),
+                        'lastmod' => $lastmod,
+                        'changefreq' => self::FREQ_WEEKLY,
+                        'priority' => 0.9 ];
+
+                    // цикл по товарам
+                    foreach ($category->product as $product)
+                        $items[] = [
+                            'loc' => $urlManager->createAbsoluteUrl([
+                                'product/view', 'city' => $city->uri_name, 'id' => $product->id, 'parent_id' => $category->id
+                            ]),
+                            'lastmod' => $lastmod,
+                            'changefreq' => self::FREQ_WEEKLY,
+                            'priority' => 0.8 ];
+                }
+            }
+        }
+        // дополнительные странички
+        return $items;
     }
-} 
+}

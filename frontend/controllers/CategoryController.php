@@ -69,7 +69,7 @@ class CategoryController extends Controller{
 
     /*
      * Листинг категорий из каталога
-     * $id - иднетификатор каталога
+     * $id - идентификатор каталога
      */
     public function actionList($id) {
         if (($catalogue = Catalogue::findOne($id)) == null)

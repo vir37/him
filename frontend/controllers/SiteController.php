@@ -220,6 +220,6 @@ class SiteController extends Controller
      * Страница контактов
      */
     public function actionContacts(){
-        return $this->render('contacts');
+        return $this->render('contacts', [ 'city' => \Yii::$app->params['city']]);
     }
 }
