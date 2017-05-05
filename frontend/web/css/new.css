@@ -122,7 +122,7 @@ a.desc:after {
 }
 
 /**                                  Self classes                                     **/
-h1, h2, h3 { color: #00275F; }
+h1, h2, h3, h4 { color: #00275F; }
 h1 {
     font-size: 30px;
     text-align: center;
@@ -133,6 +133,7 @@ h3 {
     font-size: 21px;
     font-weight: 300;
 }
+h4 { font-size: 15px; margin-bottom: 10px; }
 h2 {
     font-size: 30px;
     font-weight: normal;
@@ -391,6 +392,7 @@ h2 {
     top: 0.5em;
     border-top: 1px solid #00275F;
 }
-.site-contact {
-    color: #02275E;
-}
+.site-contact { color: #02275E; }
+.site-contact p { text-align: center; }
+.site-contact h4 { text-align: center; margin-bottom: 1.5em;}
+.site-contact .form-group { margin-bottom: 5px; }
