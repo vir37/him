@@ -162,7 +162,9 @@ h2 {
     text-align: center;
 }
 .navbar-nav-tera > li > a { padding-left: 25px; padding-right: 25px; }
-.navbar-nav-tera .phone { font-size: 23px; color: #000000 !important; }
+/*.navbar-nav-tera*/
+.phone { font-size: 23px; color: #000000 !important; }
+.phone:hover { text-decoration: none; }
 .navbar-nav-tera .subline {
     font-size: 10px;
     line-height: 12px;
@@ -382,3 +384,13 @@ h2 {
 
 .ql-editor { text-align: justify !important; color: #00275F; }
 .ql-editor p { text-indent: 2em; }
+
+/* Contact form */
+.delim {
+    position: relative;
+    top: 0.5em;
+    border-top: 1px solid #00275F;
+}
+.site-contact {
+    color: #02275E;
+}

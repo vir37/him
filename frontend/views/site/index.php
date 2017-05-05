@@ -54,9 +54,9 @@ $this->title = "Химическая продукция в {$city->name} - ОО�
             ?>
         </div>
         <div class="row main-links">
-            <?= Html::a('<p>О НАС</p>', [ 'site/about', 'city' => $city->uri_name ]) ?>
-            <?= Html::a('<p>АКЦИИ</p>', [ 'stocks/index', 'city' => $city->uri_name ]) ?>
-            <?= Html::a('<p>МЕНЕДЖЕРЫ</p>', [ 'site/managers', 'city' => $city->uri_name ]) ?>
+            <?= Html::a('<p>О НАС</p>', [ 'site/about', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) ?>
+            <?= Html::a('<p>АКЦИИ</p>', [ 'stocks/index', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) ?>
+            <?= Html::a('<p>МЕНЕДЖЕРЫ</p>', [ 'site/managers', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) ?>
             <?= Html::a('<p>КОНТАКТЫ</p>', [ 'site/contacts', 'city' => $city->uri_name ]) ?>
         </div>
     </div>
