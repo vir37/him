@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Новый производитель', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -39,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'logo',
                 'format' => 'raw',
                 'value' => function($data) {
-                    return Html::img('data:image/jpeg;charset=utf-8;base64,' . base64_encode($data->logo), ['style' => 'width:100px;']);
+                    $img = strlen($data->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($data->logo) : '/icons/no_logo.png';
+                    return Html::img($img, ['style' => 'width:100px;']);
                 },
             ],
 

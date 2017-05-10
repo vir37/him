@@ -14,7 +14,15 @@ return [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            //'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 's13.webhost1.ru',
+                'username' => 'admin@himsale.ru',
+                'password' => '1cf51ca0',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
     ],
 ];

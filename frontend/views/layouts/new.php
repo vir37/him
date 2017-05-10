@@ -72,7 +72,9 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
             'homeLink' => [ 'label' => 'Главная', 'url' => Yii::$app->homeUrl ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
+        <div id="alert-box">
+            <?= Alert::widget() ?>
+        </div>
         <?= $content ?>
     </div>
 </div>

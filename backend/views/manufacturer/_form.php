@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Manufacturer */
 /* @var $form yii\widgets\ActiveForm */
-$img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->logo) : '/images/no_logo.png';
+$img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->logo) : '/icons/no_logo.png';
 ?>
 
 <div class="manufacturer-form">

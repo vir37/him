@@ -134,7 +134,8 @@ class SiteController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 $alert = '';
                 foreach (Yii::$app->session->getAllFlashes(true) as $key => $message) {
-                    $alert.='<div class="alert alert-' . $key . '">' . $message . '</div>';
+                    $alert.='<div class="alert alert-' . $key . ' alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . $message . '</div>';
                 }
 
                 return [ 'alert' => $alert];

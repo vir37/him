@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Управление катало�
 $this->params['breadcrumbs'][] = ['label' => 'Производители', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->logo) : '/images/no_logo.png';
+$img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->logo) : '/icons/no_logo.png';
 ?>
 <div class="manufacturer-view">
 

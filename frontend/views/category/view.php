@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
         alignBlockHeight();
         $(document).on('pjax:send', function(){ $('#loading').show(); });
         $(document).on('pjax:complete', function(){ $('#loading').hide(); });
-        $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 30); });
+        $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 60); });
         $(document).on('click', '.fancybox', function(event){
             // открытие окна отправки формы
             event.preventDefault();
@@ -94,16 +94,17 @@ $this->params['breadcrumbs'][] = 'Каталог';
                 padding: 1
             });
             $(document).on('submit', '#contact-form', function(event){
-                debugger;
                 var form = $(this).serialize();
                 event.preventDefault();
                 $.ajax(this.action, {
                     type: 'POST',
                     data: form,
-                    success: function(data){ debugger; },
-                    error: function(result, str) { debugger; },
+                    success: function(data){
+                        if (data.alert)
+                            $('#alert-box').html(data.alert);
+                    },
+                    error: function(result, str) { },
                     complete: function(response, status){
-                        debugger;
                         $.fancybox.close();
                     }
                 });
