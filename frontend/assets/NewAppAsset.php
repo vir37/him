@@ -15,10 +15,13 @@ class NewAppAsset extends AssetBundle
         'css/quill.snow.css',
         'css/new.css',
         'css/font-awesome.min.css',
+        'css/fancybox/jquery.fancybox.css',
     ];
     public $js = [
         'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
         'js/navbar.js',
+        'js/jquery.fancybox.pack.js',
+        'js/jquery.mousewheel-3.0.6.pack.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

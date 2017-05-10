@@ -392,6 +392,9 @@ h2 {
     top: 0.5em;
     border-top: 1px solid #00275F;
 }
+
+.site-contact.row { margin: auto; }
+.site-contact .panel { margin: auto; }
 .site-contact { color: #02275E; }
 .site-contact p { text-align: center; }
 .site-contact h4 { text-align: center; margin-bottom: 1.5em;}

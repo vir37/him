@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\bootstrap\Alert;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -14,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
 use frontend\components\UrlManagerCityBehavior;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -65,7 +67,7 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
+                'class' => 'frontend\components\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
@@ -124,16 +126,25 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                Yii::$app->session->setFlash('success', 'Спасибо за обращение. В ближайшее время мы обязательно с вами свяжемся');
             } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
+                Yii::$app->session->setFlash('error', 'Во время отправки сообщения возникли ошибки');
             }
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $alert = '';
+                foreach (Yii::$app->session->getAllFlashes(true) as $key => $message) {
+                    $alert.='<div class="alert alert-' . $key . '">' . $message . '</div>';
+                }
 
+                return [ 'alert' => $alert];
+            }
             return $this->refresh();
         } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax)
+                return $this->renderAjax('contact', [ 'model' => $model, ]);
+            else
+                return $this->render('contact', [ 'model' => $model, ]);
         }
     }
 

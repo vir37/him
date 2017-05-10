@@ -86,5 +86,28 @@ $this->params['breadcrumbs'][] = 'Каталог';
         $(document).on('pjax:send', function(){ $('#loading').show(); });
         $(document).on('pjax:complete', function(){ $('#loading').hide(); });
         $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 30); });
+        $(document).on('click', '.fancybox', function(event){
+            // открытие окна отправки формы
+            event.preventDefault();
+            $.fancybox.open(this, {
+                type: 'ajax',
+                padding: 1
+            });
+            $(document).on('submit', '#contact-form', function(event){
+                debugger;
+                var form = $(this).serialize();
+                event.preventDefault();
+                $.ajax(this.action, {
+                    type: 'POST',
+                    data: form,
+                    success: function(data){ debugger; },
+                    error: function(result, str) { debugger; },
+                    complete: function(response, status){
+                        debugger;
+                        $.fancybox.close();
+                    }
+                });
+            })
+        });
     };
 </script>

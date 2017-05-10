@@ -9,14 +9,23 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 $phone = \Yii::$app->params['phone'];
 $city = \Yii::$app->params['city'];
+if (Yii::$app->request->isAjax)
+    $action = \yii\helpers\Url::to(['site/contact', 'city' =>$city->uri_name, "isAjax" => true ]);
+else
+    $action = '';
+
 ?>
 <div class="site-contact row">
-    <div class="col-lg-5 col-md-5 panel panel-primary">
+    <div class="col-lg-12 col-md-12 panel panel-primary">
     <div class="panel-body">
         <h4>Позвоните нам</h4>
         <div class="form-group" style="text-align: center; ">
             <label for="phone" style="margin-right: 2em;">по телефону:</label>
-            <?= Html::a($phone, "tel:$phone", [ 'class' => 'phone btn btn-default', 'name' => 'phone']) ?>
+            <?= Html::a($phone, "tel:$phone", [
+                'class' => 'phone btn btn-default',
+                'name' => 'phone',
+                'onclick' => '$.fancybox.close();',
+            ]) ?>
         </div>
         <div class="row" style="margin-top: 1em; margin-bottom: 1em;">
             <div class="col-lg-5 delim"></div>
@@ -73,3 +82,8 @@ $city = \Yii::$app->params['city'];
         </div>
     </div></div>
 </div>
+<?php
+    if (Yii::$app->request->isAjax) {
+
+    }
+?>
