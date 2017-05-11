@@ -34,11 +34,11 @@ use bizley\quill\Quill;
                     'labelOptions' => [ 'class' => 'control-label col-lg-4 col-md-4'],
                     'inputTemplate' => '<div class="col-lg-8 col-md-8">{input}</div>',
                     'options' => [ 'class' => 'form-group col-lg-5 col-md-5'],
-                ])->dropDownList( ArrayHelper::map( $model->manufacturer ? [$model->manufacturer] : Manufacturer::find()->all(),
-                        'id', 'name'),
+//                ])->dropDownList( ArrayHelper::map( $model->manufacturer ? [$model->manufacturer] : Manufacturer::find()->all(),
+                ])->dropDownList( ArrayHelper::map(Manufacturer::find()->all(), 'id', 'name'),
                     [
                         'id' => 'manufacturer_select',
-                        'disabled' => $model->manufacturer_id,
+//                        'disabled' => $model->manufacturer_id,
                         'prompt' => '...',
                         'options' => $model->manufacturer_id ? ["$model->manufacturer_id" => ["selected" => true]] : [],
                 ])->label('Производитель') ?>

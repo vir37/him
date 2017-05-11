@@ -10,9 +10,8 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
-    public $name;
     public $email;
-    public $subject;
+    public $phone;
     public $body;
     public $verifyCode;
 
@@ -23,8 +22,24 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            // email and  body are required
+            ['body', 'required'],
+            [ 'email', 'required', 'when' => function($model) { return !$model->phone; },
+                'whenClient' => 'function(attribute, value){
+                    var formId = attribute.$form.attr("id").replace("-", "");
+                    return $(attribute.$form).find("#"+formId+"-phone").val() == "" && value == "";
+                }',
+                'message' => 'Телефон или адрес электронной почты обязательны',
+            ],
+            [ 'phone', 'required', 'when' => function($model) { return !$model->email; },
+                'whenClient' => 'function(attribute, value){
+                    var formId = attribute.$form.attr("id").replace("-", "");
+                    return $(attribute.$form).find("#"+formId+"-email").val() == "" && value == "";
+                }',
+                'message' => 'Телефон или адрес электронной почты обязательны',
+            ],
+            // phone has to be a valid phone number
+            [ 'phone' , 'match', 'pattern' => '/^[0-9 +\-()]+$/i' ],
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly
@@ -38,8 +53,7 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Ваше имя',
-            'subject' => 'Тема',
+            'phone' => 'Телефон',
             'body' => 'Текст',
             'verifyCode' => 'Captcha',
         ];
@@ -53,11 +67,19 @@ class ContactForm extends Model
      */
     public function sendEmail($email)
     {
-        return Yii::$app->mailer->compose()
+        return Yii::$app->mailer->compose('requestProduct', [
+            'contactEmail' => $this->email,
+            'contactPhone' => $this->phone,
+            'body' => $this->body,
+        ])
             ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
+//            ->setFrom([$this->email => $this->name])
+            ->setFrom('request-system@himsale.ru')
+            ->setSubject("Online-заявка")
             ->setTextBody($this->body)
             ->send();
     }
+
+
+
 }

@@ -341,7 +341,7 @@ h2 {
 .product-card .left-column { text-align: center; }
 .product-card .row { padding: 0 2px;}
 .product-card .head { font-size: 14px; font-weight: 500; }
-.product-card .body { font-size: 11px; font-weight: normal; height: 6em; overflow-wrap: break-word; overflow-y: hidden; }
+.product-card .body { font-size: 11px; font-weight: normal; height: 6em; overflow-wrap: break-word; overflow: hidden; }
 .product-card .body p { margin: 0 !important;}
 .product-card .features { font-size: 12px; font-weight: normal; }
 .product-card .features .left { text-align: right; padding: 0 4px 0 2px;}

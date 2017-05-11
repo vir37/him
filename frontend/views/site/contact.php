@@ -35,21 +35,14 @@ else
         <h4>Отправьте заявку, и мы обязательно с вами свяжемся</h4>
         <div class="">
             <?php $form = ActiveForm::begin([ 'id' => 'contact-form', 'layout' => 'horizontal' ]); ?>
-                <?= $form->field($model, 'name', [
-                    'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
-                    'inputOptions' => [ 'class' => 'form-control' ],
-                    'options' => [ 'class' => 'form-group' ],
-                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
-                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
-                ])->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'email', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'inputOptions' => [ 'class' => 'form-control' ],
                     'options' => [ 'class' => 'form-group' ],
                     'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
                     'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
-                ]) ?>
-                <?= $form->field($model, 'subject', [
+                ])->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'phone', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'inputOptions' => [ 'class' => 'form-control' ],
                     'options' => [ 'class' => 'form-group' ],
