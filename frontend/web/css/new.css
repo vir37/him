@@ -341,7 +341,7 @@ h2 {
 .product-card .left-column { text-align: center; }
 .product-card .row { padding: 0 2px;}
 .product-card .head { font-size: 14px; font-weight: 500; }
-.product-card .body { font-size: 11px; font-weight: normal; height: 6em; overflow-wrap: break-word; overflow: hidden; }
+.product-card .body { font-size: 11px; font-weight: normal; height: 7em; overflow-wrap: break-word; overflow: hidden; margin-bottom: 1em; }
 .product-card .body p { margin: 0 !important;}
 .product-card .features { font-size: 12px; font-weight: normal; }
 .product-card .features .left { text-align: right; padding: 0 4px 0 2px;}
@@ -380,7 +380,7 @@ h2 {
 .product-view .table-striped > tbody > tr:nth-of-type(odd) {
       background-color: #D7E0E3;
 }
-.product-view .ql-editor { padding: 0; }
+.product-view .ql-editor { padding: 0; overflow-y: visible; }
 .product-view .ui-state-disabled { opacity: 0.9 !important; }
 
 .ql-editor { text-align: justify !important; color: #00275F; }

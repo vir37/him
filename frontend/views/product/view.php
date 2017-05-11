@@ -25,14 +25,19 @@ $this->params['breadcrumbs'][] = $model->name;
         </div>
         <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 catalogue-content">
             <div class="row">
-                <header class="cik-lg-12 col-md-12 col-sm-12">
+                <header class="col-lg-12 col-md-12 col-sm-12">
                     <h1><?= $model->name?></h1>
                 </header>
             </div>
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-7">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div style="border-top: 1px solid #00275F"></div>
                     <article class="ql-editor">
+                        <?php
+                            $img = $model->getImages()->orderBy(['is_main' => SORT_DESC])->one();
+                            $img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
+                            echo Html::img($img, [ 'style' => 'float:right; width:30%; margin-left: 10px; margin-right: 10px;']);
+                            ?>
                         <?= $model->description ?>
                     </article>
                     <p class="features-header">Технические подробности:</p>
@@ -50,13 +55,6 @@ $this->params['breadcrumbs'][] = $model->name;
                     ?>
                     </tbody>
                     </table>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-5" style="padding:0;">
-                    <?php
-                        $img = $model->getImages()->orderBy(['is_main' => SORT_DESC])->one();
-                        $img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
-                        echo Html::img($img, [ 'style' => 'width:100%;']);
-                    ?>
                 </div>
             </div>
         </div>

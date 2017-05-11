@@ -42,6 +42,7 @@ class CategoryController extends Controller
         if (!array_key_exists($model->formName(), $params))
             $params[$model->formName()] = [ 'catalogue_id' => $catalogue_id ];
         $dataProvider = $model->search($params);
+        $dataProvider->setPagination(false);
 
         return $this->render('index', [
             'model' => $model,

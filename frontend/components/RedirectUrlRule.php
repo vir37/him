@@ -23,7 +23,7 @@ class RedirectUrlRule extends UrlRule {
         $suffix = (string)($this->suffix === null ? $manager->suffix : $this->suffix);
         $result = parent::parseRequest($manager, $request);
         if ($result)
-            throw new UrlNormalizerRedirectException($route.$suffix, UrlNormalizer::ACTION_REDIRECT_TEMPORARY);
+            throw new UrlNormalizerRedirectException($route.$suffix, UrlNormalizer::ACTION_REDIRECT_PERMANENT);
         return $result;
     }
 } 

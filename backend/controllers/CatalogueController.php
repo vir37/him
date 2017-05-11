@@ -134,6 +134,8 @@ class CatalogueController extends Controller
     public function actionList() {
         $searchModel = new CatalogueSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setPagination(false);
+
         return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
