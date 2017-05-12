@@ -64,21 +64,20 @@ $this->params['breadcrumbs'][] = 'Каталог';
 <script type="text/javascript">
     function alignBlockHeight() {
         // выравниваем высоту блоков
-        var maxHeight = 0;
+        var maxHeight = 0, maxHeaderHeight = 0;
+        $('.product-card h3').each(function(){ maxHeaderHeight = Math.max(maxHeaderHeight, $(this).height()); });
         $('.product-card .left-column').each(function(){
             var  height = $(this).height();
             maxHeight = Math.max(maxHeight, height);
             $(this).on('trigger.align', '.aligner', function(event){
-                if (height) {
-                    $(this).height(maxHeight - height);
-                }
+                if (height) { $(this).height(maxHeight - height); }
             });
         });
+        $('.product-card h3').height(maxHeaderHeight);
         $('.aligner').trigger('trigger.align');
     }
 
-    window.onload = function() {
-
+    window.addEventListener('load', function() {
         $(document).on('click', '.catalogue-accordion a', function (event) {
             var container = $(this).closest('.category-view').find('[data-pjax-container]');
             event.preventDefault();
@@ -112,5 +111,5 @@ $this->params['breadcrumbs'][] = 'Каталог';
                 });
             })
         });
-    };
+    });
 </script>

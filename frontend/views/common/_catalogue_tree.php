@@ -34,7 +34,7 @@ use yii\helpers\Html;
                 foreach($category['children'] as $child){
                     $url = \yii\helpers\Url::to([ 'category/view', 'city' => $city->uri_name, 'id' => $child['id'] ]);
                     $active = $id == $child['id'] ? $i : $active;
-                    $class = $id == $child['id'] ? 'subcategory-active' : '';
+                    $class = $id == $child['id'] ? 'subcategory subcategory-active' : 'subcategory';
                     $content .= Html::a($child['name'], $url, [ 'class' => 'ui-accordion-header catalogue-accordion-content '.$class , 'data-pjax' => 0]);
                 }
                 $elem['content'] = $content;
@@ -56,3 +56,12 @@ use yii\helpers\Html;
         ]) ?>
     </div>
 </div>
+<script type="text/javascript">
+    window.addEventListener('load', function() {
+        $('.catalogue-accordion').on('click', 'a', function(event){
+            $('.catalogue-accordion a').removeClass('subcategory-active');
+            if ($(this).hasClass('subcategory'))
+                $(this).addClass('subcategory-active');
+        });
+    });
+</script>
