@@ -20,25 +20,34 @@ use common\models\Region;
             <div class="row">
                 <?= $form->field($model, 'region_id', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
-                    'options' => [ 'class' => 'col-lg-4 col-md-4' ],
-                    'labelOptions' => [ 'class' => 'col-lg-5 col-md-5'],
-                    'wrapperOptions' => [ 'class' => 'col-lg-7 col-md-7'],
-                ])->dropDownList(ArrayHelper::map( Region::find()->all(), 'id', 'name'), [
-                    'prompt' => '...' ]) ?>
-
-                <?= $form->field($model, 'name' ,[
-                    'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'options' => [ 'class' => 'col-lg-6 col-md-6' ],
                     'labelOptions' => [ 'class' => 'col-lg-3 col-md-3'],
                     'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
-                ])->textInput(['maxlength' => true])->label('Наименование') ?>
+                ])->dropDownList(ArrayHelper::map( Region::find()->all(), 'id', 'name'), [
+                    'prompt' => '...' ]) ?>
 
                 <?= $form->field($model, 'uri_name', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
-                    'options' => [ 'class' => 'col-lg-2 col-md-2' ],
+                    'options' => [ 'class' => 'col-lg-3 col-md-3' ],
                     'labelOptions' => [ 'class' => 'col-lg-4 col-md-4'],
                     'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
                 ])->textInput(['maxlength' => true])->label('URL') ?>
+
+            </div>
+            <div class="row">
+                <?= $form->field($model, 'name' ,[
+                    'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
+                    'options' => [ 'class' => 'col-lg-5 col-md-5' ],
+                    'labelOptions' => [ 'class' => 'col-lg-4 col-md-4'],
+                    'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
+                ])->textInput(['maxlength' => true])->label('Наименование') ?>
+
+                <?= $form->field($model, 'name_pp' ,[
+                    'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
+                    'options' => [ 'class' => 'col-lg-7 col-md-7' ],
+                    'labelOptions' => [ 'class' => 'col-lg-5 col-md-5'],
+                    'wrapperOptions' => [ 'class' => 'col-lg-7 col-md-7'],
+                ])->textInput(['maxlength' => true])->label('Наименование в РП (где?)') ?>
 
                 <?= $form->field($model, 'index', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',

@@ -10,14 +10,16 @@ use yii\widgets\Pjax;
 
 $city = Yii::$app->params['city'];
 if (isset($current_category)) {
-    $this->title = "{$current_category->name} в г.{$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $header = "{$current_category->name} в {$city->name_pp}";
     $this->registerMetaTag([ 'name' => 'description', 'content' => $current_category->meta_desc]);
     $this->registerMetaTag([ 'name' => 'keywords', 'content' => $current_category->meta_keys]);
 } else {
     $current_category = null;
-    $this->title = "Каталог химической продукции в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+    $header = "Химическая продукция в {$city->name_pp}";
     $this->registerMetaTag([ 'name' => 'description', 'content' => $this->title]);
 }
+$this->title = "$header купить - ".Yii::$app->params['titleSuffix'];
+
 $this->params['breadcrumbs'][] = 'Каталог';
 ?>
 <div class="category-view">
@@ -35,7 +37,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
                 </div>
             </div>
             <header class="row">
-                <h1><?= $this->title?></h1>
+                <h1><?= $header ?></h1>
             </header>
             <div class="row">
                 <?php

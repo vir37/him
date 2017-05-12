@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 
 $city = Yii::$app->params['city'];
-$this->title = $model->name;
+$this->title = $model->name.' купить в '.$city->name_pp;
 $this->registerMetaTag([ 'name' => 'description', 'content' => $model->meta_desc]);
 $this->registerMetaTag([ 'name' => 'keywords', 'content' => $model->meta_keys]);
 $this->params['breadcrumbs'][] = [ 'label' => 'Каталог', 'url' => [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue ]];

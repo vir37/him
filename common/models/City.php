@@ -31,10 +31,10 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['region_id', 'name', 'uri_name', 'index'], 'required'],
+            [['region_id', 'name', 'name_pp', 'uri_name', 'index'], 'required'],
             [['region_id', 'index'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['name', 'uri_name'], 'string', 'max' => 32],
+            [['name', 'uri_name', 'name_pp'], 'string', 'max' => 32],
             [['index', 'uri_name'], 'unique'],
             [['fake_address'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
@@ -50,6 +50,7 @@ class City extends \yii\db\ActiveRecord
             'id' => 'ID',
             'region_id' => 'Код региона',
             'name' => 'Наименование города',
+            'name_pp' => 'Наименование в предложном падеже',
             'uri_name' => 'Наименование города для URL',
             'index' => 'Почтовый индекс',
             'latitude' => 'Широта',

@@ -22,6 +22,7 @@ class NewAppAsset extends AssetBundle
         'js/navbar.js',
         'js/jquery.fancybox.pack.js',
         'js/jquery.mousewheel-3.0.6.pack.js',
+	'js/google_analytics.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

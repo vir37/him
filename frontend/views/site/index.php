@@ -5,7 +5,7 @@ use yii\bootstrap\Carousel;
 use yii\helpers\Html;
 
 $city = Yii::$app->params['city'];
-$this->title = "Химическая продукция в {$city->name} - ООО \"ТЕРА-ИНВЕСТ\"";
+$this->title = "Химическая продукция в {$city->name_pp} - ООО \"ТЕРА-ИНВЕСТ\"";
 //TODO: нужно сделать сохранение ИД каталога в сессии
 ?>
 <div class="site-index">
@@ -34,7 +34,7 @@ $this->title = "Химическая продукция в {$city->name} - ОО�
     </div>
     <div class="body-content">
         <header class="row">
-            <?= Html::tag('h1', "Каталог химической продукции в г.{$city->name}", [ 'class' => 'main-h1'])?>
+            <?= Html::tag('h1', "Химическая продукция в {$city->name_pp}", [ 'class' => 'main-h1'])?>
         </header>
         <div class="row direct-links">
             <div class="col-lg-3 col-md-3" id="catalogue" >
