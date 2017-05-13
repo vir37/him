@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
         alignBlockHeight();
         $(document).on('pjax:send', function(){ $('#loading').show(); });
         $(document).on('pjax:complete', function(){ $('#loading').hide(); });
-        $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 60); });
+        $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 100); });
         $(document).on('click', '.fancybox', function(event){
             // открытие окна отправки формы
             event.preventDefault();

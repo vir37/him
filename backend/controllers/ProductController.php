@@ -34,6 +34,7 @@ class ProductController extends \yii\web\Controller
     {
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->addOrderBy([ 'name' =>SORT_ASC ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

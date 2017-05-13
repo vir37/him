@@ -182,6 +182,7 @@ a.desc:after {
 
 /* ---- Category tree -------*/
 .tree-header { margin-bottom: 1em; }
+.image-form { margin-top: 1em; }
 /* ---- Image carousel -----*/
 .carousel-inner img {
     padding: 2px;

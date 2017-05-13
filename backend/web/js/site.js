@@ -48,6 +48,7 @@ function disableJqueryUI(selector, types){
 }
 
 disableJqueryUI('.jquery-ui-disable', ['button']);
+
 $(document).on('change', '#catalogue_select', function(){
     var target = $(this).data('target'),
         url = $(this).data('url');
@@ -56,6 +57,7 @@ $(document).on('change', '#catalogue_select', function(){
     else
         alert('Не все данные настроены');
 });
+
 // На каждый элементс атрибутом data-submit вешаем обработчик события onchange
 $('input[data-submitform], select[data-submitform]').each(function(idx, elem){
     var form = $(elem).data('submitform');
@@ -75,3 +77,6 @@ $('.catalogue-menu').each(function(){
     });
     $('.col-sm-4.col-md-3.col-lg-3').height(highestBox);
 });
+// события начала и окончания pjax
+$(document).on('pjax:send', function(){ $('.loader').removeClass('loader-hide').addClass('loader-show'); });
+$(document).on('pjax:complete', function(){ $('.loader').removeClass('loader-show').addClass('loader-hide'); });

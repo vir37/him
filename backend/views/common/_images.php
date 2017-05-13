@@ -44,6 +44,7 @@ if (isset($alert)) {
             ])->label('Файл с изображением')
             ?>
             <?= $form->field($model, 'isMain', [ 'options' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3' ] ])->checkbox()?>
+            <i class="loader fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>
             <?= Html::submitButton('<span class="glyphicon glyphicon-save"></span>', [
                 'class' => 'btn btn-primary col-lg-offset-2 col-md-offset-2',
                 'disabled' => $linkModel->id ? false: true,
@@ -63,11 +64,11 @@ if (isset($alert)) {
             'role' => "button", 'title' => "Назначить главной",
         ]);
         $a_del = Html::a('<span class="glyphicon glyphicon-remove"></span>', [ 'image-delete', 'image_id' => $image->id, 'object_id' => $linkModel->id ], [
-            'id' => "img-del", 'class' => "btn btn-default btn-sm",
+            'id' => "img-del", 'class' => "btn btn-default btn-sm deleter",
             'role' => "button", 'title' => "Удалить",
             'data' => [
-                'confirm' => 'Вы действительно хотите удалить изображение?',
                 'pjax' => 1,
+//                'confirm' => 'Вы действительно хотите удалить изображение?',
             ],
         ]);
         $img = '<img src="/images/'.$image->name.'" alt="Изображение не найдено"/>';
@@ -89,3 +90,12 @@ if (isset($alert)) {
         ]);
 ?>
 </div>
+<script type="text/javascript">
+    window.addEventListener('load', function(){
+        $(document).on('pjax:click','a.deleter',function(event){
+            if (!confirm('Вы действительно хотите удалить?'))
+                return false;
+        });
+        $(document).on('click','a.deleter',function(event){ event.preventDefault(); });
+    })
+</script>
