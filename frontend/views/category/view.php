@@ -67,9 +67,12 @@ $this->params['breadcrumbs'][] = 'Каталог';
         var maxHeight = 0, maxHeaderHeight = 0;
         $('.product-card h3').each(function(){ maxHeaderHeight = Math.max(maxHeaderHeight, $(this).height()); });
         $('.product-card .left-column').each(function(){
-            var  height = $(this).height();
-            maxHeight = Math.max(maxHeight, height);
+            var  img= $(this).find('img'), height = img.height();
+            /*console.log(img);
+            console.log('height: ' + height);*/
+            maxHeight = maxHeight > height ? maxHeight : height;
             $(this).on('trigger.align', '.aligner', function(event){
+                console.log('trigger');
                 if (height) { $(this).height(maxHeight - height); }
             });
         });
