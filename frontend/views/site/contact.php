@@ -56,7 +56,7 @@ else
                     'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
                     'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
                 ])->textarea(['rows' => 6]) ?>
-                <?= $form->field($model, 'verifyCode', [
+                <?php /* $form->field($model, 'verifyCode', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'options' => [ 'class' => 'form-group' ],
                     'inputOptions' => [ 'class' => 'col-lg-12 col-md-12' ],
@@ -67,7 +67,7 @@ else
 //                    'imageOptions' => [ 'class' => 'col-lg-6 col-md-6'],
                     'options' => [ 'class' => 'form-control' ],
                     'template' => '<div class="col-lg-6 col-md-6">{image}</div><div class="col-lg-6 col-md-6 ">{input}</div>',
-                ]) ?>
+                ]) */?>
                 <div class="form-group">
                     <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>

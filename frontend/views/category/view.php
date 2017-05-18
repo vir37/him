@@ -7,6 +7,9 @@
  */
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use frontend\assets\FancyboxAsset;
+
+FancyboxAsset::register($this);
 
 $city = Yii::$app->params['city'];
 if (isset($current_category)) {

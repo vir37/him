@@ -81,7 +81,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ" <?= date('Y') ?></p>
+        <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ"</p>
         <address class="pull-right"><?= $city->index.', '.$city->fake_address ?></address>
     </div>
 </footer>

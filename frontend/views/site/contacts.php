@@ -54,9 +54,9 @@ else
         <div class="col-lg-5 col-md-5">
             <h2>ОТДЕЛ ПРОДАЖ</h2>
             <p class="sales">телефон: <a href="tel:<?= \Yii::$app->params['phone'] ?>"><?= \Yii::$app->params['phone'] ?></a></p>
-            <p class="sales">e-mail: <a href="mailto:star4enko.tera-invest@yandex.ru">star4enko.tera-invest@yandex.ru</a></p>
+            <p class="sales">e-mail: <a href="mailto:<?= \Yii::$app->params['saleEmail'] ?>"><?= \Yii::$app->params['saleEmail'] ?></a></p>
             <p style=" margin-top: 10px;"><span style="font-weight: bold;">режим работы:</span></p>
-            <p>8:00-17:00 (понедельник-пятница)</p>
+            <p>24/7</p>
         </div>
     </div>
 </div>
