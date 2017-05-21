@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Exception,
     yii\db\IntegrityException;
 use common\models\Product;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "category".
@@ -37,6 +39,11 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['catalogue_id', 'parent_id'], 'integer'],
             [['catalogue_id', 'name', 'meta_desc', 'meta_keys'], 'required'],
+            ['list_position', 'default', 'value' => function($model, $attribute) {
+                $query = self::find()->where([ 'parent_id' => $model->parent_id ? $model->parent_id : null,
+                                               'catalogue_id' => $model->catalogue_id]);
+                return ($query->max($attribute) + 1);
+            }],
             [['description'], 'string'],
             [['name', 'meta_desc', 'meta_keys'], 'string', 'max' => 128],
         ];

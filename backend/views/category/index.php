@@ -7,6 +7,7 @@ use yii\widgets\Pjax;
 use execut\widget\TreeView;
 use yii\web\JsExpression;
 use yii\helpers\Url;
+use yii\jui\Draggable;
 
 $this->title = 'Категории';
 $this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
@@ -96,3 +97,8 @@ JS
     </div>
     <?php Pjax::end(); ?>
 </div>
+<script type="text/javascript">
+    window.addEventListener('load', function(event){
+        $('.treeview').
+    });
+</script>

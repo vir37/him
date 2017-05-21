@@ -14,7 +14,9 @@ $img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
 ?>
 <div class="row product-card">
     <div class="col-lg-12 col-md-12">
-        <h3><?= $product->name ?></h3>
+        <?= Html::a("<h3>{$product->name}</h3>",
+            [ 'product/view', 'city' => $city->uri_name, 'id' =>$product->id, 'parent_id' => $category ],
+            [ 'data' => [ 'pjax' => 0, ]] ) ?>
     </div>
     <div class="col-lg-5 col-md-5 col-sm-4 left-column">
         <div class="row">

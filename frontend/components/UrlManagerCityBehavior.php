@@ -7,6 +7,7 @@
  */
 
 namespace frontend\components;
+
 use yii\base\Behavior;
 use yii\base\Controller;
 use Yii;

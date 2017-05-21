@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Category;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\bootstrap\Alert;
@@ -80,7 +81,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $firstCategory = Category::find()->where([ 'catalogue_id' => 1])->orderBy(['list_position' =>SORT_ASC])->one();
+        return $this->render('index', [ 'firstCategory' => $firstCategory ]);
     }
 
     /**
