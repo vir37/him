@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Exception,
     yii\db\IntegrityException;
 use common\models\Product;
-use yii\behaviors\AttributeBehavior;
+use common\behaviors\ChangePositionBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -21,7 +21,7 @@ use yii\db\ActiveRecord;
  *
  * @property CategoryImg[] $categoryImgs
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -69,8 +69,10 @@ class Category extends \yii\db\ActiveRecord
 
     public function behaviors(){
         return [
-            'class' => 'common\behaviors\ChangePositionBehavior',
-            'restrictFields' => [ 'parent_id', 'catalogue_id' ],
+            [
+                'class' => ChangePositionBehavior::className(),
+                'restrictFields' => [ 'parent_id', 'catalogue_id' ],
+            ],
         ];
     }
 

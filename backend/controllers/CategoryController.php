@@ -42,12 +42,13 @@ class CategoryController extends Controller
         if (!array_key_exists($model->formName(), $params))
             $params[$model->formName()] = [ 'catalogue_id' => $catalogue_id ];
         $dataProvider = $model->search($params);
+        $dataProvider->query->orderBy([ 'list_position' => SORT_ASC ]);
         $dataProvider->setPagination(false);
 
         return $this->render('index', [
             'model' => $model,
             'filter_items' => $items,
-            'catalogue' => $catalogue,
+            'catalogue_id' => $catalogue ? $catalogue->id : 0,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -240,11 +241,21 @@ class CategoryController extends Controller
     }
 
     public function actionPosition($direction, $id) {
-        $model = $this->findModel($id);
-        if ( ($model = $this->findModel($id)) == null )
-            throw new NotFoundHttpException();
-
-
+        $catalogue_id = \Yii::$app->request->get('catalogue_id');
+        if (\Yii::$app->request->isPjax) {
+            $model = $this->findModel($id);
+            if ( ($model = $this->findModel($id)) == null )
+                throw new NotFoundHttpException();
+            switch (strtolower($direction)){
+                case 'up': $step = -1; break;
+                case 'down': $step = 1; break;
+                default: throw new \HttpInvalidParamException();
+            }
+            $model->list_position = is_null($model->list_position) ? 1 : $model->list_position;
+            $model->changePosition($model->list_position + $step);
+            return $this->actionIndex($catalogue_id);
+        }
+        return $this->redirect(['category/index', 'catalogue_id' => $catalogue_id]);
     }
 
 }

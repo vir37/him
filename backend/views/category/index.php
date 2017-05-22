@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 $label = 'Фильтр по каталогам';
 $class = '';
 $url_params = [];
-if ($catalogue) {
-    $url_params['catalogue_id'] = $catalogue->id;
+if ($catalogue_id) {
+    $url_params['catalogue_id'] = $catalogue_id;
     foreach ($filter_items as $item)
-        if ($item['id'] == $catalogue->id) {
+        if ($item['id'] == $catalogue_id) {
             $label = $item['label'];
             $class = 'selected';
         }
@@ -34,11 +34,11 @@ function (ev, item) {
     });
     $("#button-up-position").each(function(){
         $(this).removeAttr('disabled');
-        $(this).attr('href', item.href + '/position?direction=up&id=' + item.id);
+        $(this).attr('href', item.href + '/position?direction=up&id=' + item.id + '&catalogue_id=' + $catalogue_id);
     });
     $("#button-down-position").each(function(){
         $(this).removeAttr('disabled');
-        $(this).attr('href', item.href + '/position?direction=down&id=' + item.id);
+        $(this).attr('href', item.href + '/position?direction=down&id=' + item.id + '&catalogue_id=' + $catalogue_id);
     });
 }
 JS
@@ -47,7 +47,7 @@ JS
 
 <div class="category-index">
     <h3>Дерево категорий</h3>
-    <?php Pjax::begin(['enablePushState' => true, 'enableReplaceState' => true]); ?>
+    <?php Pjax::begin(['enablePushState' => false, 'enableReplaceState' => false, 'timeout' => 6000]); ?>
     <div class="panel panel-default">
         <div class="panel-body">
             <?= ButtonDropdown::widget([
@@ -101,12 +101,14 @@ JS
                     <hr/>
                     <?= Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['#'], [
                         'class' => 'btn btn-info',
+                        'data-pjax' => 1,
                         'disabled' => true,
                         'id' => 'button-up-position',
                         'title' => 'Поднять вверх'
                     ]) ?>
                     <?= Html::a('<span class="glyphicon glyphicon-arrow-down"></span>', ['#'], [
                         'class' => 'btn btn-info',
+                        'data-pjax' => 1,
                         'disabled' => true,
                         'id' => 'button-down-position',
                         'title' => 'Опустить вниз'

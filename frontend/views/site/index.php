@@ -16,7 +16,7 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
         'options' => [ 'class' => 'main-slider' ],
         'items' => [
             [
-                'content' => '<img src="/icons/slide1.jpg" style="height:inherit; width: inherit;"/>',
+                'content' => '<img src="/icons/slide4.jpg" style="height:inherit; width: inherit;"/>',
                 'caption' => '<div class="caption">
                                 <p>Всё в наличии,</p><p>либо под заказ</p>
                                 <div></div>
@@ -39,9 +39,9 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
             <?= Html::tag('h1', "Химическая продукция в {$city->name_pp}", [ 'class' => 'main-h1'])?>
         </header>
         <div class="row direct-links">
-            <div class="col-lg-3 col-md-3" id="catalogue" >
+            <div class="col-lg-3 col-md-3 col-sm-3" id="catalogue" >
             <?= Html::a('<img src="/icons/book_white.png"><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',
-                [ '/category/list', 'city'=>$city->uri_name, 'id' => 1 /* дефолтный каталог */ ]) ?>
+                [ '/category/view', 'city'=>$city->uri_name, 'id' => $firstCategory->id /* дефолтная категория */ ]) ?>
             </div>
             <?php
                 $branches = \common\models\Catalogue::findOne(2);

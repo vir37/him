@@ -26,14 +26,14 @@ class ChangePositionBehavior extends Behavior {
 
     public function events(){
         return [
-            ActiveRecord::EVENT_AFTER_DELETE => 'resortPosition',
+            ActiveRecord::EVENT_AFTER_DELETE => 'resortPositions',
         ];
     }
 
-    public function resortPositions() {
+    public function resortPositions($event) {
         $pos = 1;
         $model = $this->owner;
-        $query = $model->find()->where([true]);
+        $query = $model->find()->where('1=1');
         foreach ($this->restrictFields as $field)
             $query->andWhere([ $field => $model->{$field} ]);
 
@@ -45,22 +45,27 @@ class ChangePositionBehavior extends Behavior {
     }
 
     public function changePosition($newPosition) {
-        $model = $this->owner;
+        if (!($model = $this->owner))
+            return;
         $step = $model->{$this->positionField} > $newPosition ? 1 : -1;
         $min = $step > 0 ? (int) $newPosition : (int) $model->{$this->positionField} - $step;
         $max = $step > 0 ? (int) $model->{$this->positionField} - $step : (int) $newPosition;
-        $query = $model->find()->where([true]);
+        $query = $model->find()->where('1=1');
         foreach ($this->restrictFields as $field)
             $query->andWhere([ $field => $model->{$field} ]);
 
         $query->andWhere(['between', $this->positionField, $min, $max])
             ->orderBy([$this->positionField => SORT_ASC]);
+
+        $model->{$this->positionField} = 0;
+        $model->save();
+
         foreach ($query->all() as $rec) {
             $rec->{$this->positionField} += $step;
             $rec->save();
         }
-        $this->{$this->positionField} = $newPosition;
-        $this->save();
+        $model->{$this->positionField} = $newPosition;
+        $model->save();
     }
 
 } 
