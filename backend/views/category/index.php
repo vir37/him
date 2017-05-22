@@ -7,7 +7,6 @@ use yii\widgets\Pjax;
 use execut\widget\TreeView;
 use yii\web\JsExpression;
 use yii\helpers\Url;
-use yii\jui\Draggable;
 
 $this->title = 'Категории';
 $this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
@@ -32,6 +31,14 @@ function (ev, item) {
     $("#button-delete").each(function(){
         $(this).removeAttr('disabled');
         $(this).attr('href', item.href + '/delete?id=' + item.id);
+    });
+    $("#button-up-position").each(function(){
+        $(this).removeAttr('disabled');
+        $(this).attr('href', item.href + '/position?direction=up&id=' + item.id);
+    });
+    $("#button-down-position").each(function(){
+        $(this).removeAttr('disabled');
+        $(this).attr('href', item.href + '/position?direction=down&id=' + item.id);
     });
 }
 JS
@@ -91,14 +98,22 @@ JS
                         'id' => 'button-delete',
                         'title' => 'Удалить категорию'
                     ]) ?>
+                    <hr/>
+                    <?= Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['#'], [
+                        'class' => 'btn btn-info',
+                        'disabled' => true,
+                        'id' => 'button-up-position',
+                        'title' => 'Поднять вверх'
+                    ]) ?>
+                    <?= Html::a('<span class="glyphicon glyphicon-arrow-down"></span>', ['#'], [
+                        'class' => 'btn btn-info',
+                        'disabled' => true,
+                        'id' => 'button-down-position',
+                        'title' => 'Опустить вниз'
+                    ]) ?>
                 </div>
             </div>
         </div>
     </div>
     <?php Pjax::end(); ?>
 </div>
-<script type="text/javascript">
-    window.addEventListener('load', function(event){
-        $('.treeview').
-    });
-</script>

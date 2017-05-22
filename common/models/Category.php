@@ -66,6 +66,14 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+
+    public function behaviors(){
+        return [
+            'class' => 'common\behaviors\ChangePositionBehavior',
+            'restrictFields' => [ 'parent_id', 'catalogue_id' ],
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

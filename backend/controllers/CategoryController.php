@@ -238,4 +238,13 @@ class CategoryController extends Controller
         } else
             $this->redirect(['update', 'id' => $object_id]);
     }
+
+    public function actionPosition($direction, $id) {
+        $model = $this->findModel($id);
+        if ( ($model = $this->findModel($id)) == null )
+            throw new NotFoundHttpException();
+
+
+    }
+
 }
