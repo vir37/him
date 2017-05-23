@@ -21,14 +21,14 @@ else
         <h1><?= Html::encode($this->title) ?></h1>
     </header>
     <div class="row">
-        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+        <div class="col-lg-7 col-md-7">
             <h2>РУКОВОДСТВО</h2>
             <?php if($chief): ?>
                 <div class="row">
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div class="col-lg-5 col-md-5">
                         <img src="<?= $img ?>" style="width:100%">
                     </div>
-                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <div class="col-lg-7 col-md-7">
                         <p class="chief"><?= $chief->fio ?></p>
                         <p><span style="font-weight: bold;"><?= $chief->post ?></span></p>
                         <p>телефон: <a href="tel:<?= $chief->phone ?>"><?= $chief->phone ?></a></p>
@@ -37,25 +37,25 @@ else
             </div>
             <?php endif; ?>
         </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <div class="col-lg-5 col-md-5">
             <h2>РЕКВИЗИТЫ КОМПАНИИ</h2>
             <div class="row partners-card">
-                <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"><img src="/icons/msword.png" style="width:100%"></div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><a href="/resources/partners_card.doc">Реквизиты компании<br/>(скачать)</a></div>
+                <div class="col-lg-2 col-md-2"><img src="/icons/msword.png" style="width:100%"></div>
+                <div class="col-lg-8 col-md-8"><a href="/resources/partners_card.doc">Реквизиты компании<br/>(скачать)</a></div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+        <div class="col-lg-7 col-md-7">
             <h2>АДРЕС</h2>
             <p><?= $city->index.', '.$city->fake_address ?></p>
-            <div id="map" style="width:80%; height: 30rem; margin-top: 1rem;"></div>
+            <div id="map" style="width:80%; height: 300px; margin-top: 10px;"></div>
         </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <div class="col-lg-5 col-md-5">
             <h2>ОТДЕЛ ПРОДАЖ</h2>
             <p class="sales">телефон: <a href="tel:<?= \Yii::$app->params['phone'] ?>"><?= \Yii::$app->params['phone'] ?></a></p>
             <p class="sales">e-mail: <a href="mailto:<?= \Yii::$app->params['saleEmail'] ?>"><?= \Yii::$app->params['saleEmail'] ?></a></p>
-            <p style=" margin-top: 1rem;"><span style="font-weight: bold;">режим работы:</span></p>
+            <p style=" margin-top: 10px;"><span style="font-weight: bold;">режим работы:</span></p>
             <p>24/7</p>
         </div>
     </div>
