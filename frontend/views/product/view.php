@@ -20,17 +20,17 @@ $this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="product-view">
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-4">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
             <?= $this->render( '/common/_catalogue_tree', [ 'city' => $city, 'catalogue_type1' => $catalogue_type1,
                 'catalogue_type2' => $catalogue_type2, 'categories' => $categories,
                 'current_category' => $current_category, 'catalogue' => $catalogue ] ) ?>
         </div>
-        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8 catalogue-content">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 catalogue-content">
             <div class="row">
-                <header class="col-lg-9 col-md-9 col-sm-9">
+                <header class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     <h1><?= $model->name?></h1>
                 </header>
-                <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <?= Html::a('Купить', [ 'site/contact', 'city' => $city->uri_name, 'product_id' =>$model->id ], [
                         'class' => 'fancybox product-button red',
                         'data' => [ 'pjax' => 0, ],
@@ -38,23 +38,23 @@ $this->params['breadcrumbs'][] = $model->name;
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div style="border-top: 1px solid #00275F"></div>
                     <article class="ql-editor">
                         <?php
                             $img_list = $model->getImages()->orderBy(['is_main' => SORT_DESC])->all();
                             if ($img_list) {
                                 $img = ImageHelper::getImagePath(array_shift($img_list)->name);
-                                $i = Html::img($img, ['style' => 'float:right; width:30%; margin-left: 10px; margin-right: 10px;']);
+                                $i = Html::img($img, ['style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
                                 echo Html::a($i, $img, [ 'rel' => 'slideshow-thumbs2', 'class' => 'slideshow-thumbs2' ]);
                                 echo '<div class="hidden">';
                                 foreach ($img_list as $img) {
-                                    $i = Html::img(ImageHelper::getImagePath($img->name), ['style' => 'float:right; width:30%; margin-left: 10px; margin-right: 10px;']);
+                                    $i = Html::img(ImageHelper::getImagePath($img->name), ['style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
                                     echo Html::a($i, ImageHelper::getImagePath($img->name), [ 'rel' => 'slideshow-thumbs2', 'class' => 'slideshow-thumbs2' ]);
                                 }
                                 echo '</div>';
                             } else
-                                echo Html::img(ImageHelper::$no_image, [ 'style' => 'float:right; width:30%; margin-left: 10px; margin-right: 10px;']);
+                                echo Html::img(ImageHelper::$no_image, [ 'style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
                             ?>
                         <?= $model->description ?>
                     </article>
@@ -66,8 +66,8 @@ $this->params['breadcrumbs'][] = $model->name;
                             echo '<tr>';
                             $value = $productFeature->value();
                             $uom = $productFeature->uom();
-                            echo Html::tag('td', $uom ? $productFeature->feature->name.", {$uom->short_name}" : $productFeature->feature->name , ['class' => 'col-lg-6 col-md-6 col-sm-6 left']);
-                            echo Html::tag('td', $value, [ 'class' => 'col-lg-6 col-md-6 col-sm-6 right']);
+                            echo Html::tag('td', $uom ? $productFeature->feature->name.", {$uom->short_name}" : $productFeature->feature->name , ['class' => 'col-lg-6 col-md-6 col-sm-6 col-xs-6 left']);
+                            echo Html::tag('td', $value, [ 'class' => 'col-lg-6 col-md-6 col-sm-6 col-xs-6 right']);
                             echo '</tr>';
                         }
                     ?>

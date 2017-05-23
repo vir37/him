@@ -13,9 +13,9 @@ use yii\helpers\Html;
     <p>Формирование каталога:</p>
     <div class="row">
         <?= Html::a('Каталог', [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue_type1,],
-            [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
+            [ 'class' => "col-lg-6 col-md-6 col-sm-6 col-xs-6 catalogue-type" ]) ?>
         <?= Html::a('Отрасли', [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue_type2,],
-            [ 'class' => "col-lg-6 col-md-6 col-sm-6 catalogue-type" ]) ?>
+            [ 'class' => "col-lg-6 col-md-6 col-sm-6 col-xs-6 catalogue-type" ]) ?>
     </div>
     <div class="row">
         <?php

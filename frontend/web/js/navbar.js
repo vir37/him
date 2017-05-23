@@ -7,6 +7,7 @@ NavBar = function() {
 };
 NavBar.prototype.init = function(){
     this.city_chooser = $('.city-chooser a');
+    debugger;
     if (this.city_chooser) {
         $(this.city_chooser).each(function(idx, elem){
             var position = $(elem).offset(),

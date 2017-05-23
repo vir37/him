@@ -41,7 +41,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
         ],
     ]);
     $menuItems = [
-        [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser']],
+        [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser navbar-link']],
         $this->render('_city_choose'),
         '<li><a href="tel:'.$phone.'"><span class="phone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
         [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],

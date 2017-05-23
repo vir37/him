@@ -3,9 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Exception,
-    yii\db\IntegrityException;
-use common\models\Product;
+use yii\db\IntegrityException;
 use common\behaviors\ChangePositionBehavior;
 use yii\db\ActiveRecord;
 

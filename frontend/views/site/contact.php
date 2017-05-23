@@ -16,7 +16,7 @@ else
 
 ?>
 <div class="site-contact row">
-    <div class="col-lg-12 col-md-12 panel panel-primary">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 panel panel-primary">
     <div class="panel-body">
         <h4>Позвоните нам</h4>
         <div class="form-group" style="text-align: center; ">
@@ -28,9 +28,9 @@ else
             ]) ?>
         </div>
         <div class="row" style="margin-top: 1em; margin-bottom: 1em;">
-            <div class="col-lg-5 delim"></div>
-            <div class="col-lg-2"><p>ИЛИ</p></div>
-            <div class="col-lg-5 delim"></div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 delim"></div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><p>ИЛИ</p></div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 delim"></div>
         </div>
         <h4>Отправьте заявку, и мы обязательно с вами свяжемся</h4>
         <div class="">
@@ -39,22 +39,22 @@ else
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'inputOptions' => [ 'class' => 'form-control' ],
                     'options' => [ 'class' => 'form-group' ],
-                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
-                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
+                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3 col-xs-3'],
+                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9 col-sm-9 col-xs-9' ],
                 ])->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'phone', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'inputOptions' => [ 'class' => 'form-control' ],
                     'options' => [ 'class' => 'form-group' ],
-                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
-                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
+                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3 col-xs-3'],
+                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9 col-sm-9 col-xs-9' ],
                 ]) ?>
                 <?= $form->field($model, 'body', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                     'inputOptions' => [ 'class' => ' form-control' ],
                     'options' => [ 'class' => 'form-group' ],
-                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-4'],
-                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-8' ],
+                    'labelOptions' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3 col-xs-3'],
+                    'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9 col-sm-9 col-xs-9' ],
                 ])->textarea(['rows' => 6]) ?>
                 <?php /* $form->field($model, 'verifyCode', [
                     'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',

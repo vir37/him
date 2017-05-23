@@ -11,14 +11,14 @@ $this->params['breadcrumbs'][] = 'Каталог';
 ?>
 <div class="catalogue-index">
     <div class="row">
-        <div class="col-lg-3 col-md-3 catalogue">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 catalogue">
             <p>Формирование каталога:</p>
             <div class="row">
-                <a href="#" class="col-lg-6 col-md-6" data-catalogue-id="1">Карточки</a>
-                <a href="#" class="col-lg-6 col-md-6" data-catalogue-id="2">Список</a>
+                <a href="#" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" data-catalogue-id="1">Карточки</a>
+                <a href="#" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" data-catalogue-id="2">Список</a>
             </div>
         </div>
-        <div class="col-lg-9 col-md-9 catalogue-content">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 catalogue-content">
 
         </div>
     </div>

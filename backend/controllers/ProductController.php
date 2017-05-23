@@ -106,6 +106,7 @@ class ProductController extends \yii\web\Controller
      */
     public function actionDelete($id)
     {
+        //TODO: сделать пересортировку позиций после удаления
         $model = $this->findModel($id);
         $model->delete();
         return $this->redirect(['index']);
@@ -219,7 +220,7 @@ class ProductController extends \yii\web\Controller
             $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E02'];
         else {
             $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
-            CategoryProduct::resortPositions($category_id);
+            $model->resortPositions($category_id);
         }
         if (\Yii::$app->request->isPjax) {
             $res = $this->render('_tab3', [

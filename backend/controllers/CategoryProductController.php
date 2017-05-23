@@ -41,7 +41,7 @@ class CategoryProductController extends Controller {
             $alert = ['type' => 'danger', 'body' => 'Ошибка выполнения операции E02'];
         else {
             $alert = ['type' => 'success', 'body' => 'Операция выполнена успешно'];
-            CategoryProduct::resortPositions($category_id);
+            $model->resortPositions($category_id);
         }
         if (\Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

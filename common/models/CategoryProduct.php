@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use common\behaviors\ChangePositionBehavior;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "category_product".
@@ -14,7 +17,7 @@ use Yii;
  * @property Category $category
  * @property Product $product
  */
-class CategoryProduct extends \yii\db\ActiveRecord
+class CategoryProduct extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -53,6 +56,16 @@ class CategoryProduct extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors(){
+        return [
+            [
+                'class' => ChangePositionBehavior::className(),
+                'restrictFields' => [ 'category_id' ],
+            ],
+        ];
+    }
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -69,31 +82,4 @@ class CategoryProduct extends \yii\db\ActiveRecord
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
-    /**
-     * Сортирует товары в категории
-     * @param $category_id
-     */
-    public static function resortPositions($category_id) {
-        $pos = 1;
-        foreach (self::find()->where(['category_id' => $category_id])->orderBy(['list_position' => SORT_ASC])->all() as $rec){
-            $rec->list_position = $pos;
-            $rec->save();
-            $pos++;
-        }
-    }
-
-    public function changePosition($newPosition) {
-        $step = $this->list_position > $newPosition ? 1 : -1;
-        $min = $step > 0 ? (int) $newPosition : (int) $this->list_position - $step;
-        $max = $step > 0 ? (int) $this->list_position - $step : (int) $newPosition;
-        $query = self::find()->where(['category_id' => $this->category_id])
-            ->andWhere(['between', 'list_position', $min, $max])
-            ->orderBy(['list_position' => SORT_ASC]);
-        foreach ($query->all() as $model) {
-            $model->list_position += $step;
-            $model->save();
-        }
-        $this->list_position = $newPosition;
-        $this->save();
-    }
 }
