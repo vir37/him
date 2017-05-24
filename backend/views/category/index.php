@@ -14,14 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 $label = 'Фильтр по каталогам';
 $class = '';
 $url_params = [];
-if ($catalogue_id) {
-    $url_params['catalogue_id'] = $catalogue_id;
+if ($catalogueId) {
+    $url_params['catalogueId'] = $catalogueId;
     foreach ($filter_items as $item)
-        if ($item['id'] == $catalogue_id) {
+        if ($item['id'] == $catalogueId) {
             $label = $item['label'];
             $class = 'selected';
         }
 }
+$buttonsParams = !$categorySelected ? '#' : [ 'id' => $categorySelected ];
 $onSelect = new JsExpression(<<<JS
 function (ev, item) {
     $("#button-update").each(function(){
@@ -34,11 +35,13 @@ function (ev, item) {
     });
     $("#button-up-position").each(function(){
         $(this).removeAttr('disabled');
-        $(this).attr('href', item.href + '/position?direction=up&id=' + item.id + '&catalogue_id=' + $catalogue_id);
+        $(this).attr('data-pjax', 1);
+        $(this).attr('href', item.href + '/position?direction=up&id=' + item.id + '&catalogueId=' + $catalogueId);
     });
     $("#button-down-position").each(function(){
         $(this).removeAttr('disabled');
-        $(this).attr('href', item.href + '/position?direction=down&id=' + item.id + '&catalogue_id=' + $catalogue_id);
+        $(this).attr('data-pjax', 1);
+        $(this).attr('href', item.href + '/position?direction=down&id=' + item.id + '&catalogueId=' + $catalogueId);
     });
 }
 JS
@@ -65,7 +68,7 @@ JS
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6">
             <?= TreeView::widget([
-                'data' => $model->makeTree($dataProvider, [ 'href' => Url::to(['/category'])]),
+                'data' => $model->makeTree($dataProvider, [ 'href' => Url::to(['/category'])], $categorySelected),
                 'header' => 'Дерево категорий',
                 'size' => TreeView::SIZE_MIDDLE,
                 'clientOptions' => [
@@ -81,37 +84,43 @@ JS
         <div class="col-lg-6 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-body">
-                    <?= Html::a('Добавить', array_merge(['/category/create'], $url_params), [
+                    <?= Html::a('Добавить', array_merge(['create'], $url_params), [
                         'class' => 'btn btn-default',
                         'title' => 'Добавить новую категорию'
                     ]) ?>
-                    <?= Html::a('Редактировать', ['#'], [
+                    <?= Html::a('Редактировать', $buttonsParams == '#' ? ['#'] : array_merge(['update'], $buttonsParams, $url_params), [
                         'class' => 'btn btn-default',
-                        'disabled' => true,
+                        'data-pjax' => 0,
+                        'disabled' => $buttonsParams == '#',
                         'id' => 'button-update',
                         'title' => 'Редактировать категорию'
                     ]) ?>
-                    <?= Html::a('Удалить', ['#'], [
+                    <?= Html::a('Удалить', $buttonsParams == '#' ? ['#'] : array_merge(['delete'], $buttonsParams, $url_params), [
                         'class' => 'btn btn-danger',
                         'data-confirm' => 'Вы действительно хотите удалить?',
-                        'disabled' => true,
+                        'data-pjax' => 0,
+                        'disabled' => $buttonsParams == '#',
                         'id' => 'button-delete',
                         'title' => 'Удалить категорию'
                     ]) ?>
                     <hr/>
-                    <?= Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['#'], [
-                        'class' => 'btn btn-info',
-                        'data-pjax' => 1,
-                        'disabled' => true,
-                        'id' => 'button-up-position',
-                        'title' => 'Поднять вверх'
+                    <?= Html::a('<span class="glyphicon glyphicon-arrow-up"></span>',
+                        $buttonsParams == '#' ? ['#'] : array_merge(['position', 'direction' => 'up'], $buttonsParams, $url_params),
+                        [
+                            'class' => 'btn btn-info',
+                            'data-pjax' => $buttonsParams == '#' ? 0 : 1,
+                            'disabled' => $buttonsParams == '#',
+                            'id' => 'button-up-position',
+                            'title' => 'Поднять вверх'
                     ]) ?>
-                    <?= Html::a('<span class="glyphicon glyphicon-arrow-down"></span>', ['#'], [
-                        'class' => 'btn btn-info',
-                        'data-pjax' => 1,
-                        'disabled' => true,
-                        'id' => 'button-down-position',
-                        'title' => 'Опустить вниз'
+                    <?= Html::a('<span class="glyphicon glyphicon-arrow-down"></span>',
+                        $buttonsParams == '#' ? ['#'] : array_merge(['position', 'direction' => 'down'], $buttonsParams, $url_params),
+                        [
+                            'class' => 'btn btn-info',
+                            'data-pjax' => $buttonsParams == '#' ? 0 : 1,
+                            'disabled' => $buttonsParams == '#',
+                            'id' => 'button-down-position',
+                            'title' => 'Опустить вниз'
                     ]) ?>
                 </div>
             </div>

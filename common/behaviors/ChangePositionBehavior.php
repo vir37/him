@@ -45,7 +45,7 @@ class ChangePositionBehavior extends Behavior {
     }
 
     public function changePosition($newPosition) {
-        if (!($model = $this->owner))
+        if (!($model = $this->owner) || ($model->{$this->positionField} == $newPosition))
             return;
         $step = $model->{$this->positionField} > $newPosition ? 1 : -1;
         $min = $step > 0 ? (int) $newPosition : (int) $model->{$this->positionField} - $step;
@@ -57,10 +57,12 @@ class ChangePositionBehavior extends Behavior {
         $query->andWhere(['between', $this->positionField, $min, $max])
             ->orderBy([$this->positionField => SORT_ASC]);
 
+        $forMoving = $query->all();
+        if (!sizeof($forMoving))
+            return;
         $model->{$this->positionField} = 0;
         $model->save();
-
-        foreach ($query->all() as $rec) {
+        foreach ($forMoving as $rec) {
             $rec->{$this->positionField} += $step;
             $rec->save();
         }

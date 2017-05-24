@@ -81,7 +81,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $firstCategory = Category::find()->where([ 'catalogue_id' => 1])->orderBy(['list_position' =>SORT_ASC])->one();
+        $firstCategory = Category::find()->where([ 'catalogue_id' => 1, 'parent_id' => null ])->orderBy(['list_position' =>SORT_ASC])->one();
         return $this->render('index', [ 'firstCategory' => $firstCategory ]);
     }
 

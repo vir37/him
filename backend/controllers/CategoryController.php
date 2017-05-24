@@ -32,15 +32,15 @@ class CategoryController extends Controller
         ];
     }
 
-    public function actionIndex($catalogue_id=0)
+    public function actionIndex($catalogueId=0, $categorySelected=0)
     {
-        $e = new Expression('CONCAT("?catalogue_id=", id) as url');
+        $e = new Expression('CONCAT("?catalogueId=", id) as url');
         $items = Catalogue::find()->asArray()->select(["id", "name as label", $e])->all();
-        $catalogue = Catalogue::findOne($catalogue_id);
+        //$catalogue = Catalogue::findOne($catalogueId);
         $model = new CategorySearch();
         $params = Yii::$app->request->queryParams;
         if (!array_key_exists($model->formName(), $params))
-            $params[$model->formName()] = [ 'catalogue_id' => $catalogue_id ];
+            $params[$model->formName()] = [ 'catalogue_id' => $catalogueId ];
         $dataProvider = $model->search($params);
         $dataProvider->query->orderBy([ 'list_position' => SORT_ASC ]);
         $dataProvider->setPagination(false);
@@ -48,8 +48,9 @@ class CategoryController extends Controller
         return $this->render('index', [
             'model' => $model,
             'filter_items' => $items,
-            'catalogue_id' => $catalogue ? $catalogue->id : 0,
+            'catalogueId' => $catalogueId,
             'dataProvider' => $dataProvider,
+            'categorySelected' => $categorySelected,
         ]);
     }
 
@@ -241,9 +242,9 @@ class CategoryController extends Controller
     }
 
     public function actionPosition($direction, $id) {
-        $catalogue_id = \Yii::$app->request->get('catalogue_id');
+        $catalogueId = \Yii::$app->request->get('catalogueId');
         if (\Yii::$app->request->isPjax) {
-            $model = $this->findModel($id);
+            //$model = $this->findModel($id);
             if ( ($model = $this->findModel($id)) == null )
                 throw new NotFoundHttpException();
             switch (strtolower($direction)){
@@ -253,9 +254,9 @@ class CategoryController extends Controller
             }
             $model->list_position = is_null($model->list_position) ? 1 : $model->list_position;
             $model->changePosition($model->list_position + $step);
-            return $this->actionIndex($catalogue_id);
+            return $this->actionIndex($catalogueId, $id);
         }
-        return $this->redirect(['category/index', 'catalogue_id' => $catalogue_id]);
+        return $this->redirect(['category/index', 'catalogueId' => $catalogueId]);
     }
 
 }
