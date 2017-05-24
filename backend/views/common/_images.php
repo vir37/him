@@ -30,6 +30,7 @@ if (isset($alert)) {
         ],
         'layout' => 'inline',
         'fieldConfig' => [
+            'enableError' => true,
             'labelOptions' => [ 'class' => 'control-label' ],
         ]])
     ?>
@@ -39,9 +40,7 @@ if (isset($alert)) {
             <?= $form->field($model, 'imageFile', [
                 'labelOptions' => [ 'class' => 'control-label col-lg-5 col-md-5' ],
                 'options' => [ 'class' => 'form-group col-lg-6 col-md-6 col-sm-6'],
-            ])->fileInput([
-                'class' => 'btn btn-default'
-            ])->label('Файл с изображением')
+            ])->fileInput([ 'class' => 'btn btn-default' ])->label('Файл с изображением')
             ?>
             <?= $form->field($model, 'isMain', [ 'options' => [ 'class' => 'col-lg-3 col-md-3 col-sm-3' ] ])->checkbox()?>
             <i class="loader fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: absolute;"></i>

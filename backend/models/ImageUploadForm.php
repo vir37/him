@@ -29,7 +29,7 @@ class ImageUploadForm extends Model{
             [ 'objectId', 'required' ],
             [ 'isMain', 'boolean'],
             [ 'isMain', 'validateOnlyOne'],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 

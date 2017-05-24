@@ -76,6 +76,7 @@ class CategoryController extends Controller{
             throw new NotFoundHttpException();
         $catDataProvider = new ActiveDataProvider();
         $catDataProvider->query = $catalogue->getCategories();
+        $catDataProvider->setPagination(false);
         return $this->render('view', [
             'categories' => TreeHelper::createTree($catDataProvider),
             'catalogue' => $id,
@@ -89,6 +90,7 @@ class CategoryController extends Controller{
             throw new NotFoundHttpException();
         $catDataProvider = new ActiveDataProvider();
         $catDataProvider->query = $category->catalogue->getCategories();
+        $catDataProvider->setPagination(false);
         return $this->render('view', [
             'categories' => TreeHelper::createTree($catDataProvider),
             'catalogue' => $id,

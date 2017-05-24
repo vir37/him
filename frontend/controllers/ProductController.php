@@ -59,6 +59,7 @@ class ProductController extends Controller {
 
         $catDataProvider = new ActiveDataProvider();
         $catDataProvider->query = $category->catalogue->getCategories();
+        $catDataProvider->setPagination(false);
         return $this->render('view', [
             'model' => $model,
             'categories' => TreeHelper::createTree($catDataProvider),

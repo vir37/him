@@ -20,17 +20,17 @@ $this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="product-view">
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
             <?= $this->render( '/common/_catalogue_tree', [ 'city' => $city, 'catalogue_type1' => $catalogue_type1,
                 'catalogue_type2' => $catalogue_type2, 'categories' => $categories,
                 'current_category' => $current_category, 'catalogue' => $catalogue ] ) ?>
         </div>
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 catalogue-content">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 catalogue-content">
             <div class="row">
-                <header class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                <header class="col-lg-9 col-md-9 col-sm-9 col-xs-7">
                     <h1><?= $model->name?></h1>
                 </header>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
                     <?= Html::a('Купить', [ 'site/contact', 'city' => $city->uri_name, 'product_id' =>$model->id ], [
                         'class' => 'fancybox product-button red',
                         'data' => [ 'pjax' => 0, ],
@@ -75,9 +75,11 @@ $this->params['breadcrumbs'][] = $model->name;
                     </table>
                 </div>
                 <div class="row">
-                    <p style="text-align: center"> Посмотрите другие товары в категории <?= Html::a($current_category->name,
-                            [ 'category/view', 'city' => $city->uri_name , 'id' => $current_category->id ],
-                            [ 'class' => 'important-link'])?></p>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p style="text-align: center"> Посмотрите другие товары в категории <?= Html::a($current_category->name,
+                                [ 'category/view', 'city' => $city->uri_name , 'id' => $current_category->id ],
+                                [ 'class' => 'important-link'])?></p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = 'Каталог';
 ?>
 <div class="category-view">
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
             <?= $this->render( '/common/_catalogue_tree', [ 'city' => $city, 'catalogue_type1' => $catalogue_type1,
                                                     'catalogue_type2' => $catalogue_type2, 'categories' => $categories,
                                                     'current_category' => $current_category, 'catalogue' => $catalogue ] ) ?>
         </div>
         <?php Pjax::begin([ 'id' => 'pjax-container', 'timeout' => 6000 ]); ?>
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 catalogue-content">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-7 catalogue-content">
             <div id="loading" style="position:absolute; width: 100%; height: 100%; background-color: white; opacity: 0.8; z-index: 9999; display: none">
                 <div style="text-align: center; position: relative; top: 5rem;">
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
                 <?php
                     if ($current_category) {
                         foreach ($current_category->product as $product){
-                            echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+                            echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">';
                             echo $this->render('_product_card', [ 'product' => $product, 'city' => $city,
                                 'category' => $current_category->id ]);
                             echo '</div>';

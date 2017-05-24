@@ -44,7 +44,7 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
             <?= Html::tag('h1', "Химическая продукция в {$city->name_pp}", [ 'class' => 'main-h1 col-lg-12 col-md-12 col-sm-12 col-xs-12'])?>
         </header>
         <div class="row direct-links">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" id="catalogue" >
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5" id="catalogue" >
             <?= Html::a('<img src="/icons/book_white.png" ><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',
                 [ '/category/view', 'city'=>$city->uri_name, 'id' => $firstCategory->id /* дефолтная категория */ ]) ?>
             </div>
