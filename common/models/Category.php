@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  */
 class Category extends ActiveRecord
 {
+    private $oldParent;
     /**
      * @inheritdoc
      */
@@ -73,6 +74,35 @@ class Category extends ActiveRecord
             ],
         ];
     }
+
+    public function init(){
+        parent::init();
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'saveParentCategory']);
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'resortParent']);
+    }
+
+
+    public function saveParentCategory(){
+        $this->oldParent = $this->getOldAttribute('parent_id');
+        if ($this->parent_id == $this->oldParent)
+            return;
+        $this->list_position = self::find()->where([ 'parent_id' => $this->parent_id ? $this->parent_id : null, 'catalogue_id' => $this->catalogue_id])
+                                           ->max('list_position') + 1;
+    }
+
+    public function resortParent(){
+        if ($this->parent_id == $this->oldParent)
+            return;
+        $pos = 1;
+        $query = self::find()->where(['catalogue_id' => $this->catalogue_id, 'parent_id' => $this->oldParent]);
+        foreach ($query->orderBy([ 'list_position' => SORT_ASC])->all() as $rec){
+            $rec->list_position = $pos;
+            $rec->save();
+            $pos++;
+        }
+    }
+
+
 
     /**
      * @return \yii\db\ActiveQuery
