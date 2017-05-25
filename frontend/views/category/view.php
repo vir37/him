@@ -13,15 +13,15 @@ FancyboxAsset::register($this);
 
 $city = Yii::$app->params['city'];
 if (isset($current_category)) {
-    $header = "{$current_category->name} в {$city->name_pp}";
+    $header = $current_category->name; 
     $this->registerMetaTag([ 'name' => 'description', 'content' => $current_category->meta_desc]);
     $this->registerMetaTag([ 'name' => 'keywords', 'content' => $current_category->meta_keys]);
 } else {
     $current_category = null;
-    $header = "Химическая продукция в {$city->name_pp}";
+    $header = "Химическая продукция";
     $this->registerMetaTag([ 'name' => 'description', 'content' => $this->title]);
 }
-$this->title = "$header купить - ".Yii::$app->params['titleSuffix'];
+$this->title = "$header купить в {$city->name_pp} - ".Yii::$app->params['titleSuffix'];
 
 $this->params['breadcrumbs'][] = 'Каталог';
 ?>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
                 </div>
             </div>
             <header class="row">
-                <h1><?= $header ?></h1>
+                <h1><?= "$header в {$city->name_pp}" ?></h1>
             </header>
             <div class="row">
                 <?php
