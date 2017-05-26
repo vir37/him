@@ -27,14 +27,14 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body itemscope itemtype="http://schema.org/Organization">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
     <?php
     NavBar::begin([
         'brandLabel' => 'ООО "ТЕРА-ИНВЕСТ"',
-        'brandOptions' => [ 'class' => 'navbar-brand-tera'],
+        'brandOptions' => [ 'class' => 'navbar-brand-tera', 'itemprop' => 'name'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-default navbar-fixed-top navbar-tera',
@@ -43,7 +43,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
     $menuItems = [
         [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser navbar-link']],
         $this->render('_city_choose'),
-        '<li><a href="tel:'.$phone.'"><span class="phone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
+        '<li><a href="tel:'.$phone.'"><span class="phone" itemprop="telephone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
         [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
         [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
     ];
@@ -82,7 +82,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ"</p>
-        <address class="pull-right"><?= $city->index.', '.$city->fake_address ?></address>
+        <address class="pull-right" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><?= $city->index.', '.$city->fake_address ?></address>
     </div>
 </footer>
 
