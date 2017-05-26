@@ -48,7 +48,13 @@ $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 right-column">
         <div class="row">
             <p class="head">Описание</p>
-            <div class="body"><?= $product->description ?></div>
+            <div class="body">
+                <?php
+                    if ($product->manufacturer)
+                        echo "<p><strong>Производитель: </strong>{$product->manufacturer->name}</p><br/>";
+                ?>
+                <?= $product->description ?>
+            </div>
         </div>
         <div class="row features">
             <?php

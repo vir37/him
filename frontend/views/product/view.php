@@ -61,10 +61,16 @@ $this->params['breadcrumbs'][] = $model->name;
                             ?>
                         <?= $model->description ?>
                     </article>
-                    <p class="features-header">Технические подробности:</p>
                     <table class="table table-striped table-condensed features">
+                    <caption class="features-header">Технические подробности:</caption>
                     <tbody>
                     <?php
+                        if ($model->manufacturer) {
+                            echo '<tr>';
+                            echo Html::tag('td', 'Производитель' , ['class' => 'col-lg-6 col-md-6 col-sm-6 col-xs-6 left']);
+                            echo Html::tag('td', $model->manufacturer->name, [ 'class' => 'col-lg-6 col-md-6 col-sm-6 col-xs-6 right']);
+                            echo '</tr>';
+                        }
                         foreach($model->features as $productFeature) {
                             echo '<tr>';
                             $value = $productFeature->value();
