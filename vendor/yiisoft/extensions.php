@@ -93,4 +93,13 @@ return array (
       '@bizley/quill' => $vendorDir . '/bizley/quill',
     ),
   ),
+  'himiklab/yii2-easy-thumbnail-image-helper' => 
+  array (
+    'name' => 'himiklab/yii2-easy-thumbnail-image-helper',
+    'version' => '1.0.3.0',
+    'alias' => 
+    array (
+      '@himiklab/thumbnail' => $vendorDir . '/himiklab/yii2-easy-thumbnail-image-helper',
+    ),
+  ),
 );

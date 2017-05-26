@@ -27,6 +27,10 @@ class ComposerStaticInit56f27f0ab55bdf2b5afa9564b3a3fcef
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        'h' => 
+        array (
+            'himiklab\\thumbnail\\' => 19,
+        ),
         'e' => 
         array (
             'execut\\yii\\' => 11,
@@ -112,6 +116,10 @@ class ComposerStaticInit56f27f0ab55bdf2b5afa9564b3a3fcef
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'himiklab\\thumbnail\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/himiklab/yii2-easy-thumbnail-image-helper',
         ),
         'execut\\yii\\' => 
         array (

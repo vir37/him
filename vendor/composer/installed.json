@@ -3069,5 +3069,50 @@
             "wysiwyg",
             "yii2"
         ]
+    },
+    {
+        "name": "himiklab/yii2-easy-thumbnail-image-helper",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/himiklab/yii2-easy-thumbnail-image-helper.git",
+            "reference": "2e4f8be7d15def8411220017a98393a6eacf0013"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/himiklab/yii2-easy-thumbnail-image-helper/zipball/2e4f8be7d15def8411220017a98393a6eacf0013",
+            "reference": "2e4f8be7d15def8411220017a98393a6eacf0013",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "*",
+            "yiisoft/yii2-imagine": "*"
+        },
+        "time": "2017-01-10 13:15:27",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "himiklab\\thumbnail\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "HimikLab",
+                "homepage": "https://github.com/himiklab/"
+            }
+        ],
+        "description": "Yii2 helper for creating and caching thumbnails on real time",
+        "keywords": [
+            "helper",
+            "image",
+            "thumbnail",
+            "yii2"
+        ]
     }
 ]

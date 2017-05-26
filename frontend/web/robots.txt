@@ -1,3 +1,4 @@
-User-agent: Yandex
+User-agent: *
 Allow: /
-sitemap: http://himsale.ru/sitemap.xml
+Host: https://himsale.ru
+sitemap: https://himsale.ru/sitemap.xml

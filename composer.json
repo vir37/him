@@ -21,7 +21,8 @@
         "execut/yii2-widget-bootstraptreeview": "dev-master",
         "yiisoft/yii2-imagine": "^2.1",
         "bizley/quill": "^2.0",
-        "yiisoft/yii2-jui": "^2.0"
+        "yiisoft/yii2-jui": "^2.0",
+        "himiklab/yii2-easy-thumbnail-image-helper": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

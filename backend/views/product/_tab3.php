@@ -22,6 +22,7 @@ use yii\db\Query;
 $catalogues = Catalogue::find()->all();
 $dataProvider = new \yii\data\ActiveDataProvider();
 $product_id = isset($product_id) ? $product_id : null;
+$disabled = (isset($mode) && $mode == 'view') || !isset($product_id) ? true : false;
 ?>
 <?php Pjax::begin([
     'enableReplaceState' => false,
@@ -30,7 +31,7 @@ $product_id = isset($product_id) ? $product_id : null;
     'id' => 'tab3_pjax',
 ]); ?>
 
-<?= Html::beginTag('fieldset', [ 'disabled' => ((isset($mode) && $mode == 'view') || !isset($product_id)) ]) ?>
+<?= Html::beginTag('fieldset', [ 'disabled' => $disabled ]) ?>
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-sitemap fa-2x" aria-hidden="true"></i>
         <h3 class="panel-title">Связанные категории</h3>
@@ -109,7 +110,7 @@ $product_id = isset($product_id) ? $product_id : null;
                                         'template' => '{delete}',
                                         'controller' => 'category-product',
                                         'buttons' => [
-                                            'delete' => function($url, $model, $key) use ($product_id){
+                                            'delete' => function($url, $model, $key) use ($product_id, $disabled){
                                                 return Html::a('<span class="fa fa-chain-broken"></span>',
                                                     Url::to(['product/unlink-category', 'category_id' => $model['id'],
                                                              'product_id' => $product_id]),
@@ -119,6 +120,7 @@ $product_id = isset($product_id) ? $product_id : null;
                                                             'confirm' => 'Вы дествительно хотите отвязать категорию?',
                                                             'pjax' => 1,
                                                         ],
+                                                        'disabled' => $disabled ,
                                                     ]);
                                             },
                                         ],

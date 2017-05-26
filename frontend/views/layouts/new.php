@@ -87,6 +87,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 </footer>
 
 <?php $this->endBody() ?>
+<noscript><div><img src="https://mc.yandex.ru/watch/44777377" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </body>
 </html>
 <?php $this->endPage() ?>

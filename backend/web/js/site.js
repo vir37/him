@@ -82,6 +82,8 @@ $(document).on('pjax:send', function(){ $('.loader').removeClass('loader-hide').
 $(document).on('pjax:complete', function(){ $('.loader').removeClass('loader-show').addClass('loader-hide'); });
 // отключаем задизабленные линки
 $(document).on('click', 'a', function(event){
-    if ($(this).is('[disabled]'))
+    if ($(this).is('[disabled]')) {
+        event.stopImmediatePropagation();
         event.preventDefault();
+    }
 });

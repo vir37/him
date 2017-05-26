@@ -22,7 +22,7 @@ $fQuery = (new Query())->select('feature_id')->from(ProductFeature::tableName())
 
 $dataProvider = new ActiveDataProvider();
 $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_id]);
-
+$disabled = (isset($mode) && $mode == 'view') || !isset($product_id) ? true : false;
 ?>
 <?php Pjax::begin([
     'enableReplaceState' => false,
@@ -30,7 +30,7 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
     'timeout' => 10000,
     'id' => 'tab2_pjax'
 ]); ?>
-<?= Html::beginTag('fieldset', [ 'disabled' => (isset($mode) && $mode == 'view') ]) ?>
+<?= Html::beginTag('fieldset', [ 'disabled' => $disabled ]) ?>
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>
         <h3 class="panel-title">Характеристики</h3>
@@ -101,7 +101,7 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
                                     'data' => [ 'pjax' => 0, 'action-edit' => true ],
                                 ]);
                             },
-                            'delete' => function($url, $model, $key) use ($product_id){
+                            'delete' => function($url, $model, $key) use ($product_id, $disabled){
                                 return Html::a('<span class="glyphicon glyphicon-trash"></span>',
                                     Url::to(['product/delete-feature', 'id'=>$key, 'product_id' => $product_id]), [
                                     'title' => 'Удалить характеристику',
@@ -109,6 +109,7 @@ $dataProvider->query = ProductFeature::find()->where([ 'product_id' => $product_
                                         'pjax' => 1,
                                         'confirm' => 'Вы действительно хотите удалить характеристику?',
                                     ],
+                                    'disabled' => $disabled,
                                 ]);
                             },
                         ],

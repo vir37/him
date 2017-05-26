@@ -15,6 +15,7 @@ return array(
     'yii\\composer\\' => array($vendorDir . '/yiisoft/yii2-composer'),
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'himiklab\\thumbnail\\' => array($vendorDir . '/himiklab/yii2-easy-thumbnail-image-helper'),
     'execut\\yii\\' => array($vendorDir . '/execut/yii2-base'),
     'execut\\widget\\' => array($vendorDir . '/execut/yii2-widget-bootstraptreeview'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
