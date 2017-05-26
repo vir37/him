@@ -45,8 +45,11 @@ $this->params['breadcrumbs'][] = $model->name;
                             $img_list = $model->getImages()->orderBy(['is_main' => SORT_DESC])->all();
                             if ($img_list) {
                                 $img = ImageHelper::getImagePath(array_shift($img_list)->name);
-                                $i = Html::img($img, ['style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
+                                $i = Html::img($img, ['style' => 'width:100%;']);
+                                echo '<div class="image">';
+                                echo '<div class="disabler"></div>';
                                 echo Html::a($i, $img, [ 'rel' => 'slideshow-thumbs2', 'class' => 'slideshow-thumbs2' ]);
+                                echo '</div>';
                                 echo '<div class="hidden">';
                                 foreach ($img_list as $img) {
                                     $i = Html::img(ImageHelper::getImagePath($img->name), ['style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
@@ -86,7 +89,7 @@ $this->params['breadcrumbs'][] = $model->name;
     </div>
 </div>
 <script type="text/javascript">
-    window.onload = function() {
+    window.addEventListener('load', function() {
         $('.catalogue-accordion').accordion('disable');
         $('.slideshow-thumbs2').fancybox({
             prevEffect: 'none',
@@ -122,5 +125,6 @@ $this->params['breadcrumbs'][] = $model->name;
                 });
             })
         });
-    };
+        setTimeout(function(){  $('.disabler').hide(); }, 500 );
+    });
 </script>

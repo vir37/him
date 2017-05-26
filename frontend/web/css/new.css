@@ -158,6 +158,14 @@ h2 {
 
 .font-arial { font-family: Arial, Helvetica Neue, Helvetica, sans-serif !important; }
 .font-bold { font-weight: bolder; }
+.disabler {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 9999;
+    background-color: white;
+}
 .navbar-tera {
     font-family: 'Fira Sans', sans-serif;
     font-feature-settings: 'liga';
@@ -404,6 +412,8 @@ h2 {
 }
 .product-view .ql-editor { padding: 0; overflow-y: visible; }
 .product-view .ui-state-disabled { opacity: 0.9 !important; }
+
+.product-view .image { float:right; width:30%; margin-left: 1rem; margin-right: 1rem; position:relative; }
 
 .ql-editor { text-align: justify !important; color: #00275F; }
 .ql-editor p { text-indent: 2em; }
