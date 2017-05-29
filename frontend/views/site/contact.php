@@ -16,6 +16,9 @@ else
 
 ?>
 <div class="site-contact row">
+    <div class="disabler" style="display: none;">
+        <i class="fa fa-spinner fa-spin fa-2x fa-fw loader-hide" style="position: relative; top: 50%; left:50%; "></i>
+    </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 panel panel-primary">
     <div class="panel-body">
         <h4>Позвоните нам</h4>
@@ -75,8 +78,3 @@ else
         </div>
     </div></div>
 </div>
-<?php
-    if (Yii::$app->request->isAjax) {
-
-    }
-?>

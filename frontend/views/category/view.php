@@ -56,8 +56,11 @@ $this->params['breadcrumbs'][] = 'Каталог';
             </div>
             <article class="row ql-editor">
                 <?php
-                    if ($current_category)
-                        echo $current_category->description;
+                    if ($current_category) {
+                        echo \frontend\helpers\ReplaceHelper::replaceSpecFields($current_category->description, [
+                            'city_pp' => $city->name_pp
+                        ]);
+                    }
                 ?>
             </article>
         </div>
@@ -100,9 +103,12 @@ $this->params['breadcrumbs'][] = 'Каталог';
             $(document).on('submit', '#contact-form', function(event){
                 var form = $(this).serialize();
                 event.preventDefault();
+                event.stopImmediatePropagation();
+                $(this).closest('.site-contact').find('.disabler').show();
                 $.ajax(this.action, {
                     type: 'POST',
                     data: form,
+                    timeout: 10000,
                     success: function(data){
                         if (data.alert)
                             $('#alert-box').html(data.alert);

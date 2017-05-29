@@ -59,7 +59,9 @@ $this->params['breadcrumbs'][] = $model->name;
                             } else
                                 echo Html::img(ImageHelper::$no_image, [ 'style' => 'float:right; width:30%; margin-left: 1rem; margin-right: 1rem;']);
                             ?>
-                        <?= $model->description ?>
+                        <?= \frontend\helpers\ReplaceHelper::replaceSpecFields($model->description, [
+                            'city_pp' => $city->name_pp
+                        ]) ?>
                     </article>
                     <table class="table table-striped table-condensed features">
                     <caption class="features-header">Технические подробности:</caption>
@@ -117,9 +119,12 @@ $this->params['breadcrumbs'][] = $model->name;
             $(document).on('submit', '#contact-form', function(event){
                 var form = $(this).serialize();
                 event.preventDefault();
+                event.stopImmediatePropagation();
+                $(this).closest('.site-contact').find('.disabler').show();
                 $.ajax(this.action, {
                     type: 'POST',
                     data: form,
+                    timeout: 10000,
                     success: function(data){
                         if (data.alert)
                             $('#alert-box').html(data.alert);
