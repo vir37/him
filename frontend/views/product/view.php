@@ -8,6 +8,7 @@
 use common\helpers\ImageHelper;
 use yii\helpers\Html;
 use frontend\assets\FancyboxAsset;
+use yii\helpers\Url;
 
 FancyboxAsset::register($this);
 
@@ -45,6 +46,7 @@ $this->params['breadcrumbs'][] = $model->name;
                             $img_list = $model->getImages()->orderBy(['is_main' => SORT_DESC])->all();
                             if ($img_list) {
                                 $img = ImageHelper::getImagePath(array_shift($img_list)->name);
+                                $imageForStructData = $img;
                                 $i = Html::img($img, ['style' => 'width:100%;']);
                                 echo '<div class="image">';
                                 echo '<div class="disabler"></div>';
@@ -138,4 +140,21 @@ $this->params['breadcrumbs'][] = $model->name;
         });
         setTimeout(function(){  $('.disabler').hide(); }, 500 );
     });
+</script>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Product",
+    "name": "<?= $model->name ?>",
+    "description": "<?= $model->meta_desc ?>"
+    <?php if (isset($imageForStructData))
+             echo ',"image": "'. Url::to($imageForStructData, true). '"'."\n"?>
+    <?php if (!is_null($model->manufacturer)){
+        echo ',"brand": {'."\n";
+        echo '       "@type": "Thing",'."\n";
+        echo '       "name": "'.$model->manufacturer->name.'"'."\n";
+        echo '    }';
+    } ?>
+
+}
 </script>

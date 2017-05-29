@@ -33,8 +33,8 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'ООО "ТЕРА-ИНВЕСТ"',
-        'brandOptions' => [ 'class' => 'navbar-brand-tera', 'itemprop' => 'name'],
+        'brandLabel' => '<span itemprop="name">ООО "ТЕРА-ИНВЕСТ"</span>',
+        'brandOptions' => [ 'class' => 'navbar-brand-tera', 'itemprop' => 'url'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-default navbar-fixed-top navbar-tera',
@@ -82,7 +82,9 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; ООО "ТЕРА-ИНВЕСТ"</p>
-        <address class="pull-right" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><?= $city->index.', '.$city->fake_address ?></address>
+        <address class="pull-right" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+          <span itemprop="postalCode"><?= $city->index ?></span>, <span itemprop="streetAddress"><?= $city->fake_address ?></span>
+        </address>
     </div>
 </footer>
 
