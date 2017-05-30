@@ -19,6 +19,7 @@ class NewAppAsset extends AssetBundle
     public $js = [
         'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
         'js/navbar.js',
+        'js/order.js',
         //'js/google_analytics.js',
         //'js/yandex_metrika.js'
     ];

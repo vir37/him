@@ -3,6 +3,10 @@
 /* @var $this yii\web\View */
 use yii\bootstrap\Carousel;
 use yii\helpers\Html;
+use frontend\assets\FancyboxAsset;
+
+FancyboxAsset::register($this);
+
 
 $city = Yii::$app->params['city'];
 $this->title = "Химическая продукция в {$city->name_pp} - ООО \"ТЕРА-ИНВЕСТ\"";
@@ -44,9 +48,9 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
             <?= Html::tag('h1', "Химическая продукция в {$city->name_pp}", [ 'class' => 'main-h1 col-lg-12 col-md-12 col-sm-12 col-xs-12'])?>
         </header>
         <div class="row direct-links">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5" id="catalogue" >
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" >
             <?= Html::a('<img src="/icons/book_white.png" ><p>ПЕРЕЙТИ В КАТАЛОГ <span> >> </span></p>',
-                [ '/category/view', 'city'=>$city->uri_name, 'id' => $firstCategory->id /* дефолтная категория */ ]) ?>
+                [ '/category/view', 'city'=>$city->uri_name, 'id' => $firstCategory->id /* дефолтная категория */ ], [ 'id' => "catalogue"]) ?>
             </div>
             <?php
                 $branches = \common\models\Catalogue::findOne(2);
@@ -61,10 +65,17 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
             ?>
         </div>
         <div class="row main-links">
-            <?= Html::a('<p>О НАС</p>', [ 'site/contacts', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) ?>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                <?= Html::a('<p>О НАС</p>', [ 'site/contacts', 'city' => $city->uri_name], [ 'rel' => 'nofollow']) ?>
+            </div>
             <?php  /*Html::a('<p>АКЦИИ</p>', [ 'stocks/index', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) */?>
             <?php  /*Html::a('<p>МЕНЕДЖЕРЫ</p>', [ 'site/managers', 'city' => $city->uri_name], [ 'rel' => 'nofollow' ]) */?>
-            <?= Html::a('<p>КОНТАКТЫ</p>', [ 'site/contacts', 'city' => $city->uri_name ]) ?>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                <?= Html::a('<p>КОНТАКТЫ</p>', [ 'site/contacts', 'city' => $city->uri_name]) ?>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                <?= Html::a('<p>КУПИТЬ</p>', [ 'site/contact', 'city' => $city->uri_name]) ?>
+            </div>
         </div>
     </div>
 </div>

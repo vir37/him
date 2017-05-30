@@ -72,7 +72,7 @@ else
                     'template' => '<div class="col-lg-6 col-md-6">{image}</div><div class="col-lg-6 col-md-6 ">{input}</div>',
                 ]) */?>
                 <div class="form-group">
-                    <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-4', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

@@ -93,32 +93,5 @@ $this->params['breadcrumbs'][] = 'Каталог';
         $(document).on('pjax:send', function(){ $('#loading').show(); });
         $(document).on('pjax:complete', function(){ $('#loading').hide(); });
         $(document).on('pjax:end', function (event) { setTimeout(alignBlockHeight, 100); });
-        $(document).on('click', '.fancybox', function(event){
-            // открытие окна отправки формы
-            event.preventDefault();
-            $.fancybox.open(this, {
-                type: 'ajax',
-                padding: 1
-            });
-            $(document).on('submit', '#contact-form', function(event){
-                var form = $(this).serialize();
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                $(this).closest('.site-contact').find('.disabler').show();
-                $.ajax(this.action, {
-                    type: 'POST',
-                    data: form,
-                    timeout: 10000,
-                    success: function(data){
-                        if (data.alert)
-                            $('#alert-box').html(data.alert);
-                    },
-                    error: function(result, str) { },
-                    complete: function(response, status){
-                        $.fancybox.close();
-                    }
-                });
-            })
-        });
     });
 </script>
