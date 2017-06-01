@@ -13,7 +13,7 @@ NavBar.prototype.init = function(){
                 $(document).click(function (event) {
                     if ($(event.target).closest(data).length)
                         return true;
-                    $(data).hide(500);
+                    $(data).fadeOut();
                     event.stopPropagation()
                 });
             }
@@ -22,7 +22,7 @@ NavBar.prototype.init = function(){
             var position = $(this).offset(),
                 dt = $(this).data('cities'),
                 height = $(this).height();
-            $(dt).show(500);
+            $(dt).fadeIn();
             $(dt).offset({top: position.top + height + 20, left: position.left});
             return false;
         })

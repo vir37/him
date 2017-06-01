@@ -8,11 +8,13 @@
 use common\models\City;
 use yii\helpers\Html;
 ?>
-<div class="city-choose" style="display:none; z-index: 999; ">
-    <div id="cities" >
+<div class="city-choose col-lg-4 col-md-4 col-sm-4 col-xs-4" style="display: none; z-index: 999; position: absolute;">
+    <div id="cities">
     <?php
         foreach (City::find()->all() as $city ){
-            echo Html::a($city->name, [ "site/index", 'city' => $city->uri_name]);
+            echo Html::a($city->name, [ "site/index", 'city' => $city->uri_name], [
+                'style' => 'white-space: nowrap; display: inline-block;',
+                'class' => 'col-lg-6 col-md-6 col-sm-6 col-xs-6']);
         }
     ?>
     </div>

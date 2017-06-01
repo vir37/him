@@ -38,6 +38,7 @@ class City extends \yii\db\ActiveRecord
             [['index', 'uri_name'], 'unique'],
             [['fake_address'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
+            ['is_main', 'default', 'value' => false ],
         ];
     }
 

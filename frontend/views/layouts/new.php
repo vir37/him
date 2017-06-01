@@ -40,13 +40,6 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
             'class' => 'navbar navbar-default navbar-fixed-top navbar-tera',
         ],
     ]);
-    $menuItems = [
-        [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser navbar-link']],
-        $this->render('_city_choose'),
-        '<li><a href="tel:'.$phone.'"><span class="phone" itemprop="telephone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
-        [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
-        [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
-    ];
     /*
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -62,8 +55,19 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
             . '</li>';
     }*/
     echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-nav-tera'],
+        'items' => [
+            [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser navbar-link']],
+            $this->render('_city_choose'),
+        ],
+    ]);
+    echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right navbar-nav-tera'],
-        'items' => $menuItems,
+        'items' => [
+            '<li style="position:relative;"><a href="tel:'.$phone.'"><span class="phone" itemprop="telephone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
+            [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
+            [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
+        ],
     ]);
     NavBar::end();
     ?>

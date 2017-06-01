@@ -44,7 +44,8 @@ class Category extends ActiveRecord
                 return ($query->max($attribute) + 1);
             }],
             [['description'], 'string'],
-            [['name', 'meta_desc', 'meta_keys'], 'string', 'max' => 128],
+            [['name', 'meta_keys'], 'string', 'max' => 128],
+            [['meta_desc'], 'string', 'max' => 160],
         ];
     }
 

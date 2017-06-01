@@ -11,7 +11,6 @@ use \common\helpers\ImageHelper;
 use \himiklab\thumbnail\EasyThumbnailImage;
 
 $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
-//$img = $img ? ImageHelper::getImagePath($img->name) : ImageHelper::$no_image;
 ?>
 <div class="row product-card">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -23,7 +22,6 @@ $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
     </div>
     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 left-column">
         <div class="row">
-            <!--img src="</?= $img ?>" style="width:90%; margin-bottom: 1rem;"/-->
             <?php
                 try {
                     echo EasyThumbnailImage::thumbnailImg(\Yii::getAlias("@images/".$img->name), 200, null, EasyThumbnailImage::THUMBNAIL_OUTBOUND, [

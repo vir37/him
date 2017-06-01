@@ -127,24 +127,27 @@ body { font-size: 1.4em; }
 }
 @media ( max-width: 767px ) {
     .row { margin-right: -5px; margin-left: -5px; }
-    .city-chooser { margin-right: auto !important; }
     .navbar-link { font-size: 2.5rem; }
     .navbar-nav >li > a { padding-top: 1rem; padding-bottom: 1rem; }
+    .navbar-nav-tera .subline { top: 4rem !important; }
 }
 
 @media ( min-width: 768px ) {
     html { font-size: 6px; }
+    .navbar-nav-tera .subline { top: 6rem !important; }
 }
 
 @media ( min-width: 992px ) {
     html { font-size: 8px; }
+    .navbar-nav-tera .subline { top: 4.5rem !important; }
 }
 @media ( min-width: 1200px ) {
     html { font-size: 10px; }
+    .navbar-nav-tera .subline { top: 4rem !important; }
 }
 .btn { font-size: 1.4rem; }
 .wrap > .container {
-    padding: 11rem 1.5rem 2rem;
+    padding: 12rem 1.5rem 2rem;
 }
 
 h1, h2, h3, h4 { color: #00275F; }
@@ -182,6 +185,7 @@ h2 {
     background: white;
     border:none;
     padding-top: 1.5rem;
+    margin-bottom: 2rem;
 }
 .navbar-brand-tera {
     color: #000000 !important;
@@ -189,6 +193,7 @@ h2 {
     line-height: 4.2rem;
     font-weight: 300;
     height: 7.1rem;
+    margin-right: 4rem;
 }
 .navbar-nav-tera {
     font-size: 1.7rem;
@@ -203,8 +208,9 @@ h2 {
 .navbar-nav-tera .subline {
     font-size: 1rem;
     line-height: 1.2rem;
-    position: relative;
-    top: -2rem;
+    position: absolute;
+    left: 0;
+    width:100%;
 }
 
 .navbar-link a { color: #02275E !important; }
@@ -218,7 +224,7 @@ h2 {
 }
 .important-link { color: #00275F; text-transform: uppercase; font-size: 1.7rem; font-weight: 500; }
 
-.city-chooser { margin-right: 18rem; }
+/*.city-chooser { margin-right: 18rem; }*/
 .city-chooser a { display: inline-block !important; text-decoration: underline; text-transform: uppercase; }
 .city-chooser:before {
     content: url('/icons/location.png');
