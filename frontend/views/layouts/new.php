@@ -73,7 +73,10 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
     ?>
     <div class="container">
         <?= Breadcrumbs::widget([
-            'homeLink' => [ 'label' => 'Главная', 'url' => Yii::$app->homeUrl ],
+            'encodeLabels' => false,
+            'homeLink' => [ 'label' => '<span itemprop="name">Главная</span>', 'url' =>  Yii::$app->homeUrl,  'itemprop' => 'item'  ],
+            'options' => [ 'itemscope' => true , 'itemtype' => "http://schema.org/BreadcrumbList", 'class' => 'breadcrumb' ],
+            'itemTemplate' => "<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">{link}<meta itemprop=\"position\" content=\"{position}\"/></li>\n",
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <div id="alert-box">

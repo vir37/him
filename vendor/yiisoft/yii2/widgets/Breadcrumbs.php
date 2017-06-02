@@ -124,7 +124,10 @@ class Breadcrumbs extends Widget
      */
     public $activeItemTemplate = "<li class=\"active\">{link}</li>\n";
 
-
+    /**
+     * @var int - начальная позиция для метатэгов разметки schema.org
+     */
+    private $position=0;
     /**
      * Renders the widget.
      */
@@ -176,6 +179,7 @@ class Breadcrumbs extends Widget
         } else {
             $link = $label;
         }
-        return strtr($template, ['{link}' => $link]);
+        $this->position += 1;
+        return strtr($template, ['{link}' => $link, '{position}' => $this->position]);
     }
 }

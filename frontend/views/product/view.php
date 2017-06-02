@@ -16,7 +16,8 @@ $city = Yii::$app->params['city'];
 $this->title = $model->name.' купить в '.$city->name_pp;
 $this->registerMetaTag([ 'name' => 'description', 'content' => $model->meta_desc]);
 $this->registerMetaTag([ 'name' => 'keywords', 'content' => $model->meta_keys]);
-$this->params['breadcrumbs'][] = [ 'label' => 'Каталог', 'url' => [ 'category/list', 'city' => $city->uri_name, 'id' => $catalogue ]];
+$this->params['breadcrumbs'][] = [ 'label' => "<span itemprop=\"name\">$current_category->name</span>",
+    'url' => [ 'category/view', 'city' => $city->uri_name, 'id' => $current_category->id ], 'itemprop' => 'item'];
 $this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="product-view">
@@ -118,14 +119,14 @@ $this->params['breadcrumbs'][] = $model->name;
 {
     "@context": "http://schema.org",
     "@type": "Product",
-    "name": "<?= $model->name ?>",
+    "name": "<?= Html::encode($model->name) ?>",
     "description": "<?= $model->meta_desc ?>"
     <?php if (isset($imageForStructData))
              echo ',"image": "'. Url::to($imageForStructData, true). '"'."\n"?>
     <?php if (!is_null($model->manufacturer)){
         echo ',"brand": {'."\n";
         echo '       "@type": "Thing",'."\n";
-        echo '       "name": "'.$model->manufacturer->name.'"'."\n";
+        echo '       "name": "'.Html::encode($model->manufacturer->name).'"'."\n";
         echo '    }';
     } ?>
 
