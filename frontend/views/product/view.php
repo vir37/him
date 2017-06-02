@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $model->name;
     "@context": "http://schema.org",
     "@type": "Product",
     "name": "<?= Html::encode($model->name) ?>",
-    "description": "<?= $model->meta_desc ?>"
+    "description": "<?= Html::encode($model->meta_desc) ?>"
     <?php if (isset($imageForStructData))
              echo ',"image": "'. Url::to($imageForStructData, true). '"'."\n"?>
     <?php if (!is_null($model->manufacturer)){
