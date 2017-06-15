@@ -27,7 +27,7 @@ else
             <?= Html::a($phone, "tel:$phone", [
                 'class' => 'phone btn btn-default',
                 'name' => 'phone',
-                'onclick' => '$.fancybox.close();',
+                'onclick' => "$.fancybox.close(); yaCounter44777377.reachGoal('Call'); return true;",
             ]) ?>
         </div>
         <div class="row" style="margin-top: 1em; margin-bottom: 1em;">
@@ -72,7 +72,11 @@ else
                     'template' => '<div class="col-lg-6 col-md-6">{image}</div><div class="col-lg-6 col-md-6 ">{input}</div>',
                 ]) */?>
                 <div class="form-group">
-                    <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-4', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Отправить', [ 
+                       'class' => 'btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-4',
+                       'name' => 'contact-button',
+                       'onclick' => "yaCounter44777377.reachGoal('Request'); return true;",
+                    ]) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

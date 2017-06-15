@@ -33,10 +33,14 @@ $this->params['breadcrumbs'][] = $model->name;
                     <h1><?= $model->name?></h1>
                 </header>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-5">
+                    <noindex>
                     <?= Html::a('Купить', [ 'site/contact', 'city' => $city->uri_name, 'product_id' =>$model->id ], [
                         'class' => 'fancybox product-button red',
+                        'rel' => 'nofollow',
+                        'onclick' => "yaCounter44777377.reachGoal('Buy'); return true;",
                         'data' => [ 'pjax' => 0, ],
                     ]) ?>
+                    </noindex>
                 </div>
             </div>
             <div class="row">

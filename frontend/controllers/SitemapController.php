@@ -4,6 +4,11 @@
  * User: user
  * Date: 03.05.2017
  * Time: 17:45
+ * Контроллер формирования sitemap.xml
+ * структура такая:
+ * сначала идут все ссылки городов
+ * потом ссылки на категории в городах
+ * потом ссылки на товары в категориях в городах
  */
 
 namespace frontend\controllers;
@@ -45,35 +50,40 @@ class SitemapController  extends Controller {
         $urlManager = \Yii::$app->urlManager;
         $lastmod = date(DATE_W3C);
         $items = [];
-        // Цикл по городам
-        foreach (City::find()->all() as $city) {
+        // Выводим все города
+        $cities = City::find()->all();
+        foreach ($cities as $city) {
             $items[] = ['loc' => $urlManager->createAbsoluteUrl(['site/index', 'city' => $city->uri_name]),
                 'lastmod' => $lastmod,
                 'changefreq' => self::FREQ_WEEKLY,
-                'priority' => 0.5 ];
+                'priority' => 0.5];
 
             // контакты
-            $items[] = [ 'loc' => $urlManager->createAbsoluteUrl(['site/contacts', 'city' => $city->uri_name]),
+            $items[] = ['loc' => $urlManager->createAbsoluteUrl(['site/contacts', 'city' => $city->uri_name]),
                 'lastmod' => $lastmod,
                 'changefreq' => self::FREQ_MONTHLY,
-                'priority' => 0.5 ];
-
+                'priority' => 0.5];
+        }
+        $catalogues = Catalogue::find()->all();
+        // Выводим все категории
+        foreach ($cities as $city) {
             // цикл по каталогам
-            foreach (Catalogue::find()->all() as $catalogue) {
-                /*
-                $items[] = ['loc' => $urlManager->createAbsoluteUrl(['category/list', 'city' => $city->uri_name, 'id' => $catalogue->id]),
-                    'lastmod' => $lastmod,
-                    'changefreq' => self::FREQ_WEEKLY,
-                    'priority' => 0.5 ];
-                */
+            foreach ($catalogues as $catalogue) {
                 // цикл по категориям
-                foreach ($catalogue->categories as $category) {
+                foreach ($catalogue->getCategories()->orderBy([ 'parent_id' => SORT_DESC, 'list_position' => SORT_ASC ])->all() as $category)
                     $items[] = [
                         'loc' => $urlManager->createAbsoluteUrl(['category/view', 'city' => $city->uri_name, 'id' => $category->id]),
                         'lastmod' => $lastmod,
                         'changefreq' => self::FREQ_WEEKLY,
                         'priority' => 0.9 ];
-
+            }
+        }
+        // выводим все товары
+        foreach ($cities as $city) {
+            // цикл по каталогам
+            foreach ($catalogues as $catalogue) {
+                // цикл по категориям
+                foreach ($catalogue->categories as $category) {
                     // цикл по товарам
                     foreach ($category->product as $product)
                         $items[] = [

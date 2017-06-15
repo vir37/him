@@ -9,6 +9,7 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+    position: relative;
 }
 
 .footer {
@@ -238,8 +239,10 @@ h2 {
     min-height: 12rem;
     position: fixed;
     border: 1px solid #02275E; padding: 0.5rem; background: #D7E0E3; border-radius: 0.5rem;
+    max-height: 60%;
+    overflow-y: scroll;
 }
-.city-choose a { padding: 1rem 2rem; }
+/* .city-choose a { padding: 1rem 2rem; } */
 /*   Slider on main  */
 .main-slider {
     height: 46rem;
@@ -435,6 +438,7 @@ h2 {
 .product-view .ui-state-disabled { opacity: 0.9 !important; }
 
 .product-view .image { float:right; width:30%; margin-left: 1rem; margin-right: 1rem; position:relative; }
+.product-view .image img:hover { opacity:0.8; }
 
 .ql-editor { text-align: justify !important; color: #00275F; }
 .ql-editor p { text-indent: 2em; }
