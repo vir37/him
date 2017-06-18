@@ -8,8 +8,6 @@
 use yii\bootstrap\Tabs;
 use common\models\CategoryProduct,
     common\models\ProductFeature;
-use yii\bootstrap\Alert;
-
 
 
 if (!isset($mode))

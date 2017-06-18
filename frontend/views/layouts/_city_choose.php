@@ -8,7 +8,7 @@
 use common\models\City;
 use yii\helpers\Html;
 ?>
-<div class="city-choose col-lg-4 col-md-4 col-sm-4 col-xs-4" style="display: none; z-index: 999; position: absolute;">
+<div class="city-choose col-lg-4 col-md-4 col-sm-4 col-xs-4" style="display: none; z-index: 9999; position: absolute;">
     <div id="cities">
     <?php
         foreach (City::find()->all() as $city ){

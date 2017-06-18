@@ -57,6 +57,10 @@ class CatalogueController extends Controller
             [
                 'header' => [ 'text' => 'Поставщики', 'link' => 'supplier/'],
                 'icon' => 'fa-truck',
+                'description' => 'Модуль управления поставщиками: добавление, удаление, привязка к товарам',
+                'short_links' => [
+                    [ 'text' => 'Новый поставщик', 'link' => 'supplier/create' ],
+                ],
             ],
             [
                 'header' => [ 'text' => 'Производители', 'link' => 'manufacturer/'],

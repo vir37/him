@@ -31,7 +31,8 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
+  <?= $this->render('_city_choose') ?>
+  <?php
     NavBar::begin([
         'brandLabel' => '<span itemprop="name">ООО "ТЕРА-ИНВЕСТ"</span>',
         'brandOptions' => [ 'class' => 'navbar-brand-tera', 'itemprop' => 'url'],
@@ -58,7 +59,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
         'options' => ['class' => 'navbar-nav navbar-nav-tera'],
         'items' => [
             [ 'label' => $city->name, 'url' => '#', 'linkOptions' => ['data-cities' => '.city-choose'], 'options' => [ 'class' => 'city-chooser navbar-link']],
-            $this->render('_city_choose'),
+//            $this->render('_city_choose'),
         ],
     ]);
     echo Nav::widget([
