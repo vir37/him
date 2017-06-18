@@ -31,7 +31,7 @@ else
                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                         <p class="chief"><?= $chief->fio ?></p>
                         <p><span style="font-weight: bold;"><?= $chief->post ?></span></p>
-                        <p>телефон: <a href="tel:<?= $chief->phone ?>"><?= $chief->phone ?></a></p>
+                        <p>телефон: <a href="tel:<?= $chief->phone ?>" onclick="yaCounter44777377.reachGoal('Call'); return true;"><?= $chief->phone ?></a></p>
                         <p>e-mail: <a href="mailto:<?= $chief->email ?>"><?= $chief->email ?></a></p>
                     </div>
             </div>
@@ -53,7 +53,7 @@ else
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <h2>ОТДЕЛ ПРОДАЖ</h2>
-            <p class="sales">телефон: <a href="tel:<?= \Yii::$app->params['phone'] ?>"><?= \Yii::$app->params['phone'] ?></a></p>
+            <p class="sales">телефон: <a href="tel:<?= \Yii::$app->params['phone'] ?>" onclick="yaCounter44777377.reachGoal('Call'); return true;"><?= \Yii::$app->params['phone'] ?></a></p>
             <p class="sales">e-mail: <a href="mailto:<?= \Yii::$app->params['saleEmail'] ?>"><?= \Yii::$app->params['saleEmail'] ?></a></p>
             <p style=" margin-top: 1rem;"><span style="font-weight: bold;">режим работы:</span></p>
             <p>24/7</p>

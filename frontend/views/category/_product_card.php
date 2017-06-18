@@ -33,10 +33,14 @@ $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
         </div>
         <div class="aligner"></div>
         <div class="row"> <!-- Кнопка узнать цену -->
+            <noindex>
             <?= Html::a('Купить', [ 'site/contact', 'city' => $city->uri_name, 'product_id' =>$product->id ], [
                 'class' => 'fancybox product-button red',
+                'rel' => 'nofollow',
+                'onclick' => "yaCounter44777377.reachGoal('Buy'); return true;",
                 'data' => [ 'pjax' => 0, ],
             ]) ?>
+            </noindex>
         </div>
         <div class="row"> <!-- Кнопка Подробнее -->
             <?= Html::a('Подробности', [ 'product/view', 'city' => $city->uri_name, 'id' =>$product->id, 'parent_id' => $category ],

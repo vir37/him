@@ -74,7 +74,13 @@ $this->title = "Химическая продукция в {$city->name_pp} - О
                 <?= Html::a('<p>КОНТАКТЫ</p>', [ 'site/contacts', 'city' => $city->uri_name]) ?>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
-                <?= Html::a('<p>КУПИТЬ</p>', [ 'site/contact', 'city' => $city->uri_name], [ 'class' => 'fancybox' ]) ?>
+                <noindex>
+                   <?= Html::a('<p>КУПИТЬ</p>', [ 'site/contact', 'city' => $city->uri_name], [ 
+                         'class' => 'fancybox',
+                         'onclick' => "yaCounter44777377.reachGoal('Buy'); return true;",
+                         'rel' => 'nofollow',
+                   ]) ?>
+                </noindex>
             </div>
         </div>
     </div>

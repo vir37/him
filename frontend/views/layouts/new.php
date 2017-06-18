@@ -65,7 +65,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right navbar-nav-tera'],
         'items' => [
-            '<li style="position:relative;"><a href="tel:'.$phone.'"><span class="phone" itemprop="telephone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
+            '<li style="position:relative;"><a href="tel:'.$phone.'" onclick="yaCounter44777377.reachGoal(\'Call\'); return true;"><span class="phone" itemprop="telephone">'.$phone.'</span></a><span class="subline">Звонок по России бесплатный</span></li>',
             [ 'label' => 'КОНТАКТЫ', 'url' => ['/site/contacts', 'city' => $city->uri_name ], 'options' => [ 'class' => 'navbar-link']],
             [ 'label' => 'НАЙТИ', 'url' => '#' , 'options' => [ 'class' => 'search navbar-link']],
         ],

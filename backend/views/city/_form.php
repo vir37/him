@@ -58,14 +58,14 @@ use common\models\Region;
 
                 <div class="input-group col-lg-7 col-md-7">
                     <?= $form->field($model, 'latitude', [
-                        'template' => '{label}{input}',
-                        'options' => [ 'class' => 'col-lg-8 col-md-8' ],
-                        'labelOptions' => [ 'class' => 'col-lg-6 col-md-6'],
-                    ])->textInput(['maxlength' => true])->label('Широта/долгота') ?>
+                        'template' => '{input}',
+                        //'options' => [ 'class' => 'col-lg-8 col-md-8' ],
+                        //'labelOptions' => [ 'class' => 'col-lg-6 col-md-6'],
+                    ])->textInput(['maxlength' => true])->label(false) ?>
 
                     <?= $form->field($model, 'longitude', [
                         'template' => '{input}',
-                        'options' => [ 'class' => 'col-lg-4 col-md-4' ],
+                        //'options' => [ 'class' => 'col-lg-4 col-md-4' ],
                     ])->textInput(['maxlength' => true])->label(false) ?>
                 </div>
                 <?= $form->field($model, 'fake_address', [
