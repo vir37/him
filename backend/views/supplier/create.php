@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Supplier */
 
-$this->title = "Новый товар";
+$this->title = "Новый поставщик";
 $this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
 $this->params['breadcrumbs'][] = ['label' => "Поставщики", 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

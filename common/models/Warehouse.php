@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord,
+    yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
+
 
 /**
  * This is the model class for table "warehouse".
@@ -26,6 +30,20 @@ class Warehouse extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'warehouse';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt', 'update_dt'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dy'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

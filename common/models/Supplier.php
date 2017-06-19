@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord,
+    yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
+
 
 /**
  * This is the model class for table "supplier".
@@ -28,7 +32,7 @@ use Yii;
  * @property Address $factAddress
  * @property Address $postAddress
  */
-class Supplier extends \yii\db\ActiveRecord
+class Supplier extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,6 +40,20 @@ class Supplier extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'supplier';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt', 'update_dt'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dy'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

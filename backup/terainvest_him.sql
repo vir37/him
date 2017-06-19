@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `contact_links` (
 --
 
 CREATE TABLE IF NOT EXISTS `supplier` (
-`id` int(10) unsigned NOT NULL,
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `create_dt` datetime NOT NULL COMMENT 'Дата создания',
   `update_dt` datetime NOT NULL COMMENT 'Дата обновления',
   `name` varchar(128) NOT NULL COMMENT 'Наименование поставщика',
@@ -131,7 +131,7 @@ ALTER TABLE `contact_links`
 -- Индексы таблицы `supplier`
 --
 ALTER TABLE `supplier`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `INN` (`INN`), ADD KEY `jur_address_id` (`jur_address_id`), ADD KEY `fact_address_id` (`fact_address_id`), ADD KEY `post_address_id` (`post_address_id`);
+ ADD UNIQUE KEY `INN` (`INN`), ADD KEY `jur_address_id` (`jur_address_id`), ADD KEY `fact_address_id` (`fact_address_id`), ADD KEY `post_address_id` (`post_address_id`);
 
 --
 -- Индексы таблицы `warehouse`
@@ -158,11 +158,6 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `contact_links`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT для таблицы `supplier`
---
-ALTER TABLE `supplier`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `warehouse`
 --

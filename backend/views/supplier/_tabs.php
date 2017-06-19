@@ -13,6 +13,9 @@ use yii\bootstrap\Tabs;
         'items' => [
             [
                 'label' => 'Основная информация',
+                'content' => $this->render('_tab1', [
+                    'model' => $model,
+                ]),
             ],
             [
                 'label' => 'Склады',
