@@ -134,7 +134,7 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
 </div>
 <script type="text/javascript">
     window.addEventListener('load', function(){
-        $('#inn').mask('9999999999?99');
-        $('#inn').mask('9999999999999');
+        $('#inn').mask('9999999999?99', { placeholder: 'X'});
+        $('#ogrn').mask('9999999999999', { placeholder: 'X'});
     });
 </script>
