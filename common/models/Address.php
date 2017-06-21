@@ -38,9 +38,9 @@ class Address extends ActiveRecord
     {
         return [
             [['region_id', 'index', 'settlement', 'street', 'house'], 'required'],
-            [['region_id', 'index', 'apartment'], 'integer'],
+            [['region_id', 'index'], 'integer'],
             [['settlement', 'street'], 'string', 'max' => 64],
-            [['house', 'corp'], 'string', 'max' => 10],
+            [['house', 'corp', 'apartment'], 'string', 'max' => 10],
         ];
     }
 
@@ -94,12 +94,12 @@ class Address extends ActiveRecord
 
 
     public function makeAddress(){
-        return $this->region->name.', '.
-               $this->index.', '.
-               $this->settlement.', '.
-               $this->street.
-               $this->house ? ', '.$this->house : ''.
-               $this->corp ? ', '.$this->corp : ''.
-               $this->apartment ? ', '.$this->apartment : '';
+        return $this->region->name.', '
+               .$this->index.', '
+               .$this->settlement.', '
+               .$this->street
+               .($this->house ? ', '.$this->house : '')
+               .($this->corp ? ', '.$this->corp : '')
+               .($this->apartment ? ', '.$this->apartment : '');
     }
 }

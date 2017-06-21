@@ -5,9 +5,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Address;
 use common\models\AddressSearch;
+use yii\base\ErrorException;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\web\ServerErrorHttpException;
 
 /**
  * AddressController implements the CRUD actions for Address model.
@@ -37,7 +41,9 @@ class AddressController extends Controller
     {
         $searchModel = new AddressSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        if (Yii::$app->request->get('fancybox', false)) {
+            $this->layout = 'fancybox';
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -66,7 +72,9 @@ class AddressController extends Controller
         $model = new Address();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if (Yii::$app->request->isAjax)
+                return $this->returnJSON((object)[ 'id' => $model->id ]);
+            return $this->redirect([ 'view', 'id' => $model->id ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +93,7 @@ class AddressController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([ 'view', 'id' => $model->id ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -119,6 +127,25 @@ class AddressController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Возвращает ответ в виде JSON
+     * @param $content
+     * @return Response
+     * @throws ServerErrorHttpException
+     */
+    public function returnJSON($content) {
+        $response = new Response;
+        $response->format = Response::FORMAT_JSON;
+        $response->statusCode = 200;
+        try {
+            $response->content = Json::encode($content);
+            return $response;
+
+        } catch (ErrorException $e) {
+            throw new ServerErrorHttpException($e->getMessage());
         }
     }
 }
