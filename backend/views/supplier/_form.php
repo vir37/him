@@ -136,14 +136,27 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
     window.addEventListener('load', function(){
         $('#inn').mask('9999999999?99', { placeholder: 'X'});
         $('#ogrn').mask('9999999999999', { placeholder: 'X'});
-        $('.fancybox').fancybox({
-            type: 'iframe',
-            iframe: {headers:{"X-fancyBox": !0}},
-            beforeLoad: function() { debugger; },
-            beforeShow: function(){
-                this.width = $('.container').width();
-                //this.height = $('.container').height();
-            }
+        $(document).on('click', '.fancybox', function(event){
+            event.preventDefault();
+            $.ajax(this.href, {
+                method: 'GET',
+                success: function(data, status, request){
+                    $.fancybox.content = data;
+                    $.fancybox({
+                        type: 'iframe',
+                        content: data,
+                        beforeShow: function(){
+                            this.width = $('.container').width();
+                            //this.height = $('.container').height();
+                        }
+                    });
+                },
+                error: function(request, status, thr){
+                    alert(status);
+                },
+                complete: function() { $.fancybox.hideLoading(); }
+
+            })
         });
     });
 </script>
