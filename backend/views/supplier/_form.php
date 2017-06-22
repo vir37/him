@@ -138,9 +138,11 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
         $('#ogrn').mask('9999999999999', { placeholder: 'X'});
         $('.fancybox').fancybox({
             type: 'iframe',
+            iframe: {headers:{"X-fancyBox": !0}},
+            beforeLoad: function() { debugger; },
             beforeShow: function(){
-                this.width = $('.fancybox-iframe').contents().find('.container').width();
-                this.height = $('.fancybox-iframe').contents().find('.container').height();
+                this.width = $('.container').width();
+                //this.height = $('.container').height();
             }
         });
     });
