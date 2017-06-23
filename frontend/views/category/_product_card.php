@@ -27,7 +27,7 @@ $img = $product->getImages()->orderBy(['is_main' => SORT_DESC])->one();
                     echo EasyThumbnailImage::thumbnailImg(\Yii::getAlias("@images/".$img->name), 200, null, EasyThumbnailImage::THUMBNAIL_OUTBOUND, [
                         'alt' => $product->name, 'style'=> 'width:90%; margin-bottom: 1rem;']);
                 } catch (\Exception $e ) {
-                    echo "<img src='".ImageHelper::$no_image."' style='width:90%; margin-bottom: 1rem;'/>";
+                    echo "<img src='".ImageHelper::$no_image."' alt='".$product->name."' style='width:90%; margin-bottom: 1rem;'/>";
                 }
             ?>
         </div>

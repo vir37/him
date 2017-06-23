@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
+use backend\behaviors\LayoutBehavior;
 
 /**
  * AddressController implements the CRUD actions for Address model.
@@ -30,6 +31,10 @@ class AddressController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            [
+                'class' => LayoutBehavior::className(),
+                'assigns' => [ 'fancybox' => 'fancybox' ],
+            ],
         ];
     }
 
@@ -41,9 +46,9 @@ class AddressController extends Controller
     {
         $searchModel = new AddressSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if (Yii::$app->request->get('fancybox', false)) {
-            $this->layout = 'fancybox';
-        }
+        //if (Yii::$app->request->get('fancybox', false)) {
+        //            $this->layout = 'fancybox';
+        //}
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
