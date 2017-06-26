@@ -68,11 +68,13 @@ use common\models\Region;
                 ])->textInput() ?>
             </div>
         </div>
+        <?php if (!isset($viewMode) or !$viewMode): ?>
         <div class="panel-footer">
             <div class="form-group">
                 <?= Html::submitButton('Сохранить' , ['class' => 'btn btn-success']) ?>
             </div>
         </div>
+        <?php endif; ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

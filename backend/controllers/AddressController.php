@@ -153,4 +153,12 @@ class AddressController extends Controller
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
+
+    public function actionGetFullAddress($id) {
+        if (($model = Address::findOne($id)) !== null) {
+            return $model->makeAddress();
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

@@ -6,8 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Address */
 
-$this->title = 'Create Address';
-$this->params['breadcrumbs'][] = ['label' => 'Addresses', 'url' => ['index']];
+$this->title = 'Новый адрес';
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
+$this->params['breadcrumbs'][] = ['label' => 'Адреса', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="address-create">

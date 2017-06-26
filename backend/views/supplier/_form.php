@@ -1,7 +1,7 @@
 <?php
 
 use frontend\assets\FancyboxAsset;
-use yii\helpers\Html;
+use yii\helpers\Html, yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -59,32 +59,44 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
 
             <?= $form->field($model, 'jur_address_id', [
                 'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
-                        Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address', 'fancybox' => true ], [
-                            'class' => 'btn btn-default fancybox',
+                        Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
+                            'class' => 'btn btn-default fancybox address-select',
+                            'data' => [ 'base_url' => Url::to(['/address']) ],
+                        ]).
+                        Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
+                            'class' => 'btn btn-default address-remove',
                         ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
-                'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
+                'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
             ])->hiddenInput() ?>
 
             <?= $form->field($model, 'fact_address_id', [
                 'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
-                        Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address', 'fancybox' => true ], [
-                            'class' => 'btn btn-default fancybox',
+                        Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
+                            'class' => 'btn btn-default fancybox address-select',
+                            'data' => [ 'base_url' => Url::to(['/address']) ],
+                        ]).
+                        Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
+                            'class' => 'btn btn-default address-remove',
                         ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
-                'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
+                'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
             ])->hiddenInput() ?>
 
             <?= $form->field($model, 'post_address_id', [
                 'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
-                          Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address', 'fancybox' => true ], [
-                              'class' => 'btn btn-default fancybox',
+                          Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
+                              'class' => 'btn btn-default fancybox address-select',
+                              'data' => [ 'base_url' => Url::to(['/address']) ],
+                          ]).
+                          Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
+                              'class' => 'btn btn-default address-remove',
                           ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
-                'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
+                'wrapperOptions' => [ 'class' => 'col-lg-8 col-md-8'],
             ])->hiddenInput() ?>
 
             <?= $form->field($model, 'logo', [
@@ -133,13 +145,24 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
     <?php ActiveForm::end(); ?>
 </div>
 <script type="text/javascript">
+    var editClicker;
     window.addEventListener('load', function(){
         $('#inn').mask('9999999999?99', { placeholder: 'X'});
         $('#ogrn').mask('9999999999999', { placeholder: 'X'});
+        $('.address-select').on('click', function(event){
+            var addr_id = $(this).closest('.form-group').find('input[type=hidden]').val(),
+                base_url = $(this).data('base_url');
+            if (addr_id != '') {
+                this.href = base_url + '/update?id='+addr_id;
+            } else {
+                this.href = base_url;
+            }
+        });
         $('.fancybox').fancybox({
             type: 'iframe',
             beforeLoad: function() {
                 Cookies.set('fancybox', 1, { expires: 1 })
+                editClicker = this.element[0];
             },
             beforeShow: function(){
                 this.width = $('.container').width();
@@ -149,5 +172,32 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
                 Cookies.remove('fancybox');
             }
         });
+        /* Обработка нажатия на ссылки, позволяющие сделать выбор */
+        $(document).on('fancy:click', 'body', function(event, elem){
+            if ($(elem).data('selectable')) {
+                var addr_id = $(elem).data('id'),
+                    base_url = $(editClicker).data('base_url');;
+                $.fancybox.close();
+                $.ajax(base_url + '/get-full-address', {
+                    data: { id: addr_id },
+                    success: function(data, status, request) {
+                        var parent = $(editClicker).closest('.form-group');
+                        parent.find('input[type=hidden]').val(addr_id);
+                        parent.find('input[disabled]').val(data);
+                    },
+                    error: function(request, status, throw_obj){
+                        alert(request);
+                    },
+                    complete: function(){
+                        editClicker = undefined;
+                    }
+                })
+            }
+        });
+        $('.address-remove').on('click', function(event){
+            event.preventDefault();
+            $(this).closest('.form-group').find('.form-control').val('');
+        });
     });
+
 </script>

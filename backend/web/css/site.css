@@ -221,3 +221,5 @@ a.desc:after {
     color: #ccc;
     content: "\00bb";
 }
+
+.btn-fancy { display: none; }

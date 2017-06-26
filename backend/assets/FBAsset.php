@@ -17,6 +17,7 @@ class FBAsset extends AssetBundle
     ];
     public $js = [
         'js/site.js',
+        'js/fancy_site.js',
         'js/jquery.maskedinput.min.js',
     ];
     public $depends = [

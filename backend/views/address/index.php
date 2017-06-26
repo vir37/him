@@ -9,6 +9,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Адреса';
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="address-index">
