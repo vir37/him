@@ -7,43 +7,29 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Supplier */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Suppliers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Управление каталогами', 'url' => ['catalogue/']];
+$this->params['breadcrumbs'][] = ['label' => "Поставщики", 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="supplier-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить запись?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'create_dt',
-            'update_dt',
-            'name',
-            'description:ntext',
-            'INN',
-            'OGRN',
-            'jur_address_id',
-            'fact_address_id',
-            'post_address_id',
-            'logo',
-            'phone',
-            'email:email',
-            'site',
-            'note:ntext',
-        ],
-    ]) ?>
+    <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
+        <?= $this->render('_tabs', [
+            'model' => $model,
+            'viewMode' => true,
+        ]) ?>
+    <?= Html::endTag('fieldset') ?>
 
 </div>

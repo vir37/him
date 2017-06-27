@@ -19,9 +19,11 @@ use yii\bootstrap\Tabs;
             ],
             [
                 'label' => 'Склады',
+                'linkOptions' => $model->isNewRecord ? [ 'disabled' => "disabled", 'onclick' => 'return isDisabled(this);' ] : [],
             ],
             [
                 'label' => 'Товары и цены',
+                'linkOptions' => $model->isNewRecord ? [ 'disabled' => "disabled", 'onclick' => 'return isDisabled(this);' ] : [],
             ]
         ],
     ])

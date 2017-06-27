@@ -130,6 +130,7 @@ a.desc:after {
        width: 100%;
 }
 /*----------- SELF styles ------------------*/
+a[disabled] { cursor: not-allowed; color: #808080; }
 .delimiter {
     width: 70%;
     margin: 15px auto 25px auto;

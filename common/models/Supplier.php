@@ -34,12 +34,23 @@ use yii\behaviors\TimestampBehavior;
  */
 class Supplier extends ActiveRecord
 {
+    const SCENARIO_UPDATE = 'update';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'supplier';
+    }
+
+    public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE] = self::attributes();
+        array_walk($scenarios[self::SCENARIO_UPDATE], function(&$item, $key, $inarr){
+            if (in_array($item, $inarr))
+                $item = '!'.$item;
+        }, ['logo']);
+        return $scenarios;
     }
 
     public function behaviors()
@@ -49,7 +60,7 @@ class Supplier extends ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt', 'update_dt'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dy'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dt'],
                 ],
                 'value' => new Expression('NOW()'),
             ],
@@ -62,7 +73,7 @@ class Supplier extends ActiveRecord
     public function rules()
     {
         return [
-            [['create_dt', 'update_dt', 'name', 'description', 'INN', 'OGRN', 'email', 'note'], 'required'],
+            [['name', 'description', 'INN', 'OGRN'], 'required'],
             [['create_dt', 'update_dt'], 'safe'],
             [['description', 'note'], 'string'],
             [['jur_address_id', 'fact_address_id', 'post_address_id'], 'integer'],
