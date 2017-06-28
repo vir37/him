@@ -39,7 +39,7 @@ class Warehouse extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt', 'update_dt'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dy'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dt'],
                 ],
                 'value' => new Expression('NOW()'),
             ],
@@ -52,7 +52,7 @@ class Warehouse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_dt', 'update_dt', 'supplier_id', 'work_hours', 'note'], 'required'],
+            [['supplier_id', 'work_hours', 'note'], 'required'],
             [['create_dt', 'update_dt'], 'safe'],
             [['supplier_id', 'address_id'], 'integer'],
             [['note'], 'string'],

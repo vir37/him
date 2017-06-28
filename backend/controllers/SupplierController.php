@@ -91,7 +91,6 @@ class SupplierController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = $model::SCENARIO_UPDATE;
         if ($model->load(Yii::$app->request->post())) {
             if (($file = UploadedFile::getInstance($model, 'logo')))
                 $model->logo = file_get_contents($file->tempName);

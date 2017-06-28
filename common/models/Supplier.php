@@ -34,23 +34,12 @@ use yii\behaviors\TimestampBehavior;
  */
 class Supplier extends ActiveRecord
 {
-    const SCENARIO_UPDATE = 'update';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'supplier';
-    }
-
-    public function scenarios() {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_UPDATE] = self::attributes();
-        array_walk($scenarios[self::SCENARIO_UPDATE], function(&$item, $key, $inarr){
-            if (in_array($item, $inarr))
-                $item = '!'.$item;
-        }, ['logo']);
-        return $scenarios;
     }
 
     public function behaviors()
@@ -112,6 +101,15 @@ class Supplier extends ActiveRecord
             'site' => 'WEB-сайт',
             'note' => 'Примечание',
         ];
+    }
+
+    public function load( $data, $formName = null){
+        try {
+            // исключаем из автоматической загрузки
+            unset($data[$this->formName()]['logo']);
+        } catch (Exception $e) {}
+
+        return parent::load($data, $formName);
     }
 
     /**

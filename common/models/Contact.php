@@ -48,7 +48,7 @@ class Contact extends ActiveRecord
     public function rules()
     {
         return [
-            [['create_dt', 'update_dt', 'FIO', 'phones', 'emails'], 'required'],
+            [['FIO', 'phones', 'emails'], 'required'],
             [['create_dt', 'update_dt'], 'safe'],
             [['FIO'], 'string', 'max' => 150],
             [['phones'], 'string', 'max' => 64],

@@ -24,6 +24,7 @@ class Manufacturer extends \yii\db\ActiveRecord
         return 'manufacturer';
     }
 
+
     /**
      * @inheritdoc
      */
