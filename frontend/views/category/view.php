@@ -6,6 +6,7 @@
  * Time: 16:50
  */
 use yii\helpers\Html;
+use frontend\helpers\ReplaceHelper;
 use yii\widgets\Pjax;
 use frontend\assets\FancyboxAsset;
 
@@ -57,8 +58,8 @@ $this->params['breadcrumbs'][] = 'Каталог';
             <article class="row ql-editor">
                 <?php
                     if ($current_category) {
-                        echo \frontend\helpers\ReplaceHelper::replaceSpecFields($current_category->description, [
-                            'city_pp' => $city->name_pp
+                        echo ReplaceHelper::replaceSpecFields($current_category->description, [
+                            'city_pp' => $city->name_pp, 'city' => $city->name,
                         ]);
                     }
                 ?>
