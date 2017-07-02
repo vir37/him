@@ -46,9 +46,6 @@ class AddressController extends Controller
     {
         $searchModel = new AddressSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        //if (Yii::$app->request->get('fancybox', false)) {
-        //            $this->layout = 'fancybox';
-        //}
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

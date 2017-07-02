@@ -6,6 +6,8 @@ use Yii;
 use yii\db\ActiveRecord,
     yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
+use common\models\Contact,
+    common\models\ContactLinks;
 
 
 /**
@@ -22,8 +24,10 @@ use yii\behaviors\TimestampBehavior;
  * @property Supplier $supplier
  * @property Address $address
  */
-class Warehouse extends \yii\db\ActiveRecord
+class Warehouse extends ActiveRecord
 {
+    const CONTACT_LINK_OBJECT_TYPE = 2;
+
     /**
      * @inheritdoc
      */
@@ -93,4 +97,22 @@ class Warehouse extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Address::className(), ['id' => 'address_id']);
     }
+
+
+    public function getContact() {
+        return $this->hasMany(Contact::className(), ['id' => 'contact_id'])
+            ->viaTable(ContactLinks::tableName(), [ 'object_id' => 'id' ], function($query) { $query->where([ 'object_type' => self::CONTACT_LINK_OBJECT_TYPE ]); });
+    }
+
+    public function addContact($contact_id){
+        $model = new ContactLinks();
+        $model->contact_id = $contact_id;
+        $model->object_type = self::CONTACT_LINK_OBJECT_TYPE;
+        $model->object_id = $this->id;
+        $result = [ 'result' => $model->save()];
+        if ($result)
+            return [ 'result' => $result, 'errors' => $model->errors ];
+        return [ 'result' => $result];
+    }
+
 }

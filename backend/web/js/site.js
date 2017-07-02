@@ -57,6 +57,12 @@ function isDisabled(elem) {
     }
     return true;
 }
+
+// добавляем постобработку загрузки страницы
+if (typeof afterLoad == 'function') {
+    window.addEventListener('load', afterLoad);
+}
+
 // отключаем задизабленные линки
 $(document).on('click', 'a', function(event){
     return isDisabled(this);

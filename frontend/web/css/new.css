@@ -444,6 +444,7 @@ h2 {
 .product-view .image img:hover { opacity:0.8; }
 
 .ql-editor { text-align: justify !important; color: #00275F; }
+.ql-editor::before { content: none; }
 .ql-editor p { text-indent: 2em; }
 
 /* Contact form */
@@ -459,3 +460,5 @@ h2 {
 .site-contact p { text-align: center; }
 .site-contact h4 { text-align: center; margin-bottom: 1.5em;}
 .site-contact .form-group { margin-bottom: 0.5rem; }
+
+.site-about h1 { margin-bottom: 1rem; }

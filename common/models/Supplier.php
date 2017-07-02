@@ -34,6 +34,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Supplier extends ActiveRecord
 {
+    const CONTACT_LINK_OBJECT_TYPE = 1;
+
     /**
      * @inheritdoc
      */

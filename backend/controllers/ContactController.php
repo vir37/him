@@ -8,6 +8,7 @@ use common\models\ContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\behaviors\LayoutBehavior;
 
 /**
  * ContactController implements the CRUD actions for Contact model.
@@ -25,6 +26,10 @@ class ContactController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            [
+                'class' => LayoutBehavior::className(),
+                'assigns' => [ 'fancybox' => 'fancybox' ],
             ],
         ];
     }

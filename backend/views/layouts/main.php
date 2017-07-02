@@ -11,6 +11,10 @@ use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+if (!isset($this->params['background_class']))
+    $background_class= '';
+else
+    $background_class= $this->params['background_class'];
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,7 +33,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap <?= $background_class ?>">
     <?php
     NavBar::begin([
         'brandLabel' => '<i class="fa fa-home fa-2x"></i>',

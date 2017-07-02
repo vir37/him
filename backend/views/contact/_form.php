@@ -47,9 +47,11 @@ use yii\bootstrap\ActiveForm;
                 'wrapperOptions' => [ 'class' => 'col-lg-10 col-md-10'],
             ])->textInput(['maxlength' => true])->label('<span class="glyphicon glyphicon-envelope"></span>') ?>
         </div>
+        <?php if (!isset($viewMode) || !$viewMode): ?>
         <div class="panel-footer">
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success' ]) ?>
         </div>
+        <?php endif; ?>
     </div>
     <?php ActiveForm::end(); ?>
 

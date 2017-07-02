@@ -5,6 +5,7 @@ use yii\helpers\Html,
     yii\helpers\ArrayHelper,
     yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 use common\models\Supplier;
 /* @var $this yii\web\View */
 /* @var $model common\models\Warehouse */
@@ -41,10 +42,11 @@ FancyboxAsset::register($this);
                     ($model->address ? $model->address->makeAddress(): '').'">{input}{error}{hint}{endWrapper}'.
                     Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                         'class' => 'btn btn-default fancybox address-select',
-                        'data' => [ 'base_url' => Url::to(['/address']) ],
+                        'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                     ]).
                     Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
                         'class' => 'btn btn-default address-remove',
+                        'data' => [ 'pjax' => 0 ],
                     ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
@@ -66,9 +68,27 @@ FancyboxAsset::register($this);
                 'wrapperOptions' => [ 'class' => 'col-lg-9 col-md-9'],
             ])->textarea(['rows' => 6]) ?>
         </div>
+        <div class="delimiter2"></div>
+        <div class="contacts">
+            <?php Pjax::begin(['id'=>'pjax-container']); ?>
+            <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
+                    'class' => 'btn fancybox contact-select',
+                    'style' => 'float: right;',
+                    'title' => 'Добавить новый контакт',
+                    'data' => [ 'callback' => 'addContact', 'pjax' => 0, 'model_id' => $model->id ],
+            ]) ?>
+            <h4 style="text-align: center; padding-bottom: 2rem; padding-top: 2rem;">Список контактов</h4>
+            <?php
+                foreach ($model->contact as $contact) {
+                    echo $contact->FIO;
+                }
+            ?>
+            <?php Pjax::end(); ?>
+        </div>
         <?php if (!isset($viewMode) or !$viewMode): ?>
         <div class="panel-footer">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success'] ) ?>
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'save'] ) ?>
+            <?= Html::submitButton('Сохранить и остаться', ['class' => 'btn btn-primary', 'name' => 'save_n_stay' ] ) ?>
         </div>
         <?php endif; ?>
     </div>
@@ -76,7 +96,40 @@ FancyboxAsset::register($this);
 </div>
 <script type="text/javascript">
     var editClicker;
-    window.addEventListener('load', function(){
+    function procAddress(elem){
+        var addr_id = $(elem).data('id'),
+            clicker = editClicker,
+            base_url = $(clicker).data('base_url');
+        $.ajax(base_url + '/get-full-address', {
+            data: { id: addr_id },
+            success: function(data, status, request) {
+                var parent = $(clicker).closest('.form-group');
+                parent.find('input[type=hidden]').val(addr_id);
+                parent.find('input[disabled]').val(data);
+            },
+            error: function(request, status, throw_obj){
+                alert(request);
+            }
+        });
+    }
+
+    function addContact(elem) {
+        var contact_id = $(elem).data('id'),
+            clicker = editClicker,
+            id = $(clicker).data('model_id');
+        $.ajax(baseUrl + '/warehouse/link-contact', {
+            data: {id: id, contact_id: contact_id},
+            success: function (data, status, request) {
+                $.pjax.reload('#pjax-container')
+                console.log(data);
+            },
+            error: function (response, status, throw_obj) {
+                alert(response);
+            }
+        });
+    }
+
+    function afterLoad(){
         $('.address-select').on('click', function(event){
             var addr_id = $(this).closest('.form-group').find('input[type=hidden]').val(),
                 base_url = $(this).data('base_url');
@@ -86,6 +139,7 @@ FancyboxAsset::register($this);
                 this.href = base_url;
             }
         });
+
         $('.fancybox').fancybox({
             type: 'iframe',
             beforeLoad: function() {
@@ -94,7 +148,6 @@ FancyboxAsset::register($this);
             },
             beforeShow: function(){
                 this.width = $('.container').width();
-                //this.height = $('.container').height();
             },
             beforeClose: function(){
                 Cookies.remove('fancybox');
@@ -103,29 +156,19 @@ FancyboxAsset::register($this);
         /* Обработка нажатия на ссылки, позволяющие сделать выбор */
         $(document).on('fancy:click', 'body', function(event, elem){
             if ($(elem).data('selectable')) {
-                var addr_id = $(elem).data('id'),
-                    base_url = $(editClicker).data('base_url');;
+                var callback = $(editClicker).data('callback');
                 $.fancybox.close();
-                $.ajax(base_url + '/get-full-address', {
-                    data: { id: addr_id },
-                    success: function(data, status, request) {
-                        var parent = $(editClicker).closest('.form-group');
-                        parent.find('input[type=hidden]').val(addr_id);
-                        parent.find('input[disabled]').val(data);
-                    },
-                    error: function(request, status, throw_obj){
-                        alert(request);
-                    },
-                    complete: function(){
-                        editClicker = undefined;
-                    }
-                })
+                if (typeof window[callback] === 'function'){
+                    window[callback](elem);
+                }
+                editClicker = undefined;
             }
         });
+
         $('.address-remove').on('click', function(event){
             event.preventDefault();
             $(this).closest('.form-group').find('.form-control').val('');
         });
-    });
+    }
 
 </script>
