@@ -139,7 +139,14 @@ class WarehouseController extends Controller
         ]);
     }
 
-    public function actionUnlinkContact($contact_id) {
+    public function actionUnlinkContact($id, $contact_id) {
+        $model = $this->findModel($id);
+        $result = $model->removeContact($contact_id);
+        if (Yii::$app->request->isAjax)
+            return $this->returnJSON((object)$result);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
 
     }
 

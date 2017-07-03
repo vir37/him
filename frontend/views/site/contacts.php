@@ -10,6 +10,8 @@ use yii\captcha\Captcha;
 
 $this->title = 'Контакты';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Контактная информация ООО "ТЕРА-ИНВЕСТ", адреса, реквизиты компании']);
+
 $chief = \common\models\Employee::find()->where(['is_chief' => true])->one();
 if ($chief)
     $img = strlen($chief->photo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($chief->photo) : '/icons/no_photo.png';

@@ -115,4 +115,13 @@ class Warehouse extends ActiveRecord
         return [ 'result' => $result];
     }
 
+    public function removeContact($contact_id) {
+        $model = ContactLinks::findOne([ 'object_type' => self::CONTACT_LINK_OBJECT_TYPE, 'object_id' => $this->id, 'contact_id' => $contact_id]);
+        if (!$model)
+            return [ 'result' => false, 'errors' => [ 'Model not found' ] ];
+        $result = $model->delete();
+        if ($result)
+            return [ 'result' => $result, 'errors' => $model->errors ];
+        return [ 'result' => $result];
+    }
 }

@@ -4,8 +4,9 @@
 
 use yii\helpers\Html;
 
-$this->title = 'О нас';
+$this->title = 'О нас - компания "ТЕРА-ИНВЕСТ"';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Информация о компании "ТЕРА-ИНВЕСТ", её миссии, направлениях деятельности и партнерах'])
 ?>
 <div class="site-about">
     <header>

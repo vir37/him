@@ -10,6 +10,8 @@ FancyboxAsset::register($this);
 
 $city = Yii::$app->params['city'];
 $this->title = "Химическая продукция в {$city->name_pp} - ООО \"ТЕРА-ИНВЕСТ\"";
+$this->registerMetaTag([ 'name' => 'description', 'content' => 'Компания "ТЕРА-ИНВЕСТ" реализует оптом в '.$city->name_pp.' и по всей России широкий спектр продукции химических производств']);
+$this->registerMetaTag([ 'name' => 'keywords', 'content' => implode(', ', $keywords)]);
 //TODO: нужно сделать сохранение ИД каталога в сессии
 ?>
 <div class="site-index">

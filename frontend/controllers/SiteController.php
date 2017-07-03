@@ -84,7 +84,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $firstCategory = Category::find()->where([ 'catalogue_id' => 1, 'parent_id' => null ])->orderBy(['list_position' =>SORT_ASC])->one();
-        return $this->render('index', [ 'firstCategory' => $firstCategory ]);
+        $keywords = [];
+        foreach (Category::find()->all() as $category){
+            $keywords[] = $category->name;
+        }
+        return $this->render('index', [ 'firstCategory' => $firstCategory, 'keywords' => $keywords ]);
     }
 
     /**

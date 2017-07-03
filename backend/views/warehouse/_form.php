@@ -7,10 +7,24 @@ use yii\helpers\Html,
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
 use common\models\Supplier;
+use yii\widgets\ListView;
+use yii\data\ActiveDataProvider;
 /* @var $this yii\web\View */
 /* @var $model common\models\Warehouse */
 /* @var $form yii\widgets\ActiveForm */
 FancyboxAsset::register($this);
+$dataProvider = new ActiveDataProvider();
+
+function toLink($data, $proto) {
+    if (!$data)
+        return '...';
+    $result = [];
+    foreach (explode(',', $data) as $elem){
+        $result[] = Html::a(trim($elem), $proto.':'.trim($elem));
+    }
+    return implode(', ', $result);
+}
+
 ?>
 
 <div class="warehouse-form col-lg-9 col-md-10">
@@ -70,7 +84,7 @@ FancyboxAsset::register($this);
         </div>
         <div class="delimiter2"></div>
         <div class="contacts">
-            <?php Pjax::begin(['id'=>'pjax-container']); ?>
+            <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000 ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
                     'class' => 'btn fancybox contact-select',
                     'style' => 'float: right;',
@@ -79,9 +93,14 @@ FancyboxAsset::register($this);
             ]) ?>
             <h4 style="text-align: center; padding-bottom: 2rem; padding-top: 2rem;">Список контактов</h4>
             <?php
-                foreach ($model->contact as $contact) {
-                    echo $contact->FIO;
-                }
+                $dataProvider->query = $model->getContact();
+                echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'summary' => false,
+                    'pager' => false,
+                    'itemView' => '_contact_view',
+                    'viewParams' => [ 'warehouse' => $model ],
+                ]);
             ?>
             <?php Pjax::end(); ?>
         </div>
@@ -120,8 +139,9 @@ FancyboxAsset::register($this);
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},
             success: function (data, status, request) {
-                $.pjax.reload('#pjax-container')
                 console.log(data);
+                debugger;
+                $.pjax.reload('#pjax-container')
             },
             error: function (response, status, throw_obj) {
                 alert(response);
