@@ -237,3 +237,4 @@ a[disabled] { cursor: not-allowed; color: #808080; }
 .article_background {
     background-image: url('../images/editor_background_2.png');
 }
+.contact-view a.btn { padding-top: 0;}
