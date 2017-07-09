@@ -9,23 +9,23 @@ use yii\behaviors\TimestampBehavior;
 
 
 /**
- * This is the model class for table "contact".
+ * This is the model class for table "article".
  *
  * @property string $id
  * @property string $create_dt
  * @property string $update_dt
- * @property string $FIO
- * @property string $phones
- * @property string $emails
+ * @property string $name
+ * @property string $title
+ * @property string $body
  */
-class Contact extends ActiveRecord
+class Article extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'contact';
+        return 'article';
     }
 
     public function behaviors()
@@ -48,11 +48,13 @@ class Contact extends ActiveRecord
     public function rules()
     {
         return [
-            [['FIO', 'phones', 'emails'], 'required'],
+            [['name'], 'required'],
             [['create_dt', 'update_dt'], 'safe'],
-            [['FIO'], 'string', 'max' => 150],
-            [['phones'], 'string', 'max' => 64],
-            [['emails'], 'string', 'max' => 255],
+            [['body'], 'string'],
+            [['name'], 'string', 'max' => 32],
+            ['name', 'match', 'pattern' => '/^[A-Za-z0-9]*$/i', 'message' => 'Некорректно! Допустимы латинские буквы и цифры'],
+            [['title'], 'string', 'max' => 255],
+            [['name'], 'unique'],
         ];
     }
 
@@ -65,9 +67,9 @@ class Contact extends ActiveRecord
             'id' => 'ID',
             'create_dt' => 'Дата создания',
             'update_dt' => 'Дата обновления',
-            'FIO' => 'ФИО',
-            'phones' => 'Телефоны',
-            'emails' => 'Адреса электронной почты',
+            'name' => 'Краткое наименование',
+            'title' => 'Заголовок',
+            'body' => 'Текст',
         ];
     }
 }

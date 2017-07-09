@@ -11,6 +11,27 @@ FancyboxAsset::register($this);
 
 $img = strlen($model->logo) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($model->logo) : '/icons/no_logo.png';
 $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt' => 'NO PHOTO', ]);
+
+function renderAddressField($address, $model) {
+    if ($model->isNewRecord)
+        $value = '';
+    else {
+        switch($address) {
+            case 'jur_address':
+                $value = $model->jurAddress ? $model->jurAddress->makeAddress(): '';
+                break;
+            case 'fact_address':
+                $value = $model->factAddress ? $model->factAddress->makeAddress(): '';
+                break;
+            case 'post_address':
+                $value = $model->postAddress ? $model->postAddress->makeAddress(): '';
+                break;
+            default:
+                $value = '';
+        }
+    }
+    return '<input type="text" disabled="disabled" class="form-control" value="'.$value.'">';
+}
 ?>
 
 <div class="supplier-form">
@@ -58,7 +79,7 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
             ])->textarea(['rows' => 6])->label('Описание') ?>
 
             <?= $form->field($model, 'jur_address_id', [
-                'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
+                'template' => '{label}{beginWrapper}'.renderAddressField('jur_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                             'class' => 'btn btn-default fancybox address-select',
                             'data' => [ 'base_url' => Url::to(['/address']) ],
@@ -72,7 +93,7 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
             ])->hiddenInput() ?>
 
             <?= $form->field($model, 'fact_address_id', [
-                'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
+                'template' => '{label}{beginWrapper}'.renderAddressField('fact_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                             'class' => 'btn btn-default fancybox address-select',
                             'data' => [ 'base_url' => Url::to(['/address']) ],
@@ -86,7 +107,7 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
             ])->hiddenInput() ?>
 
             <?= $form->field($model, 'post_address_id', [
-                'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control">{input}{error}{hint}{endWrapper}'.
+                'template' => '{label}{beginWrapper}'.renderAddressField('post_address', $model).'{input}{error}{hint}{endWrapper}'.
                           Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                               'class' => 'btn btn-default fancybox address-select',
                               'data' => [ 'base_url' => Url::to(['/address']) ],
@@ -140,6 +161,7 @@ $img = Html::img($img, [ 'style' => 'width: 150px; margin-bottom: 10px; ', 'alt'
         </div>
         <div class="panel-footer">
             <?= Html::submitButton( 'Сохранить', ['class' => 'btn btn-primary', 'name' => 'save']) ?>
+            <?= Html::submitButton( 'Сохранить и остаться', ['class' => 'btn btn-primary', 'name' => 'save_n_stay']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

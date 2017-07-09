@@ -9,6 +9,8 @@ use bizley\quill\Quill;
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+if (!isset($viewMode))
+    $viewMode = false;
 ?>
 
 <div class="product-form">
@@ -102,3 +104,11 @@ use bizley\quill\Quill;
     ?>
     <?php ActiveForm::end(); ?>
 </div>
+<script type="text/javascript">
+    var afterLoad = function(){
+        var viewMode = <?= $viewMode?>;
+        if (viewMode && (typeof q_quill_1 !== 'undefined')) {
+            q_quill_1.disable();
+        }
+    }
+</script>

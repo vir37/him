@@ -49,6 +49,25 @@ function disableJqueryUI(selector, types){
 
 disableJqueryUI('.jquery-ui-disable', ['button']);
 
+function isDisabled(elem) {
+    if ($(elem).is('[disabled]')) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+
+// добавляем постобработку загрузки страницы
+if (typeof afterLoad == 'function') {
+    window.addEventListener('load', afterLoad);
+}
+
+// отключаем задизабленные линки
+$(document).on('click', 'a', function(event){
+    return isDisabled(this);
+});
+
 $(document).on('change', '#catalogue_select', function(){
     var target = $(this).data('target'),
         url = $(this).data('url');
@@ -80,10 +99,3 @@ $('.catalogue-menu').each(function(){
 // события начала и окончания pjax
 $(document).on('pjax:send', function(){ $('.loader').removeClass('loader-hide').addClass('loader-show'); });
 $(document).on('pjax:complete', function(){ $('.loader').removeClass('loader-show').addClass('loader-hide'); });
-// отключаем задизабленные линки
-$(document).on('click', 'a', function(event){
-    if ($(this).is('[disabled]')) {
-        event.stopImmediatePropagation();
-        event.preventDefault();
-    }
-});

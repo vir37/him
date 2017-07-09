@@ -4,13 +4,14 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'О нас - компания "ТЕРА-ИНВЕСТ"';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Информация о компании "ТЕРА-ИНВЕСТ", её миссии, направлениях деятельности и партнерах'])
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <header>
+        <h1><?= Html::encode($this->title) ?></h1>
+    </header>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
-
-    <code><?= __FILE__ ?></code>
+    <article class="row ql-editor"><?= $model->body ?></article>
 </div>

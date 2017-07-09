@@ -3,21 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Address;
-use common\models\AddressSearch;
-use yii\base\ErrorException;
-use yii\helpers\Json;
+use common\models\Article;
+use common\models\ArticleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
-use yii\web\ServerErrorHttpException;
-use backend\behaviors\LayoutBehavior;
 
 /**
- * AddressController implements the CRUD actions for Address model.
+ * ArticleController implements the CRUD actions for Article model.
  */
-class AddressController extends Controller
+class ArticleController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,21 +26,19 @@ class AddressController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            [
-                'class' => LayoutBehavior::className(),
-                'assigns' => [ 'fancybox' => 'fancybox' ],
-            ],
         ];
     }
 
     /**
-     * Lists all Address models.
+     * Lists all Article models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AddressSearch();
+        $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $this->view->params['background_class'] = 'article_background';
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -53,30 +46,30 @@ class AddressController extends Controller
     }
 
     /**
-     * Displays a single Address model.
+     * Displays a single Article model.
      * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
+        $this->view->params['background_class'] = 'article_background';
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Address model.
+     * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Address();
+        $model = new Article();
 
+        $this->view->params['background_class'] = 'article_background';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->isAjax)
-                return $this->returnJSON((object)[ 'id' => $model->id ]);
-            return $this->redirect([ 'view', 'id' => $model->id ]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,17 +78,18 @@ class AddressController extends Controller
     }
 
     /**
-     * Updates an existing Address model.
+     * Updates an existing Article model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
+        $this->view->params['background_class'] = 'article_background';
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([ 'view', 'id' => $model->id ]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -104,7 +98,7 @@ class AddressController extends Controller
     }
 
     /**
-     * Deletes an existing Address model.
+     * Deletes an existing Article model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -117,43 +111,16 @@ class AddressController extends Controller
     }
 
     /**
-     * Finds the Address model based on its primary key value.
+     * Finds the Article model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Address the loaded model
+     * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Address::findOne($id)) !== null) {
+        if (($model = Article::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /**
-     * Возвращает ответ в виде JSON
-     * @param $content
-     * @return Response
-     * @throws ServerErrorHttpException
-     */
-    public function returnJSON($content) {
-        $response = new Response;
-        $response->format = Response::FORMAT_JSON;
-        $response->statusCode = 200;
-        try {
-            $response->content = Json::encode($content);
-            return $response;
-
-        } catch (ErrorException $e) {
-            throw new ServerErrorHttpException($e->getMessage());
-        }
-    }
-
-    public function actionGetFullAddress($id) {
-        if (($model = Address::findOne($id)) !== null) {
-            return $model->makeAddress();
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

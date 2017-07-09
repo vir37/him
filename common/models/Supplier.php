@@ -34,6 +34,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Supplier extends ActiveRecord
 {
+    const CONTACT_LINK_OBJECT_TYPE = 1;
+
     /**
      * @inheritdoc
      */
@@ -49,7 +51,7 @@ class Supplier extends ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['create_dt', 'update_dt'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dy'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_dt'],
                 ],
                 'value' => new Expression('NOW()'),
             ],
@@ -62,7 +64,7 @@ class Supplier extends ActiveRecord
     public function rules()
     {
         return [
-            [['create_dt', 'update_dt', 'name', 'description', 'INN', 'OGRN', 'email', 'note'], 'required'],
+            [['name', 'description', 'INN', 'OGRN'], 'required'],
             [['create_dt', 'update_dt'], 'safe'],
             [['description', 'note'], 'string'],
             [['jur_address_id', 'fact_address_id', 'post_address_id'], 'integer'],
@@ -101,6 +103,15 @@ class Supplier extends ActiveRecord
             'site' => 'WEB-сайт',
             'note' => 'Примечание',
         ];
+    }
+
+    public function load( $data, $formName = null){
+        try {
+            // исключаем из автоматической загрузки
+            unset($data[$this->formName()]['logo']);
+        } catch (Exception $e) {}
+
+        return parent::load($data, $formName);
     }
 
     /**

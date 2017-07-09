@@ -5,14 +5,15 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Warehouse */
 
-$this->title = 'Update Warehouse: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Warehouses', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование: ' . $model->supplier->name .' - склад ID '. $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
+$this->params['breadcrumbs'][] = ['label' => 'Склады', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->supplier->name .' - склад ID '. $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Правка';
 ?>
 <div class="warehouse-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,

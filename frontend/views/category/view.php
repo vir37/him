@@ -55,8 +55,7 @@ $this->params['breadcrumbs'][] = 'Каталог';
                     }
                 ?>
             </div>
-            <article class="row ql-editor">
-                <?php
+            <article class="row ql-editor"><?php
                     if ($current_category) {
                         echo ReplaceHelper::replaceSpecFields($current_category->description, [
                             'city_pp' => $city->name_pp, 'city' => $city->name,

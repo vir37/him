@@ -8,6 +8,8 @@ use common\models\SupplierSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+
 
 /**
  * SupplierController implements the CRUD actions for Supplier model.
@@ -65,13 +67,19 @@ class SupplierController extends Controller
     {
         $model = new Supplier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $file = UploadedFile::getInstance($model, 'logo');
+            if ($file && $file->tempName)
+                $model->logo = file_get_contents($file->tempName);
+
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Новый поставщик успешно создан');
+                if (array_key_exists('save_n_stay', Yii::$app->request->post()))
+                    return $this->redirect(['update', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+        return $this->render('create', [ 'model' => $model,  ]);
     }
 
     /**
@@ -83,14 +91,18 @@ class SupplierController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if (($file = UploadedFile::getInstance($model, 'logo')))
+                $model->logo = file_get_contents($file->tempName);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Запись успешно обновлена');
+                if (!array_key_exists('save_n_stay', Yii::$app->request->post()))
+                    return $this->redirect(['view', 'id' => $model->id]);
+                return $this->render('update', [ 'model' => $model, ]);
+            }
         }
+        return $this->render('update', [ 'model' => $model, ]);
     }
 
     /**

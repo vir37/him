@@ -39,6 +39,14 @@ class DirectoryController extends \yii\web\Controller
                     [ 'text' => 'Новый город', 'link' => 'city/create'],
                 ]
             ],
+            [
+                'header' => [ 'text' => 'Статьи', 'link' => 'article/' ],
+                'icon' => 'fa-file-text',
+                'description' => 'Модуль управления текстовыми статьями',
+                'short_links' => [
+                    [ 'text' => 'Новая статья', 'link' => 'city/create'],
+                ]
+            ],
         ];
         return $this->render('index', [ 'elements' => $elements ]);
     }

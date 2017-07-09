@@ -4,14 +4,14 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Warehouse */
+/* @var $model common\models\Article */
 
-$this->title = 'Новый склад';
+$this->title = 'Новая статья';
 $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
-$this->params['breadcrumbs'][] = ['label' => 'Склады', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Текстовые статья', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="warehouse-create">
+<div class="article-create">
 
     <h3><?= Html::encode($this->title) ?></h3>
 

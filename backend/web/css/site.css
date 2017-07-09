@@ -130,11 +130,21 @@ a.desc:after {
        width: 100%;
 }
 /*----------- SELF styles ------------------*/
+a[disabled] { cursor: not-allowed; color: #808080; }
 .delimiter {
     width: 70%;
     margin: 15px auto 25px auto;
     border: 1px solid #b2a266;
 }
+.delimiter2 {
+    width: 99%;
+    height: 3px;
+    margin: 0.5rem auto;
+    background-image:-webkit-linear-gradient(left, transparent 0, #777 50%, transparent 100%);
+    background-image:-o-linear-gradient(left, transparent 0, #777 50%, transparent 100%);
+    background-image:linear-gradient(to left, transparent 0, #777 50%, transparent 100%);
+}
+
 .no-padding { padding: 0; }
 .sub-wrap { flex: 1 0 auto; }
 .col { padding: 2px 2px 10px 2px; }
@@ -223,3 +233,8 @@ a.desc:after {
 }
 
 .btn-fancy { display: none; }
+
+.article_background {
+    background-image: url('../images/editor_background_2.png');
+}
+.contact-view a.btn { padding-top: 0;}

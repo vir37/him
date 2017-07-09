@@ -10,6 +10,8 @@ use common\models\Catalogue;
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
 
+if (!isset($viewMode))
+    $viewMode = false;
 if (is_null($model->catalogue_id))
     $catalogueList = ArrayHelper::map(Catalogue::find()->all(), 'id', 'name');
 else
@@ -133,5 +135,12 @@ $img = strlen($model->icon) > 10 ? 'data:image/jpeg;charset=utf-8;base64,' . bas
         }
     ?>
     <?php ActiveForm::end(); ?>
-
 </div>
+<script type="text/javascript">
+    var afterLoad = function(){
+        var viewMode = <?= $viewMode?>;
+        if (viewMode && (typeof q_quill_1 !== 'undefined')) {
+            q_quill_1.disable();
+        }
+    }
+</script>

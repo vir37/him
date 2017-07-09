@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'update_dt',
             [
                 'attribute' => 'name',
-                'headerOptions' => ['class' => 'col-lg-2 col-md-2'],
+                'headerOptions' => ['class' => 'col-lg-3 col-md-3'],
                 'label' => 'Наименование',
             ],
             [
@@ -43,23 +43,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Юр.адрес',
                 'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
                 'content' => function($model, $key, $index, $column) {
-                    if (($address = $model->jurAddress()) != Null) {
-                        return $address->makeAddress();
+                    if ($model->jurAddress != Null) {
+                        return $model->jurAddress->makeAddress();
                     }
-                    return 'пусто';
+                    return '';
                 }
             ],
+            /*
             [
                 'class' => Column::className(),
                 'header' => 'Почт.адрес',
                 'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
                 'content' => function($model, $key, $index, $column) {
-                    if (($address = $model->postAddress()) != Null) {
-                        return $address->makeAddress();
+                    if ($model->postAddress != Null) {
+                        return $model->postAddress->makeAddress();
                     }
-                    return 'пусто';
+                    return '';
                 }
             ],
+            */
             //'description:ntext',
             // 'INN',
             // 'OGRN',
@@ -69,17 +71,23 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'logo',
             // 'phone',
             [
-                'attribute' => 'email',
+                'attribute' => 'phone',
+                'filter' => false,
                 'headerOptions' => ['class' => 'col-lg-2 col-md-2'],
-                'label' => 'Email',
+                'label' => 'Телефоны',
             ],
+            /*
             [
                 'attribute' => 'site',
                 'headerOptions' => ['class' => 'col-lg-2 col-md-2'],
-            ],
+            ],*/
             // 'note:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['class' => 'col-lg-1 col-md-1'],
+                'header' => 'Действия',
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

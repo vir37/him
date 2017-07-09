@@ -7,6 +7,7 @@ use yii\db\IntegrityException;
 use common\behaviors\ChangePositionBehavior;
 use yii\db\ActiveRecord;
 
+
 /**
  * This is the model class for table "category".
  *
@@ -22,6 +23,7 @@ use yii\db\ActiveRecord;
 class Category extends ActiveRecord
 {
     private $oldParent;
+
     /**
      * @inheritdoc
      */
@@ -46,6 +48,7 @@ class Category extends ActiveRecord
             [['description'], 'string'],
             [['name', 'meta_keys'], 'string', 'max' => 128],
             [['meta_desc'], 'string', 'max' => 160],
+            [['icon'], 'image', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -103,7 +106,14 @@ class Category extends ActiveRecord
         }
     }
 
+    public function load( $data, $formName = null){
+        try {
+            // исключаем из автоматической загрузки
+            unset($data[$this->formName()]['icon']);
+        } catch (Exception $e) {}
 
+        return parent::load($data, $formName);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

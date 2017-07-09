@@ -6,36 +6,31 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Warehouse */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Warehouses', 'url' => ['index']];
+$this->title = $model->supplier->name .' - склад ID '. $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
+$this->params['breadcrumbs'][] = ['label' => 'Склады', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="warehouse-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить запись?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
+    <?= $this->render('_form', [
         'model' => $model,
-        'attributes' => [
-            'id',
-            'create_dt',
-            'update_dt',
-            'supplier_id',
-            'address_id',
-            'work_hours',
-            'note:ntext',
-        ],
+        'viewMode' => true,
     ]) ?>
-
+    <?= Html::endTag('fieldset') ?>
 </div>

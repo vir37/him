@@ -14,8 +14,10 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Article;
 
 use frontend\components\UrlManagerCityBehavior;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -82,7 +84,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $firstCategory = Category::find()->where([ 'catalogue_id' => 1, 'parent_id' => null ])->orderBy(['list_position' =>SORT_ASC])->one();
-        return $this->render('index', [ 'firstCategory' => $firstCategory ]);
+        $keywords = [];
+        foreach (Category::find()->all() as $category){
+            $keywords[] = $category->name;
+        }
+        return $this->render('index', [ 'firstCategory' => $firstCategory, 'keywords' => $keywords ]);
     }
 
     /**
@@ -158,7 +164,10 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        $model = Article::findOne([ 'name' => 'about']);
+        if (!$model)
+            throw new NotFoundHttpException();
+        return $this->render('about', [ 'model' => $model ]);
     }
 
     /**

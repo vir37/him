@@ -8,6 +8,11 @@ use common\models\WarehouseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\ErrorException;
+use yii\helpers\Json;
+use yii\web\Response;
+use yii\web\ServerErrorHttpException;
+
 
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
@@ -66,6 +71,9 @@ class WarehouseController extends Controller
         $model = new Warehouse();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Запись успешно сохранена');
+            if (array_key_exists('save_n_stay', Yii::$app->request->post()))
+                return $this->redirect(['update', 'id' => $model->id]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,12 +93,11 @@ class WarehouseController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('success', 'Запись успешно обновлена');
+            if (!array_key_exists('save_n_stay', Yii::$app->request->post()))
+                return $this->redirect(['view', 'id' => $model->id]);
         }
+        return $this->render('update', [ 'model' => $model, ]);
     }
 
     /**
@@ -121,4 +128,45 @@ class WarehouseController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionLinkContact($id, $contact_id) {
+        $model = $this->findModel($id);
+        $result = $model->addContact($contact_id);
+        if (Yii::$app->request->isAjax)
+            return $this->returnJSON((object)$result);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUnlinkContact($id, $contact_id) {
+        $model = $this->findModel($id);
+        $result = $model->removeContact($contact_id);
+        if (Yii::$app->request->isAjax)
+            return $this->returnJSON((object)$result);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+
+    }
+
+    /**
+     * Возвращает ответ в виде JSON
+     * @param $content
+     * @return Response
+     * @throws ServerErrorHttpException
+     */
+    public function returnJSON($content) {
+        $response = new Response;
+        $response->format = Response::FORMAT_JSON;
+        $response->statusCode = 200;
+        try {
+            $response->content = Json::encode($content);
+            return $response;
+
+        } catch (ErrorException $e) {
+            throw new ServerErrorHttpException($e->getMessage());
+        }
+    }
+
 }
