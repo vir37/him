@@ -237,4 +237,25 @@ a[disabled] { cursor: not-allowed; color: #808080; }
 .article_background {
     background-image: url('../images/editor_background_2.png');
 }
+.contacts { margin-bottom: 1rem; background-color: #d3d3d3; }
 .contact-view a.btn { padding-top: 0;}
+
+.tab-warehouse .panel-body { padding: 0; }
+.tab-warehouse .warehouse-list { padding: 0; }
+.tab-warehouse .warehouse-list table { margin-bottom: 0; }
+.tab-warehouse .warehouse-list address { margin-bottom: 0; }
+.note {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    background-color: #d3d3d3;
+    min-height: 100%;
+    display:none;
+    pointer-events: none;
+}
+.note:target {
+    display: block;
+    pointer-events: auto;
+}

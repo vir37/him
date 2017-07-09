@@ -10,7 +10,7 @@ use yii\helpers\Html;
 <div data-key="<?= $key ?>" class="row contact-view">
     <div class="col-lg-1 col-md-1">
         <?= Html::a('<span class="glyphicon glyphicon-remove"></span>',
-            [ '/warehouse/unlink-contact', 'contact_id' => $key, 'id' => $_params_['warehouse']->id ],
+            [ '/supplier/unlink-contact', 'contact_id' => $key, 'id' => $_params_['supplier']->id ],
             [
                 'class' => 'btn',
                 'title' => 'Отвязать контакт',

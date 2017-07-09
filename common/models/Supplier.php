@@ -145,4 +145,35 @@ class Supplier extends ActiveRecord
     {
         return $this->hasOne(Address::className(), ['id' => 'post_address_id']);
     }
+
+    public function getWarehouse() {
+        return $this->hasMany(Warehouse::className(), ['supplier_id' => 'id']);
+    }
+
+    public function getContact() {
+        return $this->hasMany(Contact::className(), ['id' => 'contact_id'])
+            ->viaTable(ContactLinks::tableName(), [ 'object_id' => 'id' ], function($query) { $query->where([ 'object_type' => self::CONTACT_LINK_OBJECT_TYPE ]); });
+    }
+
+    public function addContact($contact_id){
+        $model = new ContactLinks();
+        $model->contact_id = $contact_id;
+        $model->object_type = self::CONTACT_LINK_OBJECT_TYPE;
+        $model->object_id = $this->id;
+        $result = [ 'result' => $model->save()];
+        if ($result)
+            return [ 'result' => $result, 'errors' => $model->errors ];
+        return [ 'result' => $result];
+    }
+
+    public function removeContact($contact_id) {
+        $model = ContactLinks::findOne([ 'object_type' => self::CONTACT_LINK_OBJECT_TYPE, 'object_id' => $this->id, 'contact_id' => $contact_id]);
+        if (!$model)
+            return [ 'result' => false, 'errors' => [ 'Model not found' ] ];
+        $result = $model->delete();
+        if ($result)
+            return [ 'result' => $result, 'errors' => $model->errors ];
+        return [ 'result' => $result];
+    }
+
 }

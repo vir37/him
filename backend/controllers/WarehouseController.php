@@ -12,6 +12,7 @@ use yii\base\ErrorException;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
+use backend\behaviors\LayoutBehavior;
 
 
 /**
@@ -30,6 +31,10 @@ class WarehouseController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            [
+                'class' => LayoutBehavior::className(),
+                'assigns' => [ 'fancybox' => 'fancybox' ],
             ],
         ];
     }
@@ -71,11 +76,15 @@ class WarehouseController extends Controller
         $model = new Warehouse();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Запись успешно сохранена');
+            if (!Yii::$app->request->isAjax)
+                Yii::$app->session->setFlash('success', 'Запись успешно сохранена');
             if (array_key_exists('save_n_stay', Yii::$app->request->post()))
                 return $this->redirect(['update', 'id' => $model->id]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $supplier_id = \Yii::$app->request->get('supplier_id', Null);
+            if ($supplier_id)
+                $model->supplier_id = (int) $supplier_id;
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -93,7 +102,8 @@ class WarehouseController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Запись успешно обновлена');
+            if (!Yii::$app->request->isAjax)
+                Yii::$app->session->setFlash('success', 'Запись успешно обновлена');
             if (!array_key_exists('save_n_stay', Yii::$app->request->post()))
                 return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -108,7 +118,9 @@ class WarehouseController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $result = $this->findModel($id)->delete();
+        if (Yii::$app->request->isAjax)
+            return $this->returnJSON((object)$result);
 
         return $this->redirect(['index']);
     }

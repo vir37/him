@@ -84,9 +84,9 @@ function toLink($data, $proto) {
         </div>
         <div class="delimiter2"></div>
         <div class="contacts">
-            <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000 ]); ?>
+            <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
-                    'class' => 'btn fancybox contact-select',
+                    'class' => 'btn fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
                     'style' => 'float: right;',
                     'title' => 'Добавить новый контакт',
                     'data' => [ 'callback' => 'addContact', 'pjax' => 0, 'model_id' => $model->id ],
@@ -100,6 +100,7 @@ function toLink($data, $proto) {
                     'pager' => false,
                     'itemView' => '_contact_view',
                     'viewParams' => [ 'warehouse' => $model ],
+                    'emptyText' => false,
                 ]);
             ?>
             <?php Pjax::end(); ?>
@@ -139,12 +140,24 @@ function toLink($data, $proto) {
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},
             success: function (data, status, request) {
-                console.log(data);
-                debugger;
+                $.pjax.reload('#pjax-container');
+            },
+            error: function (response, status, throw_obj) {
+                alert(status);
+            }
+        });
+    }
+
+    function removeContact(elem) {
+        event.preventDefault();
+        if (!confirm('Вы действительно хотите удалить запись?'))
+            return false;
+        $.ajax(elem.href, {
+            success: function (data, status, request) {
                 $.pjax.reload('#pjax-container')
             },
             error: function (response, status, throw_obj) {
-                alert(response);
+                alert(status);
             }
         });
     }

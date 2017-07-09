@@ -9,9 +9,7 @@
 use yii\helpers\Html;
 ?>
 
-<?= Html::beginTag('fieldset', [ 'disabled' => (isset($mode) && $mode == 'view') ]) ?>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-<?= Html::endTag('fieldset') ?>
+<?= $this->render('_form', [
+    'model' => $model,
+    'viewMode' => isset($viewMode) ? $viewMode : false,
+]) ?>

@@ -1,0 +1,124 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 09.07.2017
+ * Time: 17:30
+ */
+use yii\widgets\Pjax;
+use yii\helpers\Html,
+    yii\helpers\Url;
+use yii\grid\GridView;
+use yii\data\ActiveDataProvider;
+
+$dataProvider = new ActiveDataProvider();
+$dataProvider->query = $model->getWarehouse();
+?>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <?php Pjax::begin([ 'id'=>'pjax-container-tab2', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]) ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'summary' => false,
+            'options' => ['class' => 'warehouse-list col-lg-12 col-md-12'],
+            'columns' => [
+                [
+                    //'headerOptions' => [ 'class' => 'col-lg-1 col-md-1'],
+                    'class' => 'yii\grid\SerialColumn',
+                ],
+                [
+                    'headerOptions' => [ 'class' => 'col-lg-7 col-md-7'],
+                    'header' => 'Адрес и контакты',
+                    'content' => function($model, $key, $index, $column) {
+                        $result = $model->address ? '<p>'.$model->address->makeAddress().'</p>': '';
+                        foreach ($model->contact as $contact) {
+                            $result .= '<address>'.$contact->FIO.'
+                            <span class="glyphicon glyphicon-phone-alt">&nbsp;</span>'. toLink($contact->phones, 'tel').'
+                            <span class="glyphicon glyphicon-envelope">&nbsp;</span>'. toLink($contact->emails, 'mailto').'</address>';
+                        }
+                        return $result;
+                    },
+                ],
+                [
+                    'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
+                    'header' => 'Режим работы',
+                    'content' => function($model, $key, $index, $column){
+                        return $model->work_hours;
+                    },
+                ],
+                [
+                    'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
+                    'header' => 'Примечание',
+                    'contentOptions' => [ 'style' => 'position:relative;' ],
+                    'content' => function($model, $key, $index, $column){
+                        if (\yii\helpers\StringHelper::countWords($model->note) > 3) {
+                            $str = \yii\helpers\StringHelper::truncateWords($model->note, 3);
+                            return Html::a($str, '#note-'.$key).Html::tag('div', $model->note, [
+                                'id' => 'note-'.$key,
+                                'class' => 'note'
+                            ]);
+                        }
+                        return $model->note;
+                    },
+                ],
+                [
+                    'class' => \yii\grid\ActionColumn::className(),
+                    'controller' => 'warehouse',
+                    'template' => '{update}&nbsp;&nbsp;{delete}',
+                    'header' => 'Действия',
+                    'headerOptions' => [ 'class' => 'col-lg-1 col-md-1'],
+                    'contentOptions' => [ 'class' => 'action'],
+                    'buttons' => [
+                        'delete' => function($url, $model, $key){
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                                [ 'warehouse/delete', 'id'=>$key], [
+                                    'title' => 'Удалить склад',
+                                    'data' => [ 'pjax' => 0, ],
+                                    'onclick' => 'deleteWarehouse(this);',
+                                ]);
+                        },
+                        'update' => function($url, $model, $key){
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                                Url::to([ 'warehouse/update', 'id'=>$key]), [
+                                    'title' => 'Редактировать склад',
+                                    'class' => 'fancybox',
+                                    'data' => [
+                                        'pjax' => 0,
+                                        'callback' => 'refreshWarehouses'
+                                    ],
+                                ]);
+                        },
+                    ],
+                ],
+
+            ],
+
+        ]) ?>
+        <?php Pjax::end() ?>
+    </div>
+    <div class="panel-footer">
+        <?= Html::a('Добавить новый', ['warehouse/create', 'supplier_id' => $model->id ], [
+            'class' => 'btn btn-default fancybox warehouse-select',
+            'data' => [ 'callback' => 'refreshWarehouses' ],
+        ])?>
+    </div>
+</div>
+<script type="text/javascript">
+    function refreshWarehouses(){
+        $.pjax.reload('#pjax-container-tab2');
+    }
+    function deleteWarehouse(elem){
+        event.preventDefault();
+        if (!confirm('Вы действительно хотите удалить запись?'))
+            return false;
+        $.ajax(elem.href, {
+            method: 'POST',
+            success: function (data, status, request) {
+                $.pjax.reload('#pjax-container-tab2')
+            },
+            error: function (response, status, throw_obj) {
+                alert(status);
+            }
+        });
+    }
+</script>
