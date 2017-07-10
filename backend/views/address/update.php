@@ -15,8 +15,7 @@ $this->params['breadcrumbs'][] = 'Редактирование';
 
     <h3><?= Html::encode($this->title) ?></h3>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="address-form col-lg-8 col-md-8">
+        <?= $this->render('_form', [ 'model' => $model, ]) ?>
+    </div>
 </div>

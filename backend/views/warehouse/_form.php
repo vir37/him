@@ -27,7 +27,6 @@ function toLink($data, $proto) {
 
 ?>
 
-<div class="warehouse-form col-lg-9 col-md-10">
 
     <?php $form = ActiveForm::begin([
         'layout' => 'inline',
@@ -54,8 +53,8 @@ function toLink($data, $proto) {
             <?= $form->field($model, 'address_id', [
                 'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control" value="'.
                     ($model->address ? $model->address->makeAddress(): '').'">{input}{error}{hint}{endWrapper}'.
-                    Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
-                        'class' => 'btn btn-default fancybox address-select',
+                    Html::a('<span class="glyphicon glyphicon-pencil"></span>', ($model->address ? [ 'address/update', 'id'=>$model->address->id] : [ '/address' ]), [
+                        'class' => 'btn btn-default _fancybox fancybox.ajax address-select',
                         'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                     ]).
                     Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
@@ -113,9 +112,17 @@ function toLink($data, $proto) {
         <?php endif; ?>
     </div>
     <?php ActiveForm::end(); ?>
-</div>
 <script type="text/javascript">
-    var editClicker;
+    var editClicker,
+        fancybox_defaults = {
+            type: 'ajax',
+            autoSize: false,
+            scrolling: 'no',
+            beforeShow: function(){
+                this.width = $('.container').width();
+            }
+        };
+
     function procAddress(elem){
         var addr_id = $(elem).data('id'),
             clicker = editClicker,
@@ -186,6 +193,28 @@ function toLink($data, $proto) {
                 Cookies.remove('fancybox');
             }
         });
+        $('._fancybox').fancybox( fancybox_defaults );
+        $(document).on('click', '.fancybox-inner a', function(evt){
+            $.fancybox.close();
+            evt.preventDefault();
+            $.fancybox($.extend({}, fancybox_defaults, { href: this.href }));
+        });
+        $(document).on('submit', '.fancybox-inner form', function(evt){
+            var form = $(this).serialize();
+            $.fancybox.close();
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            $.ajax(this.action, {
+                type: 'POST',
+                data: form,
+                timeout: 10000,
+                success: function(data){ $.fancybox($.extend( {}, fancybox_defaults, { content: data}));  },
+                error: function(result, str, throwObj) {
+                }
+            });
+        });
+
+
         /* Обработка нажатия на ссылки, позволяющие сделать выбор */
         $(document).on('fancy:click', 'body', function(event, elem){
             if ($(elem).data('selectable')) {

@@ -9,17 +9,13 @@ use common\models\Region;
 /* @var $model common\models\Address */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
-<div class="address-form col-lg-8 col-md-8">
-
-    <?php $form = ActiveForm::begin([
+ <?php $form = ActiveForm::begin([
         'layout' => 'inline',
         'fieldConfig' => [
             'enableError' => true,
             'labelOptions' => [ 'class' => 'sr-only' ],
         ],
-    ]); ?>
-
+]); ?>
     <div class="panel panel-primary">
         <div class="panel-body">
             <div class="row">
@@ -76,8 +72,7 @@ use common\models\Region;
         </div>
         <?php endif; ?>
     </div>
-    <?php ActiveForm::end(); ?>
-</div>
+<?php ActiveForm::end(); ?>
 <script type="text/javascript">
     window.addEventListener('load', function(){
         $('#index').mask('999999', { placeholder: 'X'});

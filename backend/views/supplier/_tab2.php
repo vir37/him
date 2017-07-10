@@ -14,9 +14,9 @@ use yii\data\ActiveDataProvider;
 $dataProvider = new ActiveDataProvider();
 $dataProvider->query = $model->getWarehouse();
 ?>
+<?php Pjax::begin([ 'id'=>'pjax-container-tab2', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]) ?>
 <div class="panel panel-default">
     <div class="panel-body">
-        <?php Pjax::begin([ 'id'=>'pjax-container-tab2', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]) ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'summary' => false,
@@ -30,11 +30,11 @@ $dataProvider->query = $model->getWarehouse();
                     'headerOptions' => [ 'class' => 'col-lg-7 col-md-7'],
                     'header' => 'Адрес и контакты',
                     'content' => function($model, $key, $index, $column) {
-                        $result = $model->address ? '<p>'.$model->address->makeAddress().'</p>': '';
+                        $result = $model->address ? '<p><strong>'.$model->address->makeAddress().'</strong></p>': '';
                         foreach ($model->contact as $contact) {
-                            $result .= '<address>'.$contact->FIO.'
-                            <span class="glyphicon glyphicon-phone-alt">&nbsp;</span>'. toLink($contact->phones, 'tel').'
-                            <span class="glyphicon glyphicon-envelope">&nbsp;</span>'. toLink($contact->emails, 'mailto').'</address>';
+                            $result .= '<address>'.$contact->FIO.':
+                            <span class="glyphicon glyphicon-phone-alt">&nbsp;'. toLink($contact->phones, 'tel').'</span>
+                            <span class="glyphicon glyphicon-envelope">&nbsp;'. toLink($contact->emails, 'mailto').'</span></address>';
                         }
                         return $result;
                     },
@@ -42,9 +42,7 @@ $dataProvider->query = $model->getWarehouse();
                 [
                     'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
                     'header' => 'Режим работы',
-                    'content' => function($model, $key, $index, $column){
-                        return $model->work_hours;
-                    },
+                    'content' => function($model, $key, $index, $column){ return $model->work_hours; },
                 ],
                 [
                     'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
@@ -53,10 +51,12 @@ $dataProvider->query = $model->getWarehouse();
                     'content' => function($model, $key, $index, $column){
                         if (\yii\helpers\StringHelper::countWords($model->note) > 3) {
                             $str = \yii\helpers\StringHelper::truncateWords($model->note, 3);
-                            return Html::a($str, '#note-'.$key).Html::tag('div', $model->note, [
-                                'id' => 'note-'.$key,
-                                'class' => 'note'
-                            ]);
+                            return Html::a($str, '#note-'.$key).Html::tag('div',
+                                $model->note.'<a href="#close" class="btn-close" title="Закрыть">&#10006;</a>',
+                                [
+                                    'id' => 'note-'.$key,
+                                    'class' => 'note'
+                                ]);
                         }
                         return $model->note;
                     },
@@ -81,7 +81,7 @@ $dataProvider->query = $model->getWarehouse();
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
                                 Url::to([ 'warehouse/update', 'id'=>$key]), [
                                     'title' => 'Редактировать склад',
-                                    'class' => 'fancybox',
+                                    'class' => '_fancybox fancybox.ajax',
                                     'data' => [
                                         'pjax' => 0,
                                         'callback' => 'refreshWarehouses'
@@ -90,11 +90,8 @@ $dataProvider->query = $model->getWarehouse();
                         },
                     ],
                 ],
-
             ],
-
         ]) ?>
-        <?php Pjax::end() ?>
     </div>
     <div class="panel-footer">
         <?= Html::a('Добавить новый', ['warehouse/create', 'supplier_id' => $model->id ], [
@@ -103,6 +100,12 @@ $dataProvider->query = $model->getWarehouse();
         ])?>
     </div>
 </div>
+<div class="modalWindow">
+    <a href="#" class="btn-close" title="Закрыть">X</a>
+    <div class="modalContent">
+    </div>
+</div>
+<?php Pjax::end() ?>
 <script type="text/javascript">
     function refreshWarehouses(){
         $.pjax.reload('#pjax-container-tab2');

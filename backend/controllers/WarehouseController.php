@@ -107,6 +107,8 @@ class WarehouseController extends Controller
             if (!array_key_exists('save_n_stay', Yii::$app->request->post()))
                 return $this->redirect(['view', 'id' => $model->id]);
         }
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('_form', [ 'model' => $model, ]);
         return $this->render('update', [ 'model' => $model, ]);
     }
 

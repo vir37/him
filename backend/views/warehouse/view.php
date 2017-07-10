@@ -29,9 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
-    <?= $this->render('_form', [
-        'model' => $model,
-        'viewMode' => true,
-    ]) ?>
+    <div class="warehouse-form col-lg-9 col-md-10">
+        <?= $this->render('_form', [
+            'model' => $model,
+            'viewMode' => true,
+        ]) ?>
+    </div>
     <?= Html::endTag('fieldset') ?>
 </div>

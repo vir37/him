@@ -259,3 +259,4 @@ a[disabled] { cursor: not-allowed; color: #808080; }
     display: block;
     pointer-events: auto;
 }
+a.btn-close { position: absolute; bottom: 0; right: 4px; }

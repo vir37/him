@@ -59,9 +59,9 @@ class AddressController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('view', [ 'model' => $this->findModel($id), ]);
+        return $this->render('view', [ 'model' => $this->findModel($id), ]);
     }
 
     /**
@@ -94,13 +94,15 @@ class AddressController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([ 'view', 'id' => $model->id ]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+            if (Yii::$app->request->isAjax)
+                return $this->actionView($id);
+            else
+                return $this->redirect([ 'view', 'id' => $model->id ]);
+
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('update', [  'model' => $model,  ]);
+        return $this->render('update', [  'model' => $model,  ]);
     }
 
     /**

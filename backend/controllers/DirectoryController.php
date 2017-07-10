@@ -44,7 +44,15 @@ class DirectoryController extends \yii\web\Controller
                 'icon' => 'fa-file-text',
                 'description' => 'Модуль управления текстовыми статьями',
                 'short_links' => [
-                    [ 'text' => 'Новая статья', 'link' => 'city/create'],
+                    [ 'text' => 'Новая статья', 'link' => 'article/create'],
+                ]
+            ],
+            [
+                'header' => [ 'text' => 'Склады поставщиков', 'link' => 'warehouse/' ],
+                'icon' => 'fa-file-text',
+                'description' => 'Модуль управления складами поставщиков',
+                'short_links' => [
+                    [ 'text' => 'Новая склад', 'link' => 'warehouse/create'],
                 ]
             ],
         ];

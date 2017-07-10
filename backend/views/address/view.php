@@ -27,10 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
         <?= Html::a('Выбрать', '#', ['class' => 'btn btn-primary btn-fancy', 'data' => [ 'selectable' => true, 'id' => $model->id ]] ) ?>
     </p>
+    <div class="address-form col-lg-8 col-md-8">
     <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
         <?= $this->render('_form', [
             'model' => $model,
             'viewMode' => true,
         ]) ?>
     <?= Html::endTag('fieldset') ?>
+    </div>
 </div>
