@@ -41,10 +41,5 @@ use yii\bootstrap\Tabs;
             event.stopImmediatePropagation();
             $(this).closest('.modalWindow').hide().find('.modalContent').html('');
         });
-        $('._fancybox').fancybox( {
-            minWidth: 100,
-            autoSize: false,
-            scrolling: 'no'
-        });
     }
 </script>

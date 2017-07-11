@@ -99,3 +99,42 @@ $('.catalogue-menu').each(function(){
 // события начала и окончания pjax
 $(document).on('pjax:send', function(){ $('.loader').removeClass('loader-hide').addClass('loader-show'); });
 $(document).on('pjax:complete', function(){ $('.loader').removeClass('loader-show').addClass('loader-hide'); });
+
+// работа с Fancybox-окнами
+var fancyClicker,
+    fancybox_defaults = {
+        type: 'ajax',
+        autoSize: false,
+        scrolling: 'no',
+        beforeShow: function() { this.width = $('.container').width(); }
+    };
+$('._fancybox').fancybox($.extend({}, fancybox_defaults, { beforeLoad: function() { fancyClicker = this.element[0]; } }) );
+
+$(document).on('click', '.fancybox-inner a:not([data-fancybox-finish])', function(evt){
+    evt.preventDefault();
+    $.fancybox($.extend({}, fancybox_defaults, { href: this.href }));
+});
+$(document).on('click', '.fancybox-inner a[data-fancybox-finish]', function(evt){
+    $.fancybox.close();
+    if (fancyClicker) {
+        var callback = $(fancyClicker).data('callback');
+        if (typeof window[callback] === 'function'){
+            evt.preventDefault();
+            window[callback](this);
+        }
+    }
+    fancyClicker = undefined
+});
+
+$(document).on('submit', '.fancybox-inner form', function(evt){
+    var form = $(this).serialize();
+    debugger;
+    evt.preventDefault();
+    $.ajax(this.action, {
+        type: 'POST',
+        data: form,
+        timeout: 10000,
+        success: function(data){ $.fancybox($.extend( {}, fancybox_defaults, { content: data}));  },
+        error: function(result, str, throwObj) {}
+    });
+});

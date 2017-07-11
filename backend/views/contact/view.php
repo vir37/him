@@ -24,14 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Выбрать', '#', ['class' => 'btn btn-primary btn-fancy', 'data' => [ 'selectable' => true, 'id' => $model->id ]] ) ?>
+        <?= Html::a('Выбрать', '#', ['class' => 'btn btn-primary btn-fancy', 'data' => [ 'fancybox-finish' => true, 'id' => $model->id ]] ) ?>
     </p>
 
-    <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
-    <?= $this->render('_form', [
-        'model' => $model,
-        'viewMode' => true,
-    ]) ?>
-    <?= Html::endTag('fieldset') ?>
+    <div class="contact-form col-lg-7 col-md-8">
+        <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'viewMode' => true,
+        ]) ?>
+        <?= Html::endTag('fieldset') ?>
+    </div>
 
 </div>

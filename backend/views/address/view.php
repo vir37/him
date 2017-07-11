@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Выбрать', '#', ['class' => 'btn btn-primary btn-fancy', 'data' => [ 'selectable' => true, 'id' => $model->id ]] ) ?>
+        <?= Html::a('Выбрать', '#', ['class' => 'btn btn-primary btn-fancy', 'data' => [ 'selectable' => true, 'id' => $model->id, 'fancybox-finish' => true ]] ) ?>
     </p>
     <div class="address-form col-lg-8 col-md-8">
     <?= Html::beginTag('fieldset', [ 'disabled' => true ]) ?>

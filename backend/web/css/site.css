@@ -233,7 +233,7 @@ a[disabled] { cursor: not-allowed; color: #808080; }
 }
 
 .btn-fancy { display: none; }
-
+.fancybox-inner .btn-fancy { display: inline-block; }
 .article_background {
     background-image: url('../images/editor_background_2.png');
 }

@@ -43,6 +43,12 @@ class ContactController extends Controller
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -56,9 +62,9 @@ class ContactController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('view', [ 'model' => $this->findModel($id), ]);
+        return $this->render('view', [ 'model' => $this->findModel($id), ]);
     }
 
     /**
@@ -71,12 +77,13 @@ class ContactController extends Controller
         $model = new Contact();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (Yii::$app->request->isAjax)
+                return $this->actionView($model->id);
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('create', [ 'model' => $model, ]);
+        return $this->render('create', [ 'model' => $model, ]);
     }
 
     /**
@@ -90,12 +97,13 @@ class ContactController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (Yii::$app->request->isAjax)
+                return $this->actionView($model->id);
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('update', [ 'model' => $model, ]);
+        return $this->render('update', [ 'model' => $model, ]);
     }
 
     /**

@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Полный адрес',
                 'headerOptions' => [ 'class' => 'col-lg-5 col-md-5' ],
                 'content' => function($model, $key, $index, $column) {
-                    return Html::a($model->makeAddress(), '#', [ 'data' => [ 'selectable' => true, 'id' => $key ]]);
+                    return Html::a($model->makeAddress(), '#', [ 'data' => [ 'selectable' => true, 'id' => $key, 'fancybox-finish' => true ]]);
                 }
             ],
 

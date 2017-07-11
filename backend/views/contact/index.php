@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'FIO',
                 'headerOptions' => [ 'class' => 'col-lg-5 col-md-5' ],
                 'content' => function($model, $key, $index, $column) {
-                    return Html::a($model->FIO, '#', [ 'data' => [ 'selectable' => true, 'id' => $key ]]);
+                    return Html::a($model->FIO, '#', [ 'data' => [ 'id' => $key, 'fancybox-finish' => true ]]);
                 }
             ],
             [
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return '';
                     $result = [];
                     foreach (explode(',', $model->phones) as $phone){
-                        $result[] = Html::a(trim($phone), 'tel:'.trim($phone));
+                        $result[] = Html::a(trim($phone), 'tel:'.trim($phone), [ 'data' => [ 'fancybox-finish' => true ]]);
                     }
                     return implode(', ', $result);
                 }
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return '';
                     $result = [];
                     foreach (explode(',', $model->emails) as $email){
-                        $result[] = Html::a(trim($email), 'mailto:'.trim($email));
+                        $result[] = Html::a(trim($email), 'mailto:'.trim($email), [ 'data' => [ 'fancybox-finish' => true ]]);
                     }
                     return implode(', ', $result);
                 }

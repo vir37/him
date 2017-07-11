@@ -85,7 +85,7 @@ function toLink($data, $proto) {
         <div class="contacts">
             <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
-                    'class' => 'btn fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
+                    'class' => 'btn _fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
                     'style' => 'float: right;',
                     'title' => 'Добавить новый контакт',
                     'data' => [ 'callback' => 'addContact', 'pjax' => 0, 'model_id' => $model->id ],
@@ -113,19 +113,10 @@ function toLink($data, $proto) {
     </div>
     <?php ActiveForm::end(); ?>
 <script type="text/javascript">
-    var editClicker,
-        fancybox_defaults = {
-            type: 'ajax',
-            autoSize: false,
-            scrolling: 'no',
-            beforeShow: function(){
-                this.width = $('.container').width();
-            }
-        };
 
     function procAddress(elem){
         var addr_id = $(elem).data('id'),
-            clicker = editClicker,
+            clicker = fancyClicker,
             base_url = $(clicker).data('base_url');
         $.ajax(base_url + '/get-full-address', {
             data: { id: addr_id },
@@ -142,7 +133,7 @@ function toLink($data, $proto) {
 
     function addContact(elem) {
         var contact_id = $(elem).data('id'),
-            clicker = editClicker,
+            clicker = fancyClicker,
             id = $(clicker).data('model_id');
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},
@@ -179,43 +170,21 @@ function toLink($data, $proto) {
                 this.href = base_url;
             }
         });
-
+        /*
         $('.fancybox').fancybox({
             type: 'iframe',
             beforeLoad: function() {
                 Cookies.set('fancybox', 1, { expires: 1 })
                 editClicker = this.element[0];
             },
-            beforeShow: function(){
-                this.width = $('.container').width();
-            },
-            beforeClose: function(){
-                Cookies.remove('fancybox');
-            }
+            beforeShow: function(){ this.width = $('.container').width(); },
+            beforeClose: function(){ Cookies.remove('fancybox'); }
         });
-        $('._fancybox').fancybox( fancybox_defaults );
-        $(document).on('click', '.fancybox-inner a', function(evt){
-            $.fancybox.close();
-            evt.preventDefault();
-            $.fancybox($.extend({}, fancybox_defaults, { href: this.href }));
-        });
-        $(document).on('submit', '.fancybox-inner form', function(evt){
-            var form = $(this).serialize();
-            $.fancybox.close();
-            evt.preventDefault();
-            evt.stopImmediatePropagation();
-            $.ajax(this.action, {
-                type: 'POST',
-                data: form,
-                timeout: 10000,
-                success: function(data){ $.fancybox($.extend( {}, fancybox_defaults, { content: data}));  },
-                error: function(result, str, throwObj) {
-                }
-            });
-        });
+        */
 
 
         /* Обработка нажатия на ссылки, позволяющие сделать выбор */
+        /*
         $(document).on('fancy:click', 'body', function(event, elem){
             if ($(elem).data('selectable')) {
                 var callback = $(editClicker).data('callback');
@@ -226,7 +195,7 @@ function toLink($data, $proto) {
                 editClicker = undefined;
             }
         });
-
+        */
         $('.address-remove').on('click', function(event){
             event.preventDefault();
             $(this).closest('.form-group').find('.form-control').val('');

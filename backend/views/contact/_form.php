@@ -8,15 +8,14 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="contact-form col-lg-7 col-md-8">
 
-    <?php $form = ActiveForm::begin([
-        'layout' => 'inline',
-        'fieldConfig' => [
-            'enableError' => true,
-            'labelOptions' => [ 'class' => 'control-label' ],
-        ],
-    ]); ?>
+<?php $form = ActiveForm::begin([
+    'layout' => 'inline',
+    'fieldConfig' => [
+        'enableError' => true,
+        'labelOptions' => [ 'class' => 'control-label' ],
+    ],
+]); ?>
     <div class="panel panel-default">
         <div class="panel-body">
 
@@ -53,6 +52,5 @@ use yii\bootstrap\ActiveForm;
         </div>
         <?php endif; ?>
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
-</div>
