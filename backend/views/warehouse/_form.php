@@ -114,10 +114,10 @@ function toLink($data, $proto) {
     <?php ActiveForm::end(); ?>
 <script type="text/javascript">
 
-    function procAddress(elem){
+    function procAddress(elem, clicker){
         var addr_id = $(elem).data('id'),
-            clicker = fancyClicker,
             base_url = $(clicker).data('base_url');
+        debugger;
         $.ajax(base_url + '/get-full-address', {
             data: { id: addr_id },
             success: function(data, status, request) {
@@ -131,9 +131,8 @@ function toLink($data, $proto) {
         });
     }
 
-    function addContact(elem) {
+    function addContact(elem, clicker) {
         var contact_id = $(elem).data('id'),
-            clicker = fancyClicker,
             id = $(clicker).data('model_id');
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},

@@ -96,7 +96,7 @@ function toLink($data, $proto) {
             <?= $form->field($model, 'jur_address_id', [
                 'template' => '{label}{beginWrapper}'.renderAddressField('jur_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
-                            'class' => 'btn btn-default fancybox address-select',
+                            'class' => 'btn btn-default _fancybox address-select',
                             'data' => [ 'base_url' => Url::to(['/address']) ],
                         ]).
                         Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
@@ -110,7 +110,7 @@ function toLink($data, $proto) {
             <?= $form->field($model, 'fact_address_id', [
                 'template' => '{label}{beginWrapper}'.renderAddressField('fact_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
-                            'class' => 'btn btn-default fancybox address-select',
+                            'class' => 'btn btn-default _fancybox address-select',
                             'data' => [ 'base_url' => Url::to(['/address']) ],
                         ]).
                         Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
@@ -124,7 +124,7 @@ function toLink($data, $proto) {
             <?= $form->field($model, 'post_address_id', [
                 'template' => '{label}{beginWrapper}'.renderAddressField('post_address', $model).'{input}{error}{hint}{endWrapper}'.
                           Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
-                              'class' => 'btn btn-default fancybox address-select',
+                              'class' => 'btn btn-default _fancybox address-select',
                               'data' => [ 'base_url' => Url::to(['/address']) ],
                           ]).
                           Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [

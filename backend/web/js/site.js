@@ -101,29 +101,45 @@ $(document).on('pjax:send', function(){ $('.loader').removeClass('loader-hide').
 $(document).on('pjax:complete', function(){ $('.loader').removeClass('loader-show').addClass('loader-hide'); });
 
 // работа с Fancybox-окнами
-var fancyClicker,
+var fancyClickersChain = [],
     fancybox_defaults = {
         type: 'ajax',
         autoSize: false,
         scrolling: 'no',
         beforeShow: function() { this.width = $('.container').width(); }
-    };
-$('._fancybox').fancybox($.extend({}, fancybox_defaults, { beforeLoad: function() { fancyClicker = this.element[0]; } }) );
+    },
+    fancybox_clickers = { beforeLoad: function() { fancyClickersChain.push(this.element[0]); } };
+
+$('._fancybox').fancybox($.extend({}, fancybox_defaults, fancybox_clickers ) );
 
 $(document).on('click', '.fancybox-inner a:not([data-fancybox-finish])', function(evt){
     evt.preventDefault();
     $.fancybox($.extend({}, fancybox_defaults, { href: this.href }));
 });
+
+function runCallback(callback, event, clicker){
+    if (typeof window[callback] === 'function') {
+        event.preventDefault();
+        window[callback](this, clicker);
+    }
+}
 $(document).on('click', '.fancybox-inner a[data-fancybox-finish]', function(evt){
+    var fancyClicker = fancyClickersChain.pop(), that = this;
     $.fancybox.close();
     if (fancyClicker) {
         var callback = $(fancyClicker).data('callback');
-        if (typeof window[callback] === 'function'){
+        if (fancyClickersChain.length > 0) {
             evt.preventDefault();
-            window[callback](this);
-        }
+            $.fancybox($.extend({}, fancybox_defaults, {
+                href: fancyClickersChain[fancyClickersChain.length - 1].href
+                ,
+                afterShow: function () {
+                    runCallback.call(that, callback, evt, fancyClicker);
+                }
+            }));
+        } else
+            runCallback.call(that, callback, evt, fancyClicker);
     }
-    fancyClicker = undefined
 });
 
 $(document).on('submit', '.fancybox-inner form', function(evt){
