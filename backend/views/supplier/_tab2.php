@@ -127,7 +127,9 @@ $dataProvider->query = $model->getWarehouse();
 <?php Pjax::end() ?>
 <script type="text/javascript">
     function refreshWarehouses(){
-        $.pjax.reload('#pjax-container-tab2');
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        $.pjax.reload('#pjax-container-tab2', { replace: false, refresh: false });
     }
     function deleteWarehouse(elem){
         event.preventDefault();
@@ -136,7 +138,7 @@ $dataProvider->query = $model->getWarehouse();
         $.ajax(elem.href, {
             method: 'POST',
             success: function (data, status, request) {
-                $.pjax.reload('#pjax-container-tab2')
+                $.pjax.reload('#pjax-container-tab2', { replace: false, refresh: false })
             },
             error: function (response, status, throw_obj) {
                 alert(status);

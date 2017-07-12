@@ -78,16 +78,12 @@ class AddressController extends Controller
     public function actionCreate()
     {
         $model = new Address();
+        $ajax = Yii::$app->request->isAjax;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->isAjax)
-                return $this->returnJSON((object)[ 'id' => $model->id ]);
-            return $this->redirect([ 'view', 'id' => $model->id ]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $ajax ? $this->actionView($model->id) : $this->redirect([ 'view', 'id' => $model->id ]);
         }
+        return $ajax ? $this->renderAjax('create', [ 'model' => $model, ]) : $this->render('create', [ 'model' => $model, ]);
     }
 
     /**
@@ -99,16 +95,12 @@ class AddressController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $ajax = Yii::$app->request->isAjax;
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
-            if (Yii::$app->request->isAjax)
-                return $this->actionView($id);
-            else
-                return $this->redirect([ 'view', 'id' => $model->id ]);
+            return $ajax ? $this->actionView($id) : $this->redirect([ 'view', 'id' => $model->id ]);
 
-        if (Yii::$app->request->isAjax)
-            return $this->renderAjax('update', [  'model' => $model,  ]);
-        return $this->render('update', [  'model' => $model,  ]);
+        return $ajax ? $this->renderAjax('update', [  'model' => $model,  ]) : $this->render('update', [  'model' => $model,  ]);
     }
 
     /**

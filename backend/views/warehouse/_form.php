@@ -27,21 +27,16 @@ function toLink($data, $proto) {
 
 ?>
 
-
-    <?php $form = ActiveForm::begin([
+ <?php $form = ActiveForm::begin([
         'layout' => 'inline',
         'id' => 'warehouse-form',
         'fieldConfig' => [
             'enableError' => true,
             'labelOptions' => [ 'class' => 'control-label' ],
         ],
-    ]); ?>
+]); ?>
     <div class="panel panel-default">
         <div class="panel-body">
-            <?php // $form->field($model, 'create_dt')->textInput() ?>
-
-            <?php // $form->field($model, 'update_dt')->textInput() ?>
-
             <?= $form->field($model, 'supplier_id', [
                 'template' => '{label}{beginWrapper}{input}{error}{hint}{endWrapper}',
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
@@ -58,10 +53,12 @@ function toLink($data, $proto) {
                         'class' => 'btn btn-default _fancybox address-select',
                         'id' => 'warehouse-address-select',
                         'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
+                        'onclick' => 'changeHRef(this);',
                     ]).
                     Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
                         'class' => 'btn btn-default address-remove',
                         'data' => [ 'pjax' => 0 ],
+                        'onclick' => 'warehouseRemoveAddress(this);',
                     ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
@@ -88,7 +85,7 @@ function toLink($data, $proto) {
             <?php Pjax::begin([
                 'id'=>'warehouse-contacts-pc', 'timeout' => 6000,
                 'enableReplaceState' => false, 'enablePushState' => false,
-                'options' => [ 'refreshUrl' => Yii::$app->request->url ],
+                'options' => [ 'data' => ['refresh-url' => Yii::$app->request->url ]],
             ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
                     'class' => 'btn _fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
@@ -118,7 +115,7 @@ function toLink($data, $proto) {
         </div>
         <?php endif; ?>
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 <script type="text/javascript">
 
     function procAddress(elem, clicker){
@@ -127,7 +124,7 @@ function toLink($data, $proto) {
         $.ajax(base_url + '/get-full-address', {
             data: { id: addr_id },
             success: function(data, status, request) {
-                var parent = $(document).find('#'+clicker.id).closest('.form-group');
+                var parent = $('#'+clicker.id).closest('.form-group');
                 parent.find('input[type=hidden]').val(addr_id);
                 parent.find('input[disabled]').val(data);
             },
@@ -141,21 +138,28 @@ function toLink($data, $proto) {
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},
             success: function (data, status, request) {
-                debugger;
-                $.pjax.reload('#warehouse-contacts-pc');
+                warehouseRefrehPjax();
             },
             error: function (response, status, throw_obj) { alert(status); }
         });
     }
 
+    function warehouseRefrehPjax() {
+        var  href = $('#warehouse-contacts-pc').data('refresh-url');
+        if (href == undefined)
+            $.pjax.reload('#warehouse-contacts-pc', { replace: false, refresh: false });
+        else
+            $.pjax.reload('#warehouse-contacts-pc', { url: href, replace: false, refresh: false });
+    }
+
     function removeContact(elem) {
         event.preventDefault();
+        event.stopImmediatePropagation();
         if (!confirm('Вы действительно хотите удалить запись?'))
             return false;
         $.ajax(elem.href, {
             success: function (data, status, request) {
-                debugger;
-                $.pjax.reload('#warehouse-contacts-pc');
+                warehouseRefrehPjax();
             },
             error: function (response, status, throw_obj) {
                 alert(status);
@@ -163,46 +167,19 @@ function toLink($data, $proto) {
         });
     }
 
-    function afterLoad(){
-        $('.address-select').on('click', function(event){
-            var addr_id = $(this).closest('.form-group').find('input[type=hidden]').val(),
-                base_url = $(this).data('base_url');
-            if (addr_id != '') {
-                this.href = base_url + '/update?id='+addr_id;
-            } else {
-                this.href = base_url;
-            }
-        });
-        /*
-        $('.fancybox').fancybox({
-            type: 'iframe',
-            beforeLoad: function() {
-                Cookies.set('fancybox', 1, { expires: 1 })
-                editClicker = this.element[0];
-            },
-            beforeShow: function(){ this.width = $('.container').width(); },
-            beforeClose: function(){ Cookies.remove('fancybox'); }
-        });
-        */
-
-
-        /* Обработка нажатия на ссылки, позволяющие сделать выбор */
-        /*
-        $(document).on('fancy:click', 'body', function(event, elem){
-            if ($(elem).data('selectable')) {
-                var callback = $(editClicker).data('callback');
-                $.fancybox.close();
-                if (typeof window[callback] === 'function'){
-                    window[callback](elem);
-                }
-                editClicker = undefined;
-            }
-        });
-        */
-        $('.address-remove').on('click', function(event){
-            event.preventDefault();
-            $(this).closest('.form-group').find('.form-control').val('');
-        });
+    function warehouseRemoveAddress(elem){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        $(elem).closest('.form-group').find('.form-control').val('');
     }
 
+    function changeHRef(elem) {
+        var addr_id = $(elem).closest('.form-group').find('input[type=hidden]').val(),
+            base_url = $(elem).data('base_url');
+        if (addr_id != '') {
+            elem.href = base_url + '/update?id=' + addr_id;
+        } else {
+            elem.href = base_url;
+        }
+    }
 </script>

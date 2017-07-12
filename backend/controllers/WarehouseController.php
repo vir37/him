@@ -61,9 +61,9 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $ajax = Yii::$app->request->isAjax;
+
+        return $ajax ? $this->renderAjax('view', [ 'model' => $this->findModel($id),]) : $this->render('view', [ 'model' => $this->findModel($id),]);
     }
 
     /**
@@ -74,20 +74,19 @@ class WarehouseController extends Controller
     public function actionCreate()
     {
         $model = new Warehouse();
+        $ajax = Yii::$app->request->isAjax;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (!Yii::$app->request->isAjax)
+            if (!$ajax)
                 Yii::$app->session->setFlash('success', 'Запись успешно сохранена');
             if (array_key_exists('save_n_stay', Yii::$app->request->post()))
-                return $this->redirect(['update', 'id' => $model->id]);
-            return $this->redirect(['view', 'id' => $model->id]);
+                return $ajax ? $this->actionUpdate($model->id): $this->redirect(['update', 'id' => $model->id]);
+            return $ajax ? $this->actionView($model->id) : $this->redirect(['view', 'id' => $model->id]);
         }
         $supplier_id = \Yii::$app->request->get('supplier_id', Null);
         if ($supplier_id)
             $model->supplier_id = (int) $supplier_id;
-        if (Yii::$app->request->isAjax)
-            return $this->renderAjax('create', [ 'model' => $model,  ]);
-        return $this->render('create', [ 'model' => $model,  ]);
+        return $ajax ? $this->renderAjax('create', [ 'model' => $model,  ]) : $this->render('create', [ 'model' => $model,  ]);
     }
 
     /**
@@ -99,16 +98,15 @@ class WarehouseController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $ajax = Yii::$app->request->isAjax;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (!Yii::$app->request->isAjax)
+            if (!$ajax)
                 Yii::$app->session->setFlash('success', 'Запись успешно обновлена');
             if (!array_key_exists('save_n_stay', Yii::$app->request->post()))
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $ajax ? $this->actionView($model->id) : $this->redirect(['view', 'id' => $model->id]);
         }
-        if (Yii::$app->request->isAjax)
-            return $this->renderAjax('update', [ 'model' => $model, ]);
-        return $this->render('update', [ 'model' => $model, ]);
+        return $ajax ? $this->renderAjax('update', [ 'model' => $model, ]) : $this->render('update', [ 'model' => $model, ]);
     }
 
     /**

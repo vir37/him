@@ -74,7 +74,9 @@ use common\models\Region;
     </div>
 <?php ActiveForm::end(); ?>
 <script type="text/javascript">
-    window.addEventListener('load', function(){
+    function afterLoad(){
         $('#index').mask('999999', { placeholder: 'X'});
-    });
+    }
+    if ($ != undefined)
+        afterLoad();
 </script>

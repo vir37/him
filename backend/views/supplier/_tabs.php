@@ -41,5 +41,20 @@ use yii\bootstrap\Tabs;
             event.stopImmediatePropagation();
             $(this).closest('.modalWindow').hide().find('.modalContent').html('');
         });
+        $('#inn').mask('9999999999?99', { placeholder: 'X'});
+        $('#ogrn').mask('9999999999999', { placeholder: 'X'});
+        $('.address-select').on('click', function(event){
+            var addr_id = $(this).closest('.form-group').find('input[type=hidden]').val(),
+                base_url = $(this).data('base_url');
+            if (addr_id != '') {
+                this.href = base_url + '/update?id='+addr_id;
+            } else {
+                this.href = base_url;
+            }
+        });
+        $('.address-remove').on('click', function(event){
+            event.preventDefault();
+            $(this).closest('.form-group').find('.form-control').val('');
+        });
     }
 </script>

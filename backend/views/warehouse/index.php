@@ -33,8 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'id',
                 'headerOptions' => [ 'class' => 'col-lg-1 col-md-1', ],
             ],
-            // 'create_dt',
-            // 'update_dt',
             [
                 'attribute' => 'supplier_id',
                 'label' => 'Поставщик',

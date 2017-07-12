@@ -97,10 +97,12 @@ function toLink($data, $proto) {
                 'template' => '{label}{beginWrapper}'.renderAddressField('jur_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                             'class' => 'btn btn-default _fancybox address-select',
-                            'data' => [ 'base_url' => Url::to(['/address']) ],
+                            'id' => 'supplier-jur-address-select',
+                            'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                         ]).
                         Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
                             'class' => 'btn btn-default address-remove',
+                            'data' => [ 'pjax' => 0 ],
                         ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
@@ -111,10 +113,12 @@ function toLink($data, $proto) {
                 'template' => '{label}{beginWrapper}'.renderAddressField('fact_address', $model).'{input}{error}{hint}{endWrapper}'.
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                             'class' => 'btn btn-default _fancybox address-select',
-                            'data' => [ 'base_url' => Url::to(['/address']) ],
+                            'id' => 'supplier-fact-address-select',
+                            'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                         ]).
                         Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
                             'class' => 'btn btn-default address-remove',
+                            'data' => [ 'pjax' => 0 ],
                         ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
@@ -125,10 +129,12 @@ function toLink($data, $proto) {
                 'template' => '{label}{beginWrapper}'.renderAddressField('post_address', $model).'{input}{error}{hint}{endWrapper}'.
                           Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/address' ], [
                               'class' => 'btn btn-default _fancybox address-select',
-                              'data' => [ 'base_url' => Url::to(['/address']) ],
+                              'id' => 'supplier-post-address-select',
+                              'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                           ]).
                           Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
                               'class' => 'btn btn-default address-remove',
+                              'data' => [ 'pjax' => 0 ],
                           ]),
                 'options' => [ 'class' => 'form-group col-lg-12 col-md-12' ],
                 'labelOptions' => [ 'class' => 'control-label col-lg-2 col-md-2'],
@@ -178,7 +184,7 @@ function toLink($data, $proto) {
         <div class="contacts">
             <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
-                'class' => 'btn fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
+                'class' => 'btn _fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
                 'style' => 'float: right;',
                 'title' => 'Добавить новый контакт',
                 'data' => [ 'callback' => 'addContact', 'pjax' => 0, 'model_id' => $model->id ],
@@ -209,11 +215,9 @@ function toLink($data, $proto) {
 <script type="text/javascript">
     var editClicker;
 
-    function addContact(elem) {
+    function addContact(elem, clicker) {
         var contact_id = $(elem).data('id'),
-            clicker = editClicker,
             id = $(clicker).data('model_id');
-        debugger;
         $.ajax(baseUrl + '/supplier/link-contact', {
             data: {id: id, contact_id: contact_id},
             success: function (data, status, request) {
@@ -231,7 +235,7 @@ function toLink($data, $proto) {
             return false;
         $.ajax(elem.href, {
             success: function (data, status, request) {
-                $.pjax.reload('#pjax-container')
+                $.pjax.reload('#pjax-container', {replace: false, refresh: false})
             },
             error: function (response, status, throw_obj) {
                 alert(status);
@@ -239,9 +243,8 @@ function toLink($data, $proto) {
         });
     }
 
-    function procAddress(elem){
+    function procAddress(elem, clicker){
         var addr_id = $(elem).data('id'),
-            clicker = editClicker,
             base_url = $(clicker).data('base_url');
         $.ajax(base_url + '/get-full-address', {
             data: { id: addr_id },
@@ -253,49 +256,6 @@ function toLink($data, $proto) {
             error: function(request, status, throw_obj){
                 alert(request);
             }
-        });
-    }
-
-    function afterLoad(){
-        $('#inn').mask('9999999999?99', { placeholder: 'X'});
-        $('#ogrn').mask('9999999999999', { placeholder: 'X'});
-        $('.address-select').on('click', function(event){
-            var addr_id = $(this).closest('.form-group').find('input[type=hidden]').val(),
-                base_url = $(this).data('base_url');
-            if (addr_id != '') {
-                this.href = base_url + '/update?id='+addr_id;
-            } else {
-                this.href = base_url;
-            }
-        });
-        $('.fancybox').fancybox({
-            type: 'iframe',
-            beforeLoad: function() {
-                Cookies.set('fancybox', 1, { expires: 1 })
-                editClicker = this.element[0];
-            },
-            beforeShow: function(){
-                this.width = $('.container').width();
-                //this.height = $('.container').height();
-            },
-            beforeClose: function(){
-                Cookies.remove('fancybox');
-            }
-        });
-        /* Обработка нажатия на ссылки, позволяющие сделать выбор */
-        $(document).on('fancy:click', 'body', function(event, elem){
-            if ($(elem).data('selectable')) {
-                var callback = $(editClicker).data('callback');
-                $.fancybox.close();
-                if (typeof window[callback] === 'function'){
-                    window[callback](elem);
-                }
-                editClicker = undefined;
-            }
-        });
-        $('.address-remove').on('click', function(event){
-            event.preventDefault();
-            $(this).closest('.form-group').find('.form-control').val('');
         });
     }
 

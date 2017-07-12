@@ -59,9 +59,11 @@ function isDisabled(elem) {
 }
 
 // добавляем постобработку загрузки страницы
-if (typeof afterLoad == 'function') {
-    window.addEventListener('load', afterLoad);
-}
+window.addEventListener('load', function(){
+    if (typeof afterLoad == 'function')
+        afterLoad();
+});
+
 
 // отключаем задизабленные линки
 $(document).on('click', 'a', function(event){
@@ -108,7 +110,7 @@ var fancyClickersChain = [],
         scrolling: 'no',
         beforeShow: function() { this.width = $('.container').width(); }
     },
-    fancybox_clickers = { beforeLoad: function() { fancyClickersChain.push(this.element[0]); } };
+    fancybox_clickers = { beforeLoad: function() { fancyClickersChain.push(this.element[0]); console.log(fancyClickersChain);} };
 
 $('._fancybox').fancybox($.extend({}, fancybox_defaults, fancybox_clickers ) );
 
@@ -120,6 +122,7 @@ $(document).on('click', '.fancybox-inner a:not([data-fancybox-finish])', functio
 function runCallback(callback, event, clicker){
     if (typeof window[callback] === 'function') {
         event.preventDefault();
+        event.stopImmediatePropagation();
         window[callback](this, clicker);
     }
 }
@@ -150,6 +153,6 @@ $(document).on('submit', '.fancybox-inner form', function(evt){
         data: form,
         timeout: 10000,
         success: function(data){ $.fancybox($.extend( {}, fancybox_defaults, { content: data}));  },
-        error: function(result, str, throwObj) {}
+        error: function(result, str, throwObj) { alert(str);}
     });
 });
