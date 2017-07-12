@@ -62,6 +62,25 @@ $dataProvider->query = $model->getWarehouse();
                     },
                 ],
                 [
+                    'class' => \yii\grid\Column::className(),
+                    'header' => 'Действия',
+                    'headerOptions' => [ 'class' => 'col-lg-1 col-md-1'],
+                    'content' => function($model, $key, $index, $column){
+                        $update = Html::a('<span class="glyphicon glyphicon-pencil"></span>', [ '/warehouse/update', 'id'=>$key], [
+                                'title' => 'Редактировать склад',
+                                'class' => '_fancybox',
+                                'data' => [ 'pjax' => 0, 'callback' => 'refreshWarehouses' ],
+                            ]);
+                        $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', [ '/warehouse/delete', 'id'=>$key], [
+                                'title' => 'Удалить склад',
+                                'data' => [ 'pjax' => 0, ],
+                                'onclick' => 'deleteWarehouse(this);',
+                            ]);
+                        return "$update&nbsp;&nbsp;$delete";
+                    },
+                ],
+                /*
+                [
                     'class' => \yii\grid\ActionColumn::className(),
                     'controller' => 'warehouse',
                     'template' => '{update}&nbsp;&nbsp;{delete}',
@@ -89,13 +108,13 @@ $dataProvider->query = $model->getWarehouse();
                                 ]);
                         },
                     ],
-                ],
+                ],*/
             ],
         ]) ?>
     </div>
     <div class="panel-footer">
         <?= Html::a('Добавить новый', ['warehouse/create', 'supplier_id' => $model->id ], [
-            'class' => 'btn btn-default fancybox warehouse-select',
+            'class' => 'btn btn-default _fancybox warehouse-select',
             'data' => [ 'callback' => 'refreshWarehouses' ],
         ])?>
     </div>

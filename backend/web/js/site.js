@@ -144,7 +144,6 @@ $(document).on('click', '.fancybox-inner a[data-fancybox-finish]', function(evt)
 
 $(document).on('submit', '.fancybox-inner form', function(evt){
     var form = $(this).serialize();
-    debugger;
     evt.preventDefault();
     $.ajax(this.action, {
         type: 'POST',

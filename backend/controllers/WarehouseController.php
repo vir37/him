@@ -81,14 +81,13 @@ class WarehouseController extends Controller
             if (array_key_exists('save_n_stay', Yii::$app->request->post()))
                 return $this->redirect(['update', 'id' => $model->id]);
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            $supplier_id = \Yii::$app->request->get('supplier_id', Null);
-            if ($supplier_id)
-                $model->supplier_id = (int) $supplier_id;
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        $supplier_id = \Yii::$app->request->get('supplier_id', Null);
+        if ($supplier_id)
+            $model->supplier_id = (int) $supplier_id;
+        if (Yii::$app->request->isAjax)
+            return $this->renderAjax('create', [ 'model' => $model,  ]);
+        return $this->render('create', [ 'model' => $model,  ]);
     }
 
     /**
@@ -108,7 +107,7 @@ class WarehouseController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
         if (Yii::$app->request->isAjax)
-            return $this->renderAjax('_form', [ 'model' => $model, ]);
+            return $this->renderAjax('update', [ 'model' => $model, ]);
         return $this->render('update', [ 'model' => $model, ]);
     }
 

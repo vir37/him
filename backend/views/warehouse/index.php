@@ -3,10 +3,12 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use frontend\assets\FancyboxAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\WarehouseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+FancyboxAsset::register($this);
 $this->title = 'Склады';
 $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['directory/']];
 $this->params['breadcrumbs'][] = $this->title;

@@ -30,6 +30,7 @@ function toLink($data, $proto) {
 
     <?php $form = ActiveForm::begin([
         'layout' => 'inline',
+        'id' => 'warehouse-form',
         'fieldConfig' => [
             'enableError' => true,
             'labelOptions' => [ 'class' => 'control-label' ],
@@ -51,10 +52,11 @@ function toLink($data, $proto) {
                'prompt' => '...' ])->label('Поставщик') ?>
 
             <?= $form->field($model, 'address_id', [
-                'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control" value="'.
+                'template' => '{label}{beginWrapper}<input type="text" disabled="disabled" class="form-control" id="addr-str" value="'.
                     ($model->address ? $model->address->makeAddress(): '').'">{input}{error}{hint}{endWrapper}'.
                     Html::a('<span class="glyphicon glyphicon-pencil"></span>', ($model->address ? [ 'address/update', 'id'=>$model->address->id] : [ '/address' ]), [
-                        'class' => 'btn btn-default _fancybox fancybox.ajax address-select',
+                        'class' => 'btn btn-default _fancybox address-select',
+                        'id' => 'warehouse-address-select',
                         'data' => [ 'base_url' => Url::to(['/address']), 'callback' => 'procAddress', 'pjax' => 0 ],
                     ]).
                     Html::a('<span class="glyphicon glyphicon-remove"></span>', '#', [
@@ -83,9 +85,14 @@ function toLink($data, $proto) {
         </div>
         <div class="delimiter2"></div>
         <div class="contacts">
-            <?php Pjax::begin(['id'=>'pjax-container', 'timeout' => 6000, 'enableReplaceState' => false, 'enablePushState' => false ]); ?>
+            <?php Pjax::begin([
+                'id'=>'warehouse-contacts-pc', 'timeout' => 6000,
+                'enableReplaceState' => false, 'enablePushState' => false,
+                'options' => [ 'refreshUrl' => Yii::$app->request->url ],
+            ]); ?>
             <?= Html::a('<span class="glyphicon glyphicon-plus"></span><span class="label label-default">Добавить</span>', [ '/contact' ], [
                     'class' => 'btn _fancybox contact-select'. ($model->isNewRecord ? ' hidden': ''),
+                    'id' => 'contact-select',
                     'style' => 'float: right;',
                     'title' => 'Добавить новый контакт',
                     'data' => [ 'callback' => 'addContact', 'pjax' => 0, 'model_id' => $model->id ],
@@ -117,17 +124,14 @@ function toLink($data, $proto) {
     function procAddress(elem, clicker){
         var addr_id = $(elem).data('id'),
             base_url = $(clicker).data('base_url');
-        debugger;
         $.ajax(base_url + '/get-full-address', {
             data: { id: addr_id },
             success: function(data, status, request) {
-                var parent = $(clicker).closest('.form-group');
+                var parent = $(document).find('#'+clicker.id).closest('.form-group');
                 parent.find('input[type=hidden]').val(addr_id);
                 parent.find('input[disabled]').val(data);
             },
-            error: function(request, status, throw_obj){
-                alert(request);
-            }
+            error: function(request, status, throw_obj){ alert(request); }
         });
     }
 
@@ -137,11 +141,10 @@ function toLink($data, $proto) {
         $.ajax(baseUrl + '/warehouse/link-contact', {
             data: {id: id, contact_id: contact_id},
             success: function (data, status, request) {
-                $.pjax.reload('#pjax-container');
+                debugger;
+                $.pjax.reload('#warehouse-contacts-pc');
             },
-            error: function (response, status, throw_obj) {
-                alert(status);
-            }
+            error: function (response, status, throw_obj) { alert(status); }
         });
     }
 
@@ -151,7 +154,8 @@ function toLink($data, $proto) {
             return false;
         $.ajax(elem.href, {
             success: function (data, status, request) {
-                $.pjax.reload('#pjax-container')
+                debugger;
+                $.pjax.reload('#warehouse-contacts-pc');
             },
             error: function (response, status, throw_obj) {
                 alert(status);
