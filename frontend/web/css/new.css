@@ -170,7 +170,7 @@ h2 {
     padding-bottom: 0.5rem;
 }
 
-.ql-editor h2 { padding-bottom: 0.5rem !important; }
+.ql-editor h2, .ql-editor h4 { padding-bottom: 0.5rem !important; }
 
 .font-arial { font-family: Arial, Helvetica Neue, Helvetica, sans-serif !important; }
 .font-bold { font-weight: bolder; }
