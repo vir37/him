@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => Column::className(),
-                'header' => 'Юр.адрес',
-                'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
+                'header' => 'Юридический адрес',
+                'headerOptions' => [ 'class' => 'col-lg-3 col-md-3' ],
                 'content' => function($model, $key, $index, $column) {
                     if ($model->jurAddress != Null) {
                         return $model->jurAddress->makeAddress();
@@ -49,10 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '';
                 }
             ],
-            /*
             [
                 'class' => Column::className(),
-                'header' => 'Почт.адрес',
+                'header' => 'Почтовый адрес',
                 'headerOptions' => [ 'class' => 'col-lg-2 col-md-2' ],
                 'content' => function($model, $key, $index, $column) {
                     if ($model->postAddress != Null) {
@@ -61,7 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '';
                 }
             ],
-            */
             //'description:ntext',
             // 'INN',
             // 'OGRN',

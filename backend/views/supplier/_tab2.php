@@ -6,8 +6,7 @@
  * Time: 17:30
  */
 use yii\widgets\Pjax;
-use yii\helpers\Html,
-    yii\helpers\Url;
+use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 

@@ -30,6 +30,10 @@ use yii\bootstrap\Tabs;
             [
                 'label' => 'Товары и цены',
                 'linkOptions' => $model->isNewRecord ? [ 'disabled' => "disabled", 'onclick' => 'return isDisabled(this);' ] : [],
+                'content' => $this->render('_tab3', [
+                    'model' => $model,
+                    'viewMode' => isset($viewMode) ? $viewMode : false,
+                ]),
             ]
         ],
     ])
