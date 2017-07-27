@@ -1,6 +1,6 @@
 <?php
 return [
     'adminEmail' => 'admin@himsale.ru',
-    'requestsEmail' => 'invest.tera@yandex.ru',
+    'requestsEmail' => ['info@himsale.ru', 'alex.melnikov@mail.ru'],
     'saleEmail' => 'sale@himsale.ru',
 ];
