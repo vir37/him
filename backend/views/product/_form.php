@@ -10,7 +10,7 @@ use bizley\quill\Quill;
 /* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 if (!isset($viewMode))
-    $viewMode = false;
+    $viewMode = 0;
 ?>
 
 <div class="product-form">

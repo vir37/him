@@ -110,9 +110,11 @@ var fancyClickersChain = [],
         scrolling: 'no',
         beforeShow: function() { this.width = $('.container').width(); }
     },
-    fancybox_clickers = { beforeLoad: function() { fancyClickersChain.push(this.element[0]); console.log(fancyClickersChain);} };
+    fancybox_clickers = { beforeLoad: function() { fancyClickersChain.push(this.element[0]); } };
 
-$('._fancybox').fancybox($.extend({}, fancybox_defaults, fancybox_clickers ) );
+try {
+    $('._fancybox').fancybox($.extend({}, fancybox_defaults, fancybox_clickers ) );
+} catch(e) {}
 
 $(document).on('click', '.fancybox-inner a:not([data-fancybox-finish])', function(evt){
     evt.preventDefault();

@@ -43,19 +43,26 @@ $this->params['breadcrumbs'][] = 'Каталог';
             <header class="row">
                 <h1><?= "$header в {$city->name_pp}" ?></h1>
             </header>
-            <div class="row">
                 <?php
                     if ($current_category) {
+                        $count = 1;
+                        echo '<div class="row">';
                         foreach ($current_category->product as $product){
+                            if ($count > 2) {           
+                                echo '</div><div class="row">';
+                                $count = 1;	
+                            }
                             echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">';
                             echo $this->render('_product_card', [ 'product' => $product, 'city' => $city,
                                 'category' => $current_category->id ]);
                             echo '</div>';
+                            $count++;
                         }
+                        echo '</div>';
                     }
                 ?>
-            </div>
-            <article class="row ql-editor"><?php
+            <article class="row ql-editor">
+                <?php
                     if ($current_category) {
                         echo ReplaceHelper::replaceSpecFields($current_category->description, [
                             'city_pp' => $city->name_pp, 'city' => $city->name,

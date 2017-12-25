@@ -60,7 +60,7 @@ class ProductSearch extends Product
             return $dataProvider;
         }
 
-        $query->joinWith('category', true, 'LEFT JOIN');
+        $query->joinWith('category c', true, 'LEFT JOIN');
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -68,7 +68,7 @@ class ProductSearch extends Product
             'manufacturer_id' => $this->manufacturer_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'product.name', $this->name]);
 
         return $dataProvider;
     }
