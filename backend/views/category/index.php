@@ -96,8 +96,8 @@ JS
                         'title' => 'Редактировать категорию'
                     ]) ?>
                     <?= Html::a('Удалить', $buttonsParams == '#' ? ['#'] : array_merge(['delete'], $buttonsParams, $url_params), [
-                        'class' => 'btn btn-danger',
-                        'data-confirm' => 'Вы действительно хотите удалить?',
+                        'class' => 'btn btn-danger deleter',
+                        //'data-confirm' => 'Вы действительно хотите удалить?',
                         'data-pjax' => 0,
                         'disabled' => $buttonsParams == '#',
                         'id' => 'button-delete',
@@ -128,3 +128,13 @@ JS
     </div>
     <?php Pjax::end(); ?>
 </div>
+
+<script type="text/javascript">
+    window.addEventListener('load', function(){
+        $(document).on('click','a.deleter',function(event){
+            if (!confirm('Вы действительно хотите удалить?'))
+                return false;
+        });
+//        $(document).on('click','a.deleter',function(event){ event.preventDefault(); });
+    })
+</script>
