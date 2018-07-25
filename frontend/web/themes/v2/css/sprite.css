@@ -1,0 +1,113 @@
+.icon-arrow-right {
+  background-image: url(../images/sprite.png);
+  background-position: -126px -50px;
+  width: 5px;
+  height: 8px; }
+
+.icon-barrel-green {
+  background-image: url(../images/sprite.png);
+  background-position: -50px -100px;
+  width: 18px;
+  height: 20px; }
+
+.icon-barrel-oil {
+  background-image: url(../images/sprite.png);
+  background-position: 0px -50px;
+  width: 40px;
+  height: 50px; }
+
+.icon-barrel-white {
+  background-image: url(../images/sprite.png);
+  background-position: -68px -100px;
+  width: 18px;
+  height: 20px; }
+
+.icon-cart-black {
+  background-image: url(../images/sprite.png);
+  background-position: -16px -128px;
+  width: 16px;
+  height: 16px; }
+
+.icon-cart-white {
+  background-image: url(../images/sprite.png);
+  background-position: 0px -128px;
+  width: 16px;
+  height: 16px; }
+
+.icon-cross {
+  background-image: url(../images/sprite.png);
+  background-position: -118px -100px;
+  width: 16px;
+  height: 16px; }
+
+.icon-delivery {
+  background-image: url(../images/sprite.png);
+  background-position: 0px -100px;
+  width: 50px;
+  height: 28px; }
+
+.icon-icq {
+  background-image: url(../images/sprite.png);
+  background-position: -141px -64px;
+  width: 31px;
+  height: 32px; }
+
+.icon-medal {
+  background-image: url(../images/sprite.png);
+  background-position: -99px 0px;
+  width: 42px;
+  height: 50px; }
+
+.icon-phone-black {
+  background-image: url(../images/sprite.png);
+  background-position: -86px -100px;
+  width: 16px;
+  height: 16px; }
+
+.icon-phone-white {
+  background-image: url(../images/sprite.png);
+  background-position: -102px -100px;
+  width: 16px;
+  height: 16px; }
+
+.icon-placeholder {
+  background-image: url(../images/sprite.png);
+  background-position: -40px -50px;
+  width: 40px;
+  height: 50px; }
+
+.icon-support {
+  background-image: url(../images/sprite.png);
+  background-position: -50px 0px;
+  width: 49px;
+  height: 50px; }
+
+.icon-tag {
+  background-image: url(../images/sprite.png);
+  background-position: 0px 0px;
+  width: 50px;
+  height: 50px; }
+
+.icon-telegram {
+  background-image: url(../images/sprite.png);
+  background-position: -141px -32px;
+  width: 32px;
+  height: 32px; }
+
+.icon-viber {
+  background-image: url(../images/sprite.png);
+  background-position: -141px -96px;
+  width: 30px;
+  height: 32px; }
+
+.icon-warehouse {
+  background-image: url(../images/sprite.png);
+  background-position: -80px -50px;
+  width: 46px;
+  height: 43px; }
+
+.icon-whatsapp {
+  background-image: url(../images/sprite.png);
+  background-position: -141px 0px;
+  width: 32px;
+  height: 32px; }

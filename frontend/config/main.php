@@ -37,6 +37,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@app/themes/v2',
+                'baseUrl' => '@web/themes/v2',
+                'pathMap' => [
+                    '@app/views' => '@app/themes/v2/views',
+                ],
+            ],
+        ],
         'thumbnail' => [
             'class' => 'himiklab\thumbnail\EasyThumbnail',
             'cacheAlias' => 'assets/thumbnails',

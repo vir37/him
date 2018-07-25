@@ -20,8 +20,6 @@ use yii\web\NotFoundHttpException;
 
 class CatalogueController extends Controller{
 
-    public $layout = "new";
-
     public function behaviors()
     {
         return [

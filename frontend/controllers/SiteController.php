@@ -25,7 +25,7 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
-    public $layout = "new";
+    //public $layout = "new";
     /**
      * @inheritdoc
      */

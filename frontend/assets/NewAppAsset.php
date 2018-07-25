@@ -9,8 +9,8 @@ use yii\web\AssetBundle;
  */
 class NewAppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    //public $basePath = '@webroot';
+    //public $baseUrl = '@web';
     public $css = [
         'css/quill.snow.css',
         'css/new.css',

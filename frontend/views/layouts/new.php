@@ -34,7 +34,7 @@ $phone = \Yii::$app->params['phone']; //TODO: сохранять в настро
   <?= $this->render('_city_choose') ?>
   <?php
     NavBar::begin([
-        'brandLabel' => '<span itemprop="name">ООО "ТЕРА-ИНВЕСТ"</span>',
+        'brandLabel' => '<span itemprop="name">..</span>',
         'brandOptions' => [ 'class' => 'navbar-brand-tera', 'itemprop' => 'url'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
